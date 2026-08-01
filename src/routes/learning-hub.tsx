@@ -53,8 +53,8 @@ const LEVELS = [
 ];
 
 function LearningHubPage() {
-  const [level, setLevel] = useState(LEVELS[2]);
-  const [targetJob, setTargetJob] = useState(roadmaps[0].title);
+  const [level, setLevel] = useState<string>(LEVELS[2]!);
+  const [targetJob, setTargetJob] = useState<string>(roadmaps[0]!.title);
   const [hours, setHours] = useState(10);
   const [interests, setInterests] = useState("");
 
@@ -130,7 +130,7 @@ function LearningHubPage() {
               min={2}
               max={40}
               step={1}
-              onValueChange={(v) => setHours(v[0])}
+              onValueChange={(v) => setHours(v[0] ?? hours)}
             />
           </div>
 
