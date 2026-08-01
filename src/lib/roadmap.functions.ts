@@ -81,6 +81,7 @@ Respond with ONLY a JSON object (no markdown fences, no commentary) shaped exact
       .replace(/```$/, "")
       .trim();
 
+    console.log("RAWLEN", text.length, JSON.stringify(text.slice(0, 300)));
     let parsed: unknown;
     try {
       parsed = JSON.parse(cleaned.slice(cleaned.indexOf("{"), cleaned.lastIndexOf("}") + 1));
