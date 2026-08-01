@@ -80,20 +80,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Luna.io" },
+      { title: "Luna.io — Empowering Electronics Engineers" },
       {
         name: "description",
         content:
-          "Luna.io is an AI-powered platform for Electronics & Communication Engineering learners.",
+          "Luna.io is an AI-powered platform for Electronics & Communication Engineering learners, offering structured paths, projects, career guidance, and community.",
       },
-      { property: "og:title", content: "Luna.io" },
+      { property: "og:title", content: "Luna.io — Empowering Electronics Engineers" },
       {
         property: "og:description",
         content:
-          "Luna.io is an AI-powered platform for Electronics & Communication Engineering learners.",
+          "Luna.io is an AI-powered platform for Electronics & Communication Engineering learners, offering structured paths, projects, career guidance, and community.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Luna.io — Empowering Electronics Engineers" },
+      { name: "twitter:description", content: "Luna.io is an AI-powered platform for Electronics & Communication Engineering learners, offering structured paths, projects, career guidance, and community." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/984c31ed-7258-4355-b349-063d57ac18e4/id-preview-abc854e6--b2249bb6-cc8c-4a44-8977-6cfa205e2b7d.lovable.app-1785576577239.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/984c31ed-7258-4355-b349-063d57ac18e4/id-preview-abc854e6--b2249bb6-cc8c-4a44-8977-6cfa205e2b7d.lovable.app-1785576577239.png" },
     ],
     links: [
       {

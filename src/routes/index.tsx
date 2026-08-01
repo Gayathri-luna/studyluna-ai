@@ -16,7 +16,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "Structured learning paths, career roadmaps, project guidance, AI mentorship, and community for ECE learners.",
+          "Luna.io is an AI-powered platform for Electronics & Communication Engineering learners, offering structured paths, projects, career guidance, and community.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
