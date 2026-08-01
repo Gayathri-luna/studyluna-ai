@@ -81,12 +81,11 @@ Respond with ONLY a JSON object (no markdown fences, no commentary) shaped exact
       .replace(/```$/, "")
       .trim();
 
-    console.log("RAWLEN", text.length, JSON.stringify(text.slice(0, 300)));
     let parsed: unknown;
     try {
       parsed = JSON.parse(cleaned.slice(cleaned.indexOf("{"), cleaned.lastIndexOf("}") + 1));
     } catch {
-      throw new Error("DEBUG_RAW:" + JSON.stringify(text.slice(0, 400)));
+      throw new Error("Luna AI returned an unexpected response. Please try again.");
     }
 
     const result = PlanSchema.safeParse(parsed);
