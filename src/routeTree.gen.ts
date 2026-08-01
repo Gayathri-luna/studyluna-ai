@@ -10,33 +10,167 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as CareerHubRouteImport } from './routes/career-hub'
+import { Route as CommunityRouteImport } from './routes/community'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as IndustryNewsRouteImport } from './routes/industry-news'
+import { Route as LearningHubRouteImport } from './routes/learning-hub'
+import { Route as LunaAiRouteImport } from './routes/luna-ai'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
+import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareerHubRoute = CareerHubRouteImport.update({
+  id: '/career-hub',
+  path: '/career-hub',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommunityRoute = CommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndustryNewsRoute = IndustryNewsRouteImport.update({
+  id: '/industry-news',
+  path: '/industry-news',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearningHubRoute = LearningHubRouteImport.update({
+  id: '/learning-hub',
+  path: '/learning-hub',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LunaAiRoute = LunaAiRouteImport.update({
+  id: '/luna-ai',
+  path: '/luna-ai',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsOfServiceRoute = TermsOfServiceRouteImport.update({
+  id: '/terms-of-service',
+  path: '/terms-of-service',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/career-hub': typeof CareerHubRoute
+  '/community': typeof CommunityRoute
+  '/contact': typeof ContactRoute
+  '/industry-news': typeof IndustryNewsRoute
+  '/learning-hub': typeof LearningHubRoute
+  '/luna-ai': typeof LunaAiRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/projects': typeof ProjectsRoute
+  '/terms-of-service': typeof TermsOfServiceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/career-hub': typeof CareerHubRoute
+  '/community': typeof CommunityRoute
+  '/contact': typeof ContactRoute
+  '/industry-news': typeof IndustryNewsRoute
+  '/learning-hub': typeof LearningHubRoute
+  '/luna-ai': typeof LunaAiRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/projects': typeof ProjectsRoute
+  '/terms-of-service': typeof TermsOfServiceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/career-hub': typeof CareerHubRoute
+  '/community': typeof CommunityRoute
+  '/contact': typeof ContactRoute
+  '/industry-news': typeof IndustryNewsRoute
+  '/learning-hub': typeof LearningHubRoute
+  '/luna-ai': typeof LunaAiRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/projects': typeof ProjectsRoute
+  '/terms-of-service': typeof TermsOfServiceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/career-hub'
+    | '/community'
+    | '/contact'
+    | '/industry-news'
+    | '/learning-hub'
+    | '/luna-ai'
+    | '/privacy-policy'
+    | '/projects'
+    | '/terms-of-service'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/career-hub'
+    | '/community'
+    | '/contact'
+    | '/industry-news'
+    | '/learning-hub'
+    | '/luna-ai'
+    | '/privacy-policy'
+    | '/projects'
+    | '/terms-of-service'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/career-hub'
+    | '/community'
+    | '/contact'
+    | '/industry-news'
+    | '/learning-hub'
+    | '/luna-ai'
+    | '/privacy-policy'
+    | '/projects'
+    | '/terms-of-service'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  CareerHubRoute: typeof CareerHubRoute
+  CommunityRoute: typeof CommunityRoute
+  ContactRoute: typeof ContactRoute
+  IndustryNewsRoute: typeof IndustryNewsRoute
+  LearningHubRoute: typeof LearningHubRoute
+  LunaAiRoute: typeof LunaAiRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
+  ProjectsRoute: typeof ProjectsRoute
+  TermsOfServiceRoute: typeof TermsOfServiceRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +182,92 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/career-hub': {
+      id: '/career-hub'
+      path: '/career-hub'
+      fullPath: '/career-hub'
+      preLoaderRoute: typeof CareerHubRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/community': {
+      id: '/community'
+      path: '/community'
+      fullPath: '/community'
+      preLoaderRoute: typeof CommunityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/industry-news': {
+      id: '/industry-news'
+      path: '/industry-news'
+      fullPath: '/industry-news'
+      preLoaderRoute: typeof IndustryNewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learning-hub': {
+      id: '/learning-hub'
+      path: '/learning-hub'
+      fullPath: '/learning-hub'
+      preLoaderRoute: typeof LearningHubRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/luna-ai': {
+      id: '/luna-ai'
+      path: '/luna-ai'
+      fullPath: '/luna-ai'
+      preLoaderRoute: typeof LunaAiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms-of-service': {
+      id: '/terms-of-service'
+      path: '/terms-of-service'
+      fullPath: '/terms-of-service'
+      preLoaderRoute: typeof TermsOfServiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  CareerHubRoute: CareerHubRoute,
+  CommunityRoute: CommunityRoute,
+  ContactRoute: ContactRoute,
+  IndustryNewsRoute: IndustryNewsRoute,
+  LearningHubRoute: LearningHubRoute,
+  LunaAiRoute: LunaAiRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
+  ProjectsRoute: ProjectsRoute,
+  TermsOfServiceRoute: TermsOfServiceRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
