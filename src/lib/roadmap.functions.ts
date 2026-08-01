@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { generateText, Output, NoObjectGeneratedError } from "ai";
+import { generateText } from "ai";
 import { z } from "zod";
 import { createLovableAiGatewayProvider } from "@/lib/ai-gateway.server";
 import { miniProjects, roadmaps } from "@/data/ece";
@@ -67,23 +67,36 @@ Rules:
 - projectSlugs: choose 3-4 slugs EXACTLY from the list above, matched to the level and target role.
 - Be concrete and practical; no filler.`;
 
+    const { text } = await generateText({
+      model: gateway("google/gemini-3.6-flash"),
+      prompt: `${prompt}
+
+Respond with ONLY a JSON object (no markdown fences, no commentary) shaped exactly like:
+{"summary":string,"totalDuration":string,"phases":[{"title":string,"duration":string,"focus":string,"steps":[string],"skills":[string]}],"weeklyRoutine":[string],"projectSlugs":[string],"interviewTopics":[string]}`,
+    });
+
+    const cleaned = text
+      .trim()
+      .replace(/^```(?:json)?/i, "")
+      .replace(/```$/, "")
+      .trim();
+
+    let parsed: unknown;
     try {
-      const { output } = await generateText({
-        model: gateway("google/gemini-3.6-flash"),
-        output: Output.object({ schema: PlanSchema }),
-        prompt,
-      });
-
-      const projects = output.projectSlugs
-        .map((slug) => miniProjects.find((p) => p.slug === slug))
-        .filter((p): p is (typeof miniProjects)[number] => Boolean(p))
-        .slice(0, 4);
-
-      return { ...output, projects };
-    } catch (error) {
-      if (NoObjectGeneratedError.isInstance(error)) {
-        throw new Error("Luna AI returned an unexpected response. Please try again.");
-      }
-      throw error;
+      parsed = JSON.parse(cleaned.slice(cleaned.indexOf("{"), cleaned.lastIndexOf("}") + 1));
+    } catch {
+      throw new Error("Luna AI returned an unexpected response. Please try again.");
     }
+
+    const result = PlanSchema.safeParse(parsed);
+    if (!result.success) {
+      throw new Error("Luna AI returned an incomplete roadmap. Please try again.");
+    }
+
+    const projects = result.data.projectSlugs
+      .map((slug) => miniProjects.find((p) => p.slug === slug))
+      .filter((p): p is (typeof miniProjects)[number] => Boolean(p))
+      .slice(0, 4);
+
+    return { ...result.data, projects };
   });
