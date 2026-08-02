@@ -103,9 +103,14 @@ const socialLinks = [
 function AboutPage() {
   return (
     <div className="min-h-screen bg-background">
-      <section className="relative border-b border-border bg-muted/30 py-20 sm:py-28">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
+      <section className="circuit-grid relative overflow-hidden border-b border-border bg-card/40 py-20 sm:py-28">
+        <div className="absolute -top-24 left-1/2 h-64 w-[36rem] -translate-x-1/2 rounded-full bg-primary/20 blur-3xl" />
+        <div className="container relative mx-auto px-4 text-center">
+          <div className="mx-auto mb-5 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary">
+            <Cpu className="h-3.5 w-3.5" />
+            Electronics · Communication · AI
+          </div>
+          <h1 className="text-4xl font-extrabold tracking-tight text-gradient-circuit sm:text-5xl">
             About Luna.io
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
@@ -114,6 +119,7 @@ function AboutPage() {
           </p>
         </div>
       </section>
+
 
       <main className="container mx-auto px-4 py-16">
         <section className="grid gap-12 lg:grid-cols-2">
