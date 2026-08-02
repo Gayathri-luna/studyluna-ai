@@ -113,11 +113,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+const themeInitScript = `(function(){try{var t=localStorage.getItem('luna-theme')||'circuit';var r=document.documentElement;r.classList.remove('theme-circuit','dark');if(t==='circuit')r.classList.add('theme-circuit');if(t==='dark')r.classList.add('dark');}catch(e){document.documentElement.classList.add('theme-circuit');}})();`;
+
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="theme-circuit">
       <head>
         <HeadContent />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body>
         {children}
@@ -133,6 +136,9 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-screen flex-col">
+        <div className="fixed right-4 top-4 z-50">
+          <ThemeToggle />
+        </div>
         <main className="flex-1">
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
@@ -144,3 +150,4 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+
