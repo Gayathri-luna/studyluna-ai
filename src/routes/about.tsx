@@ -85,11 +85,20 @@ const skills = [
 ];
 
 const socialLinks = [
-  { label: "GitHub", href: "https://github.com/gayathri", icon: Github },
-  { label: "LinkedIn", href: "https://linkedin.com/in/gayathri", icon: Linkedin },
+  {
+    label: "GitHub — Gayathri-luna (Gayathri Marasani)",
+    href: "https://github.com/Gayathri-luna",
+    icon: Github,
+  },
+  {
+    label: "LinkedIn — Gayathri Marasani",
+    href: "https://www.linkedin.com/in/gayathri-marasani",
+    icon: Linkedin,
+  },
   { label: "X", href: "https://x.com/gayathri", icon: Twitter },
-  { label: "Email", href: "mailto:gayathri@luna.io", icon: Mail },
+  { label: "Email — Gayathriluna1234@gmail.com", href: "mailto:Gayathriluna1234@gmail.com", icon: Mail },
 ];
+
 
 function AboutPage() {
   return (
