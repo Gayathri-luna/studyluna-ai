@@ -230,16 +230,41 @@ function AboutPage() {
                   <h4 className="text-sm font-semibold text-card-foreground">
                     Contact
                   </h4>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Email:{" "}
-                    <a
-                      href="mailto:gayathri@luna.io"
-                      className="font-medium text-primary hover:underline"
-                    >
-                      gayathri@luna.io
-                    </a>
-                  </p>
+                  <ul className="mt-1 space-y-1 text-sm text-muted-foreground">
+                    <li>
+                      Email:{" "}
+                      <a
+                        href="mailto:Gayathriluna1234@gmail.com"
+                        className="font-medium text-primary hover:underline"
+                      >
+                        Gayathriluna1234@gmail.com
+                      </a>
+                    </li>
+                    <li>
+                      LinkedIn:{" "}
+                      <a
+                        href="https://www.linkedin.com/in/gayathri-marasani"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-medium text-primary hover:underline"
+                      >
+                        Gayathri Marasani | LinkedIn
+                      </a>
+                    </li>
+                    <li>
+                      GitHub:{" "}
+                      <a
+                        href="https://github.com/Gayathri-luna"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-medium text-primary hover:underline"
+                      >
+                        Gayathri-luna (Gayathri Marasani)
+                      </a>
+                    </li>
+                  </ul>
                 </div>
+
 
                 <div className="flex items-center gap-3 pt-2">
                   {socialLinks.map((link) => (
