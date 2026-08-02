@@ -1,4 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { CircuitBoard, Cpu, Radio, Sparkles, Zap } from "lucide-react";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
