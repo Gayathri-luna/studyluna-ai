@@ -148,9 +148,8 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-screen flex-col">
-        <div className="fixed right-4 top-4 z-50">
-          <ThemeToggle />
-        </div>
+        <Navbar />
+
         <main className="flex-1">
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
