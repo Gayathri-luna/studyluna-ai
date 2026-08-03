@@ -13,7 +13,8 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { Navbar } from "@/components/Navbar";
+
 
 
 
@@ -77,38 +78,47 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
+const SITE_TITLE = "LUNA | One Platform. Endless Learning";
+const SITE_DESCRIPTION =
+  "LUNA is an AI-powered learning platform that helps engineering students with roadmaps, AI guidance, projects, skills, career preparation, and learning resources.";
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Luna.io — Empowering Electronics Engineers" },
-      {
-        name: "description",
-        content:
-          "Luna.io is an AI-powered platform for Electronics & Communication Engineering learners, offering structured paths, projects, career guidance, and community.",
-      },
-      { property: "og:title", content: "Luna.io — Empowering Electronics Engineers" },
-      {
-        property: "og:description",
-        content:
-          "Luna.io is an AI-powered platform for Electronics & Communication Engineering learners, offering structured paths, projects, career guidance, and community.",
-      },
+      { title: SITE_TITLE },
+      { name: "description", content: SITE_DESCRIPTION },
+      { property: "og:site_name", content: "LUNA" },
+      { property: "og:title", content: SITE_TITLE },
+      { property: "og:description", content: SITE_DESCRIPTION },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Luna.io — Empowering Electronics Engineers" },
-      { name: "twitter:description", content: "Luna.io is an AI-powered platform for Electronics & Communication Engineering learners, offering structured paths, projects, career guidance, and community." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/984c31ed-7258-4355-b349-063d57ac18e4/id-preview-abc854e6--b2249bb6-cc8c-4a44-8977-6cfa205e2b7d.lovable.app-1785576577239.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/984c31ed-7258-4355-b349-063d57ac18e4/id-preview-abc854e6--b2249bb6-cc8c-4a44-8977-6cfa205e2b7d.lovable.app-1785576577239.png" },
+      { name: "twitter:title", content: SITE_TITLE },
+      { name: "twitter:description", content: SITE_DESCRIPTION },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "LUNA",
+          alternateName: "LUNA — One Platform. Endless Learning",
+          url: "https://studywithluna.lovable.app",
+          description: SITE_DESCRIPTION,
+        }),
+      },
     ],
   }),
+
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -138,9 +148,8 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-screen flex-col">
-        <div className="fixed right-4 top-4 z-50">
-          <ThemeToggle />
-        </div>
+        <Navbar />
+
         <main className="flex-1">
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />

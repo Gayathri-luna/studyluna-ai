@@ -8,7 +8,10 @@ export function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <h3 className="text-lg font-semibold text-foreground">Luna.io</h3>
+            <h3 className="text-lg font-semibold text-foreground">LUNA</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              One Platform. Endless Learning.
+            </p>
             <p className="mt-2 text-sm text-muted-foreground">
               Empowering the Future of Electronics Engineers.
             </p>
@@ -18,10 +21,16 @@ export function Footer() {
             <h4 className="text-sm font-semibold text-foreground">Platform</h4>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
               <li>
+                <Link to="/platform" className="hover:text-foreground">
+                  Platform
+                </Link>
+              </li>
+              <li>
                 <Link to="/career-hub" className="hover:text-foreground">
                   Career Hub
                 </Link>
               </li>
+
               <li>
                 <Link to="/learning-hub" className="hover:text-foreground">
                   Learning Hub
@@ -90,8 +99,9 @@ export function Footer() {
 
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-border pt-6 sm:flex-row">
           <p className="text-sm text-muted-foreground">
-            © {year} Luna.io. All Rights Reserved.
+            © {year} LUNA. All Rights Reserved.
           </p>
+
           <p className="text-sm text-muted-foreground">
             Built with ❤️ by M. Gayathri
           </p>
