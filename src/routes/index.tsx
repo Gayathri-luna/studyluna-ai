@@ -1,31 +1,28 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { CircuitBoard, Cpu, Radio, Sparkles, Zap } from "lucide-react";
+import lunaLogo from "@/assets/luna-logo.png";
 
+const TITLE = "LUNA | One Platform. Endless Learning";
+const DESCRIPTION =
+  "LUNA is an AI-powered learning platform that helps engineering students with roadmaps, AI guidance, projects, skills, career preparation, and learning resources.";
+const URL = "https://studywithluna.lovable.app/";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Luna.io — Empowering Electronics Engineers" },
-      {
-        name: "description",
-        content:
-          "Luna.io is an AI-powered platform for Electronics & Communication Engineering learners, offering structured paths, projects, career guidance, and community.",
-      },
-      {
-        property: "og:title",
-        content: "Luna.io — Empowering Electronics Engineers",
-      },
-      {
-        property: "og:description",
-        content:
-          "Luna.io is an AI-powered platform for Electronics & Communication Engineering learners, offering structured paths, projects, career guidance, and community.",
-      },
+      { title: TITLE },
+      { name: "description", content: DESCRIPTION },
+      { property: "og:title", content: TITLE },
+      { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: URL },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: URL }],
   }),
   component: HomePage,
 });
+
 
 const highlights = [
   {
