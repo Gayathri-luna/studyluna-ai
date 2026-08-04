@@ -1,127 +1,139 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
-import { CircuitBoard, Cpu, Radio, Sparkles, Zap } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import {
+  Bot,
+  Map as MapIcon,
+  Code2,
+  Rocket,
+  Landmark,
+  BookOpen,
+  Users,
+  ArrowRight,
+} from "lucide-react";
 import lunaLogo from "@/assets/luna-logo.png";
 
-const TITLE = "LUNA | One Platform. Endless Learning";
 const DESCRIPTION =
-  "LUNA is an AI-powered learning platform that helps engineering students with roadmaps, AI guidance, projects, skills, career preparation, and learning resources.";
-const URL = "https://studywithluna.lovable.app/";
+  "LUNA is an AI-powered learning platform for engineering students — roadmaps, skills, projects, government jobs, resources and an AI mentor in one place.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: TITLE },
+      { title: "LUNA | One Platform. Endless Learning." },
       { name: "description", content: DESCRIPTION },
-      { property: "og:title", content: TITLE },
+      { property: "og:title", content: "LUNA | One Platform. Endless Learning." },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: URL },
+      { property: "og:url", content: "https://studywithluna.lovable.app/" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: URL }],
+    links: [{ rel: "canonical", href: "https://studywithluna.lovable.app/" }],
   }),
   component: HomePage,
 });
 
-
-const highlights = [
+const FEATURES = [
   {
-    icon: CircuitBoard,
-    title: "Career Roadmaps",
-    text: "VLSI, embedded, RF, DSP, IoT and more — staged step by step.",
+    to: "/luna-ai",
+    icon: Bot,
+    title: "Luna AI",
+    text: "Ask anything. Get a personal engineering mentor, 24/7.",
   },
   {
-    icon: Cpu,
-    title: "Mini Projects",
-    text: "Buildable projects with components and full procedures.",
+    to: "/roadmaps",
+    icon: MapIcon,
+    title: "Learning Roadmaps",
+    text: "A clear step-by-step path for your branch.",
   },
   {
-    icon: Radio,
-    title: "Industry Pulse",
-    text: "Fresh semiconductor, telecom and automotive career updates.",
+    to: "/skills",
+    icon: Code2,
+    title: "Skills",
+    text: "Technical and soft skills, each with its own guide.",
   },
   {
-    icon: Sparkles,
-    title: "Luna AI Mentor",
-    text: "Personalized learning plans generated for your target job.",
+    to: "/projects",
+    icon: Rocket,
+    title: "Projects",
+    text: "Beginner to advanced builds with full procedures.",
   },
-];
+  {
+    to: "/government-jobs",
+    icon: Landmark,
+    title: "Government Jobs",
+    text: "ISRO, DRDO, GATE, PSUs — eligibility to salary.",
+  },
+  {
+    to: "/resources",
+    icon: BookOpen,
+    title: "Learning Resources",
+    text: "Books, notes, courses and channels worth your time.",
+  },
+  {
+    to: "/community",
+    icon: Users,
+    title: "Community",
+    text: "Discussions, events, hackathons and announcements.",
+  },
+] as const;
 
 function HomePage() {
   return (
-    <div className="bg-background">
-      <section className="circuit-grid relative overflow-hidden px-4 py-24 sm:py-32">
-        <div className="pointer-events-none absolute -top-32 left-1/2 h-80 w-[44rem] -translate-x-1/2 rounded-full bg-primary/20 blur-3xl" />
-        <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
-        <div className="relative mx-auto max-w-3xl text-center">
+    <div>
+      <section className="circuit-grid relative overflow-hidden border-b border-border/60">
+        <div className="container mx-auto flex flex-col items-center px-4 py-20 text-center sm:py-28">
           <img
             src={lunaLogo}
             alt="LUNA logo"
-            width={112}
-            height={112}
-            className="mx-auto mb-6 h-24 w-24 object-contain drop-shadow-[0_0_28px_var(--color-primary)] sm:h-28 sm:w-28"
+            width={96}
+            height={96}
+            className="glow-primary h-24 w-24 rounded-full object-contain"
           />
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary">
-            <Zap className="h-3.5 w-3.5" />
-            AI-powered engineering platform
-          </div>
-          <h1 className="text-5xl font-extrabold tracking-tight text-gradient-circuit sm:text-7xl">
+          <h1 className="mt-8 text-5xl font-extrabold tracking-tight text-foreground sm:text-7xl">
             LUNA
           </h1>
-          <p className="mt-6 text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+          <p className="mt-4 text-2xl font-bold tracking-tight text-primary sm:text-3xl">
             One Platform. Endless Learning.
           </p>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-            Structured learning paths, practical circuits and projects, career
-            roadmaps, AI mentorship, and a community built for engineering
-            students.
+          <p className="mt-4 max-w-xl text-base text-muted-foreground sm:text-lg">
+            AI-powered learning platform for engineering students.
           </p>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link
-              to="/learning-hub"
-              className="glow-primary inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
+              to="/roadmaps"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.04]"
             >
-              Generate My Roadmap
-            </Link>
-            <Link
-              to="/luna-ai"
-              className="inline-flex items-center justify-center rounded-md border border-primary/40 bg-card/60 px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent"
-            >
-              Ask Luna AI
+              Start Learning <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
               to="/platform"
-              className="inline-flex items-center justify-center rounded-md px-4 py-3 text-sm font-semibold text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
+              className="inline-flex items-center justify-center rounded-full border border-border bg-card/60 px-7 py-3 text-sm font-semibold text-foreground backdrop-blur transition-colors hover:bg-accent/60"
             >
-              Explore the platform →
+              Explore Platform
             </Link>
           </div>
         </div>
       </section>
 
-      <section className="container mx-auto px-4 pb-24">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {highlights.map((item) => (
-            <div
-              key={item.title}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-card/70 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/50 hover:shadow-[var(--glow-primary)]"
+      <section className="container mx-auto px-4 py-16 sm:py-20">
+        <h2 className="sr-only">What you can do on LUNA</h2>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {FEATURES.map(({ to, icon: Icon, title, text }) => (
+            <Link
+              key={to}
+              to={to}
+              className="group rounded-2xl border border-border/70 bg-card/50 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/60 hover:shadow-lg active:translate-y-0 active:scale-[0.98]"
             >
-              <div className="pointer-events-none absolute -right-10 -top-10 h-24 w-24 rounded-full bg-primary/10 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100" />
-              <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20 transition-transform duration-300 group-hover:scale-110">
-                <item.icon className="h-5 w-5" />
-              </div>
-              <h2 className="mt-4 text-lg font-semibold text-card-foreground">
-                {item.title}
-              </h2>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {item.text}
-              </p>
-            </div>
+              <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-110">
+                <Icon className="h-6 w-6" />
+              </span>
+              <h3 className="mt-5 text-lg font-bold text-foreground">{title}</h3>
+              <p className="mt-1.5 text-sm text-muted-foreground">{text}</p>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100">
+                Open <ArrowRight className="h-3.5 w-3.5" />
+              </span>
+            </Link>
           ))}
         </div>
       </section>
-
     </div>
   );
 }
-

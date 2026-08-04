@@ -14,6 +14,8 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { Navbar } from "@/components/Navbar";
+import { BranchWelcome } from "@/components/BranchWelcome";
+import { AuthProvider } from "@/lib/auth";
 
 
 
