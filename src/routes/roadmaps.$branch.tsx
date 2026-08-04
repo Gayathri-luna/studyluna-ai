@@ -1,11 +1,11 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { branchBySlug } from "@/data/branches";
+import { branchBySlug, type Branch } from "@/data/branches";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/roadmaps/$branch")({
-  loader: ({ params }) => {
+  loader: ({ params }): { branch: Branch } => {
     const branch = branchBySlug(params.branch);
     if (!branch) throw notFound();
     return { branch };

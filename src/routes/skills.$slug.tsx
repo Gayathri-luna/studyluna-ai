@@ -1,9 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { skillBySlug } from "@/data/skills";
+import { skillBySlug, type Skill } from "@/data/skills";
 import { ArrowLeft, ExternalLink, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/skills/$slug")({
-  loader: ({ params }) => {
+  loader: ({ params }): { skill: Skill } => {
     const skill = skillBySlug(params.slug);
     if (!skill) throw notFound();
     return { skill };
