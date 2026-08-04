@@ -37,7 +37,7 @@ export const Route = createFileRoute("/skills/$slug")({
 });
 
 function SkillPage() {
-  const { skill } = Route.useLoaderData();
+  const { skill } = Route.useLoaderData() as { skill: Skill };
 
   return (
     <div className="container mx-auto max-w-3xl px-4 py-12">

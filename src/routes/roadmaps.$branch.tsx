@@ -39,7 +39,7 @@ export const Route = createFileRoute("/roadmaps/$branch")({
 });
 
 function BranchRoadmapPage() {
-  const { branch } = Route.useLoaderData();
+  const { branch } = Route.useLoaderData() as { branch: Branch };
 
   return (
     <div className="container mx-auto max-w-4xl px-4 py-12">
