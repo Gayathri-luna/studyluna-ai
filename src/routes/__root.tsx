@@ -14,6 +14,8 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { Navbar } from "@/components/Navbar";
+import { BranchWelcome } from "@/components/BranchWelcome";
+import { AuthProvider } from "@/lib/auth";
 
 
 
@@ -147,17 +149,19 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-screen flex-col">
-        <Navbar />
+      <AuthProvider>
+        <div className="flex min-h-screen flex-col">
+          <Navbar />
 
-        <main className="flex-1">
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <Outlet />
-        </main>
-        <Footer />
-      </div>
-      <Toaster />
-
+          <main className="flex-1">
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+          </main>
+          <Footer />
+        </div>
+        <BranchWelcome />
+        <Toaster />
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
