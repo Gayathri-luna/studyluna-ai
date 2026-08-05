@@ -24,6 +24,10 @@ import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as GovernmentJobsIndexRouteImport } from './routes/government-jobs.index'
+import { Route as GovernmentJobsSlugRouteImport } from './routes/government-jobs.$slug'
+import { Route as ResourcesIndexRouteImport } from './routes/resources.index'
+import { Route as ResourcesSlugRouteImport } from './routes/resources.$slug'
 import { Route as RoadmapsIndexRouteImport } from './routes/roadmaps.index'
 import { Route as RoadmapsBranchRouteImport } from './routes/roadmaps.$branch'
 import { Route as SkillsIndexRouteImport } from './routes/skills.index'
@@ -104,6 +108,26 @@ const ApiChatRoute = ApiChatRouteImport.update({
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GovernmentJobsIndexRoute = GovernmentJobsIndexRouteImport.update({
+  id: '/government-jobs/',
+  path: '/government-jobs/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GovernmentJobsSlugRoute = GovernmentJobsSlugRouteImport.update({
+  id: '/government-jobs/$slug',
+  path: '/government-jobs/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourcesIndexRoute = ResourcesIndexRouteImport.update({
+  id: '/resources/',
+  path: '/resources/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourcesSlugRoute = ResourcesSlugRouteImport.update({
+  id: '/resources/$slug',
+  path: '/resources/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RoadmapsIndexRoute = RoadmapsIndexRouteImport.update({
   id: '/roadmaps/',
   path: '/roadmaps/',
@@ -141,8 +165,12 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/api/chat': typeof ApiChatRoute
+  '/government-jobs/$slug': typeof GovernmentJobsSlugRoute
+  '/resources/$slug': typeof ResourcesSlugRoute
   '/roadmaps/$branch': typeof RoadmapsBranchRoute
   '/skills/$slug': typeof SkillsSlugRoute
+  '/government-jobs/': typeof GovernmentJobsIndexRoute
+  '/resources/': typeof ResourcesIndexRoute
   '/roadmaps/': typeof RoadmapsIndexRoute
   '/skills/': typeof SkillsIndexRoute
 }
@@ -162,8 +190,12 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/api/chat': typeof ApiChatRoute
+  '/government-jobs/$slug': typeof GovernmentJobsSlugRoute
+  '/resources/$slug': typeof ResourcesSlugRoute
   '/roadmaps/$branch': typeof RoadmapsBranchRoute
   '/skills/$slug': typeof SkillsSlugRoute
+  '/government-jobs': typeof GovernmentJobsIndexRoute
+  '/resources': typeof ResourcesIndexRoute
   '/roadmaps': typeof RoadmapsIndexRoute
   '/skills': typeof SkillsIndexRoute
 }
@@ -184,8 +216,12 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/api/chat': typeof ApiChatRoute
+  '/government-jobs/$slug': typeof GovernmentJobsSlugRoute
+  '/resources/$slug': typeof ResourcesSlugRoute
   '/roadmaps/$branch': typeof RoadmapsBranchRoute
   '/skills/$slug': typeof SkillsSlugRoute
+  '/government-jobs/': typeof GovernmentJobsIndexRoute
+  '/resources/': typeof ResourcesIndexRoute
   '/roadmaps/': typeof RoadmapsIndexRoute
   '/skills/': typeof SkillsIndexRoute
 }
@@ -207,8 +243,12 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms-of-service'
     | '/api/chat'
+    | '/government-jobs/$slug'
+    | '/resources/$slug'
     | '/roadmaps/$branch'
     | '/skills/$slug'
+    | '/government-jobs/'
+    | '/resources/'
     | '/roadmaps/'
     | '/skills/'
   fileRoutesByTo: FileRoutesByTo
@@ -228,8 +268,12 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms-of-service'
     | '/api/chat'
+    | '/government-jobs/$slug'
+    | '/resources/$slug'
     | '/roadmaps/$branch'
     | '/skills/$slug'
+    | '/government-jobs'
+    | '/resources'
     | '/roadmaps'
     | '/skills'
   id:
@@ -249,8 +293,12 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms-of-service'
     | '/api/chat'
+    | '/government-jobs/$slug'
+    | '/resources/$slug'
     | '/roadmaps/$branch'
     | '/skills/$slug'
+    | '/government-jobs/'
+    | '/resources/'
     | '/roadmaps/'
     | '/skills/'
   fileRoutesById: FileRoutesById
@@ -271,8 +319,12 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsOfServiceRoute: typeof TermsOfServiceRoute
   ApiChatRoute: typeof ApiChatRoute
+  GovernmentJobsSlugRoute: typeof GovernmentJobsSlugRoute
+  ResourcesSlugRoute: typeof ResourcesSlugRoute
   RoadmapsBranchRoute: typeof RoadmapsBranchRoute
   SkillsSlugRoute: typeof SkillsSlugRoute
+  GovernmentJobsIndexRoute: typeof GovernmentJobsIndexRoute
+  ResourcesIndexRoute: typeof ResourcesIndexRoute
   RoadmapsIndexRoute: typeof RoadmapsIndexRoute
   SkillsIndexRoute: typeof SkillsIndexRoute
 }
@@ -384,6 +436,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/government-jobs/': {
+      id: '/government-jobs/'
+      path: '/government-jobs'
+      fullPath: '/government-jobs/'
+      preLoaderRoute: typeof GovernmentJobsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/government-jobs/$slug': {
+      id: '/government-jobs/$slug'
+      path: '/government-jobs/$slug'
+      fullPath: '/government-jobs/$slug'
+      preLoaderRoute: typeof GovernmentJobsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources/': {
+      id: '/resources/'
+      path: '/resources'
+      fullPath: '/resources/'
+      preLoaderRoute: typeof ResourcesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources/$slug': {
+      id: '/resources/$slug'
+      path: '/resources/$slug'
+      fullPath: '/resources/$slug'
+      preLoaderRoute: typeof ResourcesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/roadmaps/': {
       id: '/roadmaps/'
       path: '/roadmaps'
@@ -431,8 +511,12 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsOfServiceRoute: TermsOfServiceRoute,
   ApiChatRoute: ApiChatRoute,
+  GovernmentJobsSlugRoute: GovernmentJobsSlugRoute,
+  ResourcesSlugRoute: ResourcesSlugRoute,
   RoadmapsBranchRoute: RoadmapsBranchRoute,
   SkillsSlugRoute: SkillsSlugRoute,
+  GovernmentJobsIndexRoute: GovernmentJobsIndexRoute,
+  ResourcesIndexRoute: ResourcesIndexRoute,
   RoadmapsIndexRoute: RoadmapsIndexRoute,
   SkillsIndexRoute: SkillsIndexRoute,
 }
