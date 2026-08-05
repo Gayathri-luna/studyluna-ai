@@ -288,6 +288,53 @@ function AboutPage() {
                 </div>
               </div>
             </div>
+
+            <div className="border-t border-border p-8">
+              <div className="flex flex-col gap-6 md:flex-row md:items-start">
+                <div className="flex flex-shrink-0 justify-center md:justify-start">
+                  <div className="flex h-24 w-24 items-center justify-center rounded-full bg-secondary text-3xl font-bold text-secondary-foreground">
+                    V
+                  </div>
+                </div>
+                <div className="flex-1 space-y-3">
+                  <div>
+                    <h3 className="text-xl font-semibold text-card-foreground">
+                      Y. Varshini
+                    </h3>
+                    <p className="text-sm font-medium text-primary">
+                      Co-Partner of Luna.io
+                    </p>
+                  </div>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    Co-partner at Luna.io, working alongside the founder on
+                    content, learning experience, and community growth for
+                    engineering students.
+                  </p>
+                  <ul className="space-y-1 text-sm text-muted-foreground">
+                    <li>
+                      LinkedIn:{" "}
+                      <a
+                        href="https://www.linkedin.com/in/varshini-yarramsetty"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-medium text-primary hover:underline"
+                      >
+                        Varshini Yarramsetty | LinkedIn
+                      </a>
+                    </li>
+                  </ul>
+                  <a
+                    href="https://www.linkedin.com/in/varshini-yarramsetty"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="LinkedIn — Varshini Yarramsetty"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary"
+                  >
+                    <Linkedin className="h-4 w-4" />
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </main>
