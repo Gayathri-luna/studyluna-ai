@@ -177,7 +177,7 @@ function AboutPage() {
 
         <section className="mt-24">
           <h2 className="text-center text-3xl font-semibold tracking-tight text-foreground">
-            Meet the Creator
+            Meet the Team
           </h2>
           <div className="mt-10 mx-auto max-w-4xl overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
             <div className="flex flex-col gap-8 p-8 md:flex-row md:items-start">
