@@ -25,6 +25,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as GovernmentJobsIndexRouteImport } from './routes/government-jobs.index'
+import { Route as GovernmentJobsSlugRouteImport } from './routes/government-jobs.$slug'
 import { Route as RoadmapsIndexRouteImport } from './routes/roadmaps.index'
 import { Route as RoadmapsBranchRouteImport } from './routes/roadmaps.$branch'
 import { Route as SkillsIndexRouteImport } from './routes/skills.index'
@@ -110,6 +111,11 @@ const GovernmentJobsIndexRoute = GovernmentJobsIndexRouteImport.update({
   path: '/government-jobs/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GovernmentJobsSlugRoute = GovernmentJobsSlugRouteImport.update({
+  id: '/government-jobs/$slug',
+  path: '/government-jobs/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RoadmapsIndexRoute = RoadmapsIndexRouteImport.update({
   id: '/roadmaps/',
   path: '/roadmaps/',
@@ -147,6 +153,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/api/chat': typeof ApiChatRoute
+  '/government-jobs/$slug': typeof GovernmentJobsSlugRoute
   '/roadmaps/$branch': typeof RoadmapsBranchRoute
   '/skills/$slug': typeof SkillsSlugRoute
   '/government-jobs/': typeof GovernmentJobsIndexRoute
@@ -169,6 +176,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/api/chat': typeof ApiChatRoute
+  '/government-jobs/$slug': typeof GovernmentJobsSlugRoute
   '/roadmaps/$branch': typeof RoadmapsBranchRoute
   '/skills/$slug': typeof SkillsSlugRoute
   '/government-jobs': typeof GovernmentJobsIndexRoute
@@ -192,6 +200,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/api/chat': typeof ApiChatRoute
+  '/government-jobs/$slug': typeof GovernmentJobsSlugRoute
   '/roadmaps/$branch': typeof RoadmapsBranchRoute
   '/skills/$slug': typeof SkillsSlugRoute
   '/government-jobs/': typeof GovernmentJobsIndexRoute
@@ -216,6 +225,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms-of-service'
     | '/api/chat'
+    | '/government-jobs/$slug'
     | '/roadmaps/$branch'
     | '/skills/$slug'
     | '/government-jobs/'
@@ -238,6 +248,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms-of-service'
     | '/api/chat'
+    | '/government-jobs/$slug'
     | '/roadmaps/$branch'
     | '/skills/$slug'
     | '/government-jobs'
@@ -260,6 +271,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms-of-service'
     | '/api/chat'
+    | '/government-jobs/$slug'
     | '/roadmaps/$branch'
     | '/skills/$slug'
     | '/government-jobs/'
@@ -283,6 +295,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsOfServiceRoute: typeof TermsOfServiceRoute
   ApiChatRoute: typeof ApiChatRoute
+  GovernmentJobsSlugRoute: typeof GovernmentJobsSlugRoute
   RoadmapsBranchRoute: typeof RoadmapsBranchRoute
   SkillsSlugRoute: typeof SkillsSlugRoute
   GovernmentJobsIndexRoute: typeof GovernmentJobsIndexRoute
@@ -404,6 +417,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GovernmentJobsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/government-jobs/$slug': {
+      id: '/government-jobs/$slug'
+      path: '/government-jobs/$slug'
+      fullPath: '/government-jobs/$slug'
+      preLoaderRoute: typeof GovernmentJobsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/roadmaps/': {
       id: '/roadmaps/'
       path: '/roadmaps'
@@ -451,6 +471,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsOfServiceRoute: TermsOfServiceRoute,
   ApiChatRoute: ApiChatRoute,
+  GovernmentJobsSlugRoute: GovernmentJobsSlugRoute,
   RoadmapsBranchRoute: RoadmapsBranchRoute,
   SkillsSlugRoute: SkillsSlugRoute,
   GovernmentJobsIndexRoute: GovernmentJobsIndexRoute,
@@ -460,13 +481,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

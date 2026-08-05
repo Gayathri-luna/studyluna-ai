@@ -93,7 +93,7 @@ function GovJobDetail() {
       <section className="mt-5 rounded-xl border border-border/70 bg-card/50 p-6 backdrop-blur-xl">
         <h2 className="text-sm font-semibold uppercase tracking-wider text-primary">Resources</h2>
         <ul className="mt-4 space-y-2 text-sm">
-          {job.resources.map((resource) => (
+          {job.resources.map((resource: { label: string; href: string }) => (
             <li key={resource.href}>
               <a
                 href={resource.href}
