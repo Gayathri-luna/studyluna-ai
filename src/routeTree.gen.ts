@@ -27,6 +27,7 @@ import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as GovernmentJobsIndexRouteImport } from './routes/government-jobs.index'
 import { Route as GovernmentJobsSlugRouteImport } from './routes/government-jobs.$slug'
 import { Route as ResourcesIndexRouteImport } from './routes/resources.index'
+import { Route as ResourcesSlugRouteImport } from './routes/resources.$slug'
 import { Route as RoadmapsIndexRouteImport } from './routes/roadmaps.index'
 import { Route as RoadmapsBranchRouteImport } from './routes/roadmaps.$branch'
 import { Route as SkillsIndexRouteImport } from './routes/skills.index'
@@ -122,6 +123,11 @@ const ResourcesIndexRoute = ResourcesIndexRouteImport.update({
   path: '/resources/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResourcesSlugRoute = ResourcesSlugRouteImport.update({
+  id: '/resources/$slug',
+  path: '/resources/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RoadmapsIndexRoute = RoadmapsIndexRouteImport.update({
   id: '/roadmaps/',
   path: '/roadmaps/',
@@ -160,6 +166,7 @@ export interface FileRoutesByFullPath {
   '/terms-of-service': typeof TermsOfServiceRoute
   '/api/chat': typeof ApiChatRoute
   '/government-jobs/$slug': typeof GovernmentJobsSlugRoute
+  '/resources/$slug': typeof ResourcesSlugRoute
   '/roadmaps/$branch': typeof RoadmapsBranchRoute
   '/skills/$slug': typeof SkillsSlugRoute
   '/government-jobs/': typeof GovernmentJobsIndexRoute
@@ -184,6 +191,7 @@ export interface FileRoutesByTo {
   '/terms-of-service': typeof TermsOfServiceRoute
   '/api/chat': typeof ApiChatRoute
   '/government-jobs/$slug': typeof GovernmentJobsSlugRoute
+  '/resources/$slug': typeof ResourcesSlugRoute
   '/roadmaps/$branch': typeof RoadmapsBranchRoute
   '/skills/$slug': typeof SkillsSlugRoute
   '/government-jobs': typeof GovernmentJobsIndexRoute
@@ -209,6 +217,7 @@ export interface FileRoutesById {
   '/terms-of-service': typeof TermsOfServiceRoute
   '/api/chat': typeof ApiChatRoute
   '/government-jobs/$slug': typeof GovernmentJobsSlugRoute
+  '/resources/$slug': typeof ResourcesSlugRoute
   '/roadmaps/$branch': typeof RoadmapsBranchRoute
   '/skills/$slug': typeof SkillsSlugRoute
   '/government-jobs/': typeof GovernmentJobsIndexRoute
@@ -235,6 +244,7 @@ export interface FileRouteTypes {
     | '/terms-of-service'
     | '/api/chat'
     | '/government-jobs/$slug'
+    | '/resources/$slug'
     | '/roadmaps/$branch'
     | '/skills/$slug'
     | '/government-jobs/'
@@ -259,6 +269,7 @@ export interface FileRouteTypes {
     | '/terms-of-service'
     | '/api/chat'
     | '/government-jobs/$slug'
+    | '/resources/$slug'
     | '/roadmaps/$branch'
     | '/skills/$slug'
     | '/government-jobs'
@@ -283,6 +294,7 @@ export interface FileRouteTypes {
     | '/terms-of-service'
     | '/api/chat'
     | '/government-jobs/$slug'
+    | '/resources/$slug'
     | '/roadmaps/$branch'
     | '/skills/$slug'
     | '/government-jobs/'
@@ -308,6 +320,7 @@ export interface RootRouteChildren {
   TermsOfServiceRoute: typeof TermsOfServiceRoute
   ApiChatRoute: typeof ApiChatRoute
   GovernmentJobsSlugRoute: typeof GovernmentJobsSlugRoute
+  ResourcesSlugRoute: typeof ResourcesSlugRoute
   RoadmapsBranchRoute: typeof RoadmapsBranchRoute
   SkillsSlugRoute: typeof SkillsSlugRoute
   GovernmentJobsIndexRoute: typeof GovernmentJobsIndexRoute
@@ -444,6 +457,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResourcesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/resources/$slug': {
+      id: '/resources/$slug'
+      path: '/resources/$slug'
+      fullPath: '/resources/$slug'
+      preLoaderRoute: typeof ResourcesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/roadmaps/': {
       id: '/roadmaps/'
       path: '/roadmaps'
@@ -492,6 +512,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsOfServiceRoute: TermsOfServiceRoute,
   ApiChatRoute: ApiChatRoute,
   GovernmentJobsSlugRoute: GovernmentJobsSlugRoute,
+  ResourcesSlugRoute: ResourcesSlugRoute,
   RoadmapsBranchRoute: RoadmapsBranchRoute,
   SkillsSlugRoute: SkillsSlugRoute,
   GovernmentJobsIndexRoute: GovernmentJobsIndexRoute,
