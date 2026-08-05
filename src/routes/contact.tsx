@@ -56,6 +56,20 @@ function ContactPage() {
         <h2 className="mt-1 text-2xl font-bold text-foreground">Gayathri Marasani</h2>
         <p className="mt-1 text-sm text-muted-foreground">Founder &amp; Developer of LUNA</p>
 
+        <div className="mt-4 border-t border-border/70 pt-4">
+          <p className="text-[11px] font-medium uppercase tracking-wider text-primary">Co-Partner</p>
+          <h3 className="mt-1 text-xl font-bold text-foreground">Y. Varshini</h3>
+          <a
+            href="https://www.linkedin.com/in/varshini-yarramsetty"
+            target="_blank"
+            rel="noreferrer"
+            className="mt-1 inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
+          >
+            <Linkedin className="h-4 w-4" />
+            Varshini Yarramsetty | LinkedIn
+          </a>
+        </div>
+
         <div className="mt-6 grid gap-3 sm:grid-cols-3">
           {LINKS.map((link) => (
             <a
