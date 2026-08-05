@@ -169,10 +169,11 @@ function LunaAIPage() {
 
     setInput("");
     setLastPrompt(prompt);
-    void sendMessage({
-      text: prompt,
-      files: attachments.length ? dataTransfer.files : undefined,
-    });
+    void sendMessage(
+      attachments.length
+        ? { text: prompt, files: dataTransfer.files }
+        : { text: prompt },
+    );
     attachments.forEach((a) => URL.revokeObjectURL(a.url));
     setAttachments([]);
   };
