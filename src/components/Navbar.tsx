@@ -11,6 +11,7 @@ const NAV_LINKS = [
   { to: "/platform", label: "Platform" },
   { to: "/roadmaps", label: "Roadmaps" },
   { to: "/skills", label: "Skills" },
+  { to: "/learning-hub", label: "Learning Hub" },
   { to: "/projects", label: "Projects" },
   { to: "/government-jobs", label: "Government Jobs" },
   { to: "/resources", label: "Resources" },
