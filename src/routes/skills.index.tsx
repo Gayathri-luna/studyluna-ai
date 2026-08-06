@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { technicalSkillList, softSkillList } from "@/data/skills";
 import { ArrowRight } from "lucide-react";
+import { BranchContentPanel } from "@/components/BranchContentPanel";
 
 const DESCRIPTION =
   "Technical skills and soft skills for engineering students — each with its own focused guide, steps and free resources.";
