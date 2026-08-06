@@ -9,6 +9,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Sparkles } from "lucide-react";
+import { useAuth } from "@/lib/auth";
+import { branchBySlug } from "@/data/branches";
+import { BranchContentPanel } from "@/components/BranchContentPanel";
 
 const DESCRIPTION =
   "ECE mini projects with objectives, component lists, and step-by-step procedures across IoT, VLSI, RF, DSP, embedded, and edge AI.";
