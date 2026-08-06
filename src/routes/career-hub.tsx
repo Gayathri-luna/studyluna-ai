@@ -59,6 +59,8 @@ function CareerHubPage() {
         </Link>
       </header>
 
+      <BranchContentPanel section="career-updates" heading="Career updates for your branch" />
+
       <section className="mt-16" aria-labelledby="roadmaps">
         <h2
           id="roadmaps"
