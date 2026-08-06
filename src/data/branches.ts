@@ -294,32 +294,119 @@ export const branches: Branch[] = [
     careers: ["Aerospace Design Engineer", "CFD Analyst", "ISRO Scientist", "Avionics Engineer"],
   },
   {
-    slug: "ai-ds",
-    name: "AI & Data Science",
-    short: "AI & DS",
-    tagline: "Machine learning, data engineering and applied AI.",
+    slug: "ai-ml",
+    name: "Artificial Intelligence & Machine Learning",
+    short: "AI & ML",
+    tagline: "Machine learning, deep learning and applied AI systems.",
     phases: [
       {
         title: "Phase 1 — Foundations",
-        items: ["Python and NumPy/Pandas", "Statistics and probability", "Linear algebra basics", "SQL"],
+        items: ["Python and NumPy/Pandas", "Statistics and probability", "Linear algebra and calculus basics", "SQL"],
       },
       {
         title: "Phase 2 — Core subjects",
-        items: ["Machine learning algorithms", "Data visualisation", "Deep learning with PyTorch", "Model evaluation and MLOps basics"],
+        items: ["Machine learning algorithms", "Deep learning with PyTorch", "Model evaluation and tuning", "MLOps basics"],
       },
       {
         title: "Phase 3 — Specialise",
-        items: ["Pick one: NLP/LLMs, computer vision, data engineering, or analytics", "Kaggle competitions", "Deploy 2 models as apps"],
+        items: ["Pick one: NLP/LLMs, computer vision, or reinforcement learning", "Kaggle competitions", "Deploy 2 models as apps"],
       },
       {
         title: "Phase 4 — Job ready",
-        items: ["Case-study interview practice", "Portfolio with notebooks and dashboards", "DSA basics for coding rounds"],
+        items: ["ML case-study interview practice", "Portfolio with notebooks and demos", "DSA basics for coding rounds"],
       },
     ],
-    coreSkills: ["Python", "Machine Learning", "PyTorch", "SQL", "Statistics"],
-    projectIdeas: ["LLM-powered study assistant", "Image classification web app", "Sales forecasting dashboard"],
-    careers: ["Data Scientist", "ML Engineer", "Data Analyst", "AI Researcher"],
+    coreSkills: ["Python", "Machine Learning", "PyTorch", "MLOps", "Statistics"],
+    projectIdeas: ["LLM-powered study assistant", "Image classification web app", "Recommendation engine"],
+    careers: ["ML Engineer", "AI Engineer", "Research Associate", "Computer Vision Engineer"],
+  },
+  {
+    slug: "data-science",
+    name: "Data Science",
+    short: "Data Science",
+    tagline: "Analytics, data engineering and decision science.",
+    phases: [
+      {
+        title: "Phase 1 — Foundations",
+        items: ["Python and Pandas", "Descriptive statistics", "Advanced SQL", "Excel and spreadsheets"],
+      },
+      {
+        title: "Phase 2 — Core subjects",
+        items: ["Data cleaning and EDA", "Visualisation with Power BI/Tableau", "Hypothesis testing and A/B tests", "Predictive modelling"],
+      },
+      {
+        title: "Phase 3 — Specialise",
+        items: ["Pick one: analytics, data engineering, or business intelligence", "Build ETL pipelines", "Two dashboard case studies"],
+      },
+      {
+        title: "Phase 4 — Job ready",
+        items: ["Guesstimate and case-study rounds", "SQL interview drills", "Portfolio with dashboards and notebooks"],
+      },
+    ],
+    coreSkills: ["SQL", "Python", "Power BI", "Statistics", "ETL"],
+    projectIdeas: ["Sales forecasting dashboard", "Customer churn analysis", "End-to-end ETL pipeline"],
+    careers: ["Data Analyst", "Data Scientist", "Data Engineer", "BI Developer"],
+  },
+  {
+    slug: "cyber-security",
+    name: "Cyber Security",
+    short: "Cyber Security",
+    tagline: "Security operations, ethical hacking and secure systems.",
+    phases: [
+      {
+        title: "Phase 1 — Foundations",
+        items: ["Networking and TCP/IP", "Linux command line", "Python scripting", "Security fundamentals (CIA triad)"],
+      },
+      {
+        title: "Phase 2 — Core subjects",
+        items: ["Web application security (OWASP Top 10)", "Cryptography basics", "System hardening and SIEM", "Hands-on labs: TryHackMe / HackTheBox"],
+      },
+      {
+        title: "Phase 3 — Specialise",
+        items: ["Pick one: pentesting, SOC/blue team, cloud security, or forensics", "Earn CEH / Security+ level certification", "Bug bounty or CTF participation"],
+      },
+      {
+        title: "Phase 4 — Job ready",
+        items: ["Write-ups of solved CTFs and labs", "Incident response scenario practice", "Interview prep on protocols and attacks"],
+      },
+    ],
+    coreSkills: ["Networking", "Linux", "Python", "OWASP", "SIEM"],
+    projectIdeas: ["Vulnerability scanner", "Home SOC with ELK stack", "Secure file transfer tool"],
+    careers: ["Security Analyst", "Penetration Tester", "SOC Analyst", "Cloud Security Engineer"],
+  },
+  {
+    slug: "other",
+    name: "Other / Not listed",
+    short: "Other",
+    tagline: "General engineering guidance personalised by Luna AI.",
+    phases: [
+      {
+        title: "Phase 1 — Foundations",
+        items: ["Core maths and problem solving", "One programming language", "Your branch's fundamental subjects", "Documentation and technical writing"],
+      },
+      {
+        title: "Phase 2 — Core subjects",
+        items: ["Branch core theory with applications", "One industry-standard software tool", "Two guided projects"],
+      },
+      {
+        title: "Phase 3 — Specialise",
+        items: ["Pick a niche inside your branch", "Internship or research work", "Portfolio of two deep projects"],
+      },
+      {
+        title: "Phase 4 — Job ready",
+        items: ["Aptitude and interview practice", "Resume and LinkedIn polish", "Competitive exam prep if relevant"],
+      },
+    ],
+    coreSkills: ["Problem Solving", "Programming", "Technical Writing", "Domain Tools"],
+    projectIdeas: ["Domain simulation project", "Automation tool for your branch", "Capstone research study"],
+    careers: ["Graduate Engineer Trainee", "Domain Specialist", "Research Assistant"],
   },
 ];
 
-export const branchBySlug = (slug: string) => branches.find((b) => b.slug === slug);
+const ALIASES: Record<string, string> = { "ai-ds": "ai-ml", biotech: "biotechnology" };
+
+export const branchBySlug = (slug: string | null | undefined) =>
+  slug ? branches.find((b) => b.slug === (ALIASES[slug] ?? slug)) : undefined;
+
+export const branchLabel = (slug: string | null | undefined) =>
+  branchBySlug(slug)?.name ?? "Engineering";
