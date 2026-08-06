@@ -120,6 +120,7 @@ function ProjectsPage() {
           </Card>
         ))}
       </div>
+      )}
     </div>
   );
 }
