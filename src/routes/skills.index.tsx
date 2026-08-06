@@ -51,6 +51,9 @@ function SkillsPage() {
         </p>
       </header>
 
+      <BranchContentPanel section="technical-skills" heading="Technical skills for your branch" />
+      <BranchContentPanel section="non-technical-skills" heading="Non-technical & placement skills" />
+
       <section className="mt-14" aria-labelledby="technical">
         <h2 id="technical" className="text-2xl font-bold tracking-tight text-foreground">
           Technical Skills
