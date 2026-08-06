@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CareerHubRouteImport } from './routes/career-hub'
 import { Route as CommunityRouteImport } from './routes/community'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndustryNewsRouteImport } from './routes/industry-news'
 import { Route as LearningHubRouteImport } from './routes/learning-hub'
 import { Route as LunaAiRouteImport } from './routes/luna-ai'
@@ -61,6 +62,11 @@ const CommunityRoute = CommunityRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndustryNewsRoute = IndustryNewsRouteImport.update({
@@ -156,6 +162,7 @@ export interface FileRoutesByFullPath {
   '/career-hub': typeof CareerHubRoute
   '/community': typeof CommunityRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/industry-news': typeof IndustryNewsRoute
   '/learning-hub': typeof LearningHubRoute
   '/luna-ai': typeof LunaAiRoute
@@ -181,6 +188,7 @@ export interface FileRoutesByTo {
   '/career-hub': typeof CareerHubRoute
   '/community': typeof CommunityRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/industry-news': typeof IndustryNewsRoute
   '/learning-hub': typeof LearningHubRoute
   '/luna-ai': typeof LunaAiRoute
@@ -207,6 +215,7 @@ export interface FileRoutesById {
   '/career-hub': typeof CareerHubRoute
   '/community': typeof CommunityRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/industry-news': typeof IndustryNewsRoute
   '/learning-hub': typeof LearningHubRoute
   '/luna-ai': typeof LunaAiRoute
@@ -234,6 +243,7 @@ export interface FileRouteTypes {
     | '/career-hub'
     | '/community'
     | '/contact'
+    | '/dashboard'
     | '/industry-news'
     | '/learning-hub'
     | '/luna-ai'
@@ -259,6 +269,7 @@ export interface FileRouteTypes {
     | '/career-hub'
     | '/community'
     | '/contact'
+    | '/dashboard'
     | '/industry-news'
     | '/learning-hub'
     | '/luna-ai'
@@ -284,6 +295,7 @@ export interface FileRouteTypes {
     | '/career-hub'
     | '/community'
     | '/contact'
+    | '/dashboard'
     | '/industry-news'
     | '/learning-hub'
     | '/luna-ai'
@@ -310,6 +322,7 @@ export interface RootRouteChildren {
   CareerHubRoute: typeof CareerHubRoute
   CommunityRoute: typeof CommunityRoute
   ContactRoute: typeof ContactRoute
+  DashboardRoute: typeof DashboardRoute
   IndustryNewsRoute: typeof IndustryNewsRoute
   LearningHubRoute: typeof LearningHubRoute
   LunaAiRoute: typeof LunaAiRoute
@@ -371,6 +384,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/industry-news': {
@@ -502,6 +522,7 @@ const rootRouteChildren: RootRouteChildren = {
   CareerHubRoute: CareerHubRoute,
   CommunityRoute: CommunityRoute,
   ContactRoute: ContactRoute,
+  DashboardRoute: DashboardRoute,
   IndustryNewsRoute: IndustryNewsRoute,
   LearningHubRoute: LearningHubRoute,
   LunaAiRoute: LunaAiRoute,
@@ -523,13 +544,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
