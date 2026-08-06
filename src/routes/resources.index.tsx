@@ -35,6 +35,8 @@ function ResourcesPage() {
         </p>
       </header>
 
+      <BranchContentPanel section="resources" heading="Resources picked for your branch" />
+
       <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {resourceCategories.map((category) => (
           <Link
