@@ -2,31 +2,62 @@ import { createContext, useContext, useEffect, useMemo, useState, type ReactNode
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 
-interface AuthValue {
+export interface LearnerProfile {
+  branch: string | null;
+  year: string | null;
+  careerGoal: string | null;
+  learningSpeed: string | null;
+}
+
+interface AuthValue extends LearnerProfile {
   session: Session | null;
   user: User | null;
   loading: boolean;
-  branch: string | null;
   setBranch: (slug: string) => void;
+  updateProfile: (patch: Partial<LearnerProfile>) => void;
 }
 
+const EMPTY: LearnerProfile = { branch: null, year: null, careerGoal: null, learningSpeed: null };
+
 const AuthContext = createContext<AuthValue>({
+  ...EMPTY,
   session: null,
   user: null,
   loading: true,
-  branch: null,
   setBranch: () => {},
+  updateProfile: () => {},
 });
 
+const PROFILE_KEY = "luna-profile";
 const BRANCH_KEY = "luna-branch";
+
+function readLocal(): LearnerProfile {
+  if (typeof window === "undefined") return EMPTY;
+  try {
+    const raw = localStorage.getItem(PROFILE_KEY);
+    const parsed = raw ? (JSON.parse(raw) as Partial<LearnerProfile>) : {};
+    return {
+      ...EMPTY,
+      ...parsed,
+      branch: parsed.branch ?? localStorage.getItem(BRANCH_KEY),
+    };
+  } catch {
+    return { ...EMPTY, branch: localStorage.getItem(BRANCH_KEY) };
+  }
+}
+
+function writeLocal(profile: LearnerProfile) {
+  localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+  if (profile.branch) localStorage.setItem(BRANCH_KEY, profile.branch);
+}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const [branch, setBranchState] = useState<string | null>(null);
+  const [profile, setProfile] = useState<LearnerProfile>(EMPTY);
 
   useEffect(() => {
-    setBranchState(localStorage.getItem(BRANCH_KEY));
+    setProfile(readLocal());
 
     const { data } = supabase.auth.onAuthStateChange((_event, next) => {
       setSession(next);
@@ -48,17 +79,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     let cancelled = false;
     void supabase
       .from("profiles")
-      .select("branch")
+      .select("branch, year, career_goal, learning_speed")
       .eq("id", userId)
       .maybeSingle()
       .then(({ data }) => {
         if (cancelled) return;
-        const stored = localStorage.getItem(BRANCH_KEY);
+        const local = readLocal();
         if (data?.branch) {
-          localStorage.setItem(BRANCH_KEY, data.branch);
-          setBranchState(data.branch);
-        } else if (stored) {
-          void supabase.from("profiles").update({ branch: stored }).eq("id", userId);
+          const next: LearnerProfile = {
+            branch: data.branch,
+            year: data.year ?? local.year,
+            careerGoal: data.career_goal ?? local.careerGoal,
+            learningSpeed: data.learning_speed ?? local.learningSpeed,
+          };
+          writeLocal(next);
+          setProfile(next);
+        } else if (local.branch) {
+          void supabase
+            .from("profiles")
+            .update({
+              branch: local.branch,
+              year: local.year,
+              career_goal: local.careerGoal,
+              learning_speed: local.learningSpeed,
+            })
+            .eq("id", userId);
         }
       });
     return () => {
@@ -66,20 +111,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, [userId]);
 
-  const value = useMemo<AuthValue>(
-    () => ({
+  const value = useMemo<AuthValue>(() => {
+    const updateProfile = (patch: Partial<LearnerProfile>) => {
+      setProfile((current) => {
+        const next = { ...current, ...patch };
+        writeLocal(next);
+        if (userId) {
+          void supabase
+            .from("profiles")
+            .update({
+              branch: next.branch,
+              year: next.year,
+              career_goal: next.careerGoal,
+              learning_speed: next.learningSpeed,
+            })
+            .eq("id", userId);
+        }
+        return next;
+      });
+    };
+
+    return {
+      ...profile,
       session,
       user: session?.user ?? null,
       loading,
-      branch,
-      setBranch: (slug: string) => {
-        localStorage.setItem(BRANCH_KEY, slug);
-        setBranchState(slug);
-        if (userId) void supabase.from("profiles").update({ branch: slug }).eq("id", userId);
-      },
-    }),
-    [session, loading, branch, userId],
-  );
+      setBranch: (slug: string) => updateProfile({ branch: slug }),
+      updateProfile,
+    };
+  }, [session, loading, profile, userId]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

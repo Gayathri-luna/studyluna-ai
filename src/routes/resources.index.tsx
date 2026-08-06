@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { resourceCategories } from "@/data/resources";
 import { ArrowRight, Library } from "lucide-react";
+import { BranchContentPanel } from "@/components/BranchContentPanel";
 
 const DESCRIPTION =
   "Curated engineering learning resources — books, PDF notes, YouTube channels, free courses, GitHub repos, documentation and blogs.";
@@ -33,6 +34,8 @@ function ResourcesPage() {
           Pick a category and get a short, hand-picked list — no endless link dumps.
         </p>
       </header>
+
+      <BranchContentPanel section="resources" heading="Resources picked for your branch" />
 
       <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {resourceCategories.map((category) => (
