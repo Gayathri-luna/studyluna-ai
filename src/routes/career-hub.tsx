@@ -20,6 +20,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Sparkles } from "lucide-react";
+import { BranchContentPanel } from "@/components/BranchContentPanel";
 
 const DESCRIPTION =
   "ECE career roadmaps for core jobs, technical and non-technical skills, and the latest hiring updates — with Luna AI guidance.";
