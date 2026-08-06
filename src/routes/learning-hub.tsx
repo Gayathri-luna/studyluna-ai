@@ -6,7 +6,6 @@ import { toast } from "sonner";
 import { Loader2, Sparkles, Target, CalendarClock, Wrench } from "lucide-react";
 import { generateRoadmap, type RoadmapPlan } from "@/lib/roadmap.functions";
 import { roadmaps } from "@/data/ece";
-import { BranchContentPanel } from "@/components/BranchContentPanel";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
@@ -84,11 +83,6 @@ function LearningHubPage() {
           matched to your level.
         </p>
       </header>
-
-      <BranchContentPanel
-        section="learning-hub"
-        heading="Beginner → Advanced learning tracks"
-      />
 
       <Card className="mx-auto mt-10 max-w-3xl">
         <CardHeader>

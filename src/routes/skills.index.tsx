@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { technicalSkillList, softSkillList } from "@/data/skills";
 import { ArrowRight } from "lucide-react";
-import { BranchContentPanel } from "@/components/BranchContentPanel";
 
 const DESCRIPTION =
   "Technical skills and soft skills for engineering students — each with its own focused guide, steps and free resources.";
@@ -50,9 +49,6 @@ function SkillsPage() {
           Two things get you hired: what you can build, and how well you can explain it.
         </p>
       </header>
-
-      <BranchContentPanel section="technical-skills" heading="Technical skills for your branch" />
-      <BranchContentPanel section="non-technical-skills" heading="Non-technical & placement skills" />
 
       <section className="mt-14" aria-labelledby="technical">
         <h2 id="technical" className="text-2xl font-bold tracking-tight text-foreground">

@@ -106,33 +106,24 @@ export type Database = {
       profiles: {
         Row: {
           branch: string | null
-          career_goal: string | null
           created_at: string
           display_name: string | null
           id: string
-          learning_speed: string | null
           updated_at: string
-          year: string | null
         }
         Insert: {
           branch?: string | null
-          career_goal?: string | null
           created_at?: string
           display_name?: string | null
           id: string
-          learning_speed?: string | null
           updated_at?: string
-          year?: string | null
         }
         Update: {
           branch?: string | null
-          career_goal?: string | null
           created_at?: string
           display_name?: string | null
           id?: string
-          learning_speed?: string | null
           updated_at?: string
-          year?: string | null
         }
         Relationships: []
       }
