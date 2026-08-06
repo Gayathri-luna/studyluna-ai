@@ -84,6 +84,11 @@ function LearningHubPage() {
         </p>
       </header>
 
+      <BranchContentPanel
+        section="learning-hub"
+        heading="Beginner → Advanced learning tracks"
+      />
+
       <Card className="mx-auto mt-10 max-w-3xl">
         <CardHeader>
           <CardTitle>Build my roadmap</CardTitle>
