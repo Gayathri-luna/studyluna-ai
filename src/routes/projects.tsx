@@ -34,15 +34,19 @@ const levelVariant: Record<string, "secondary" | "default" | "destructive"> = {
 };
 
 function ProjectsPage() {
+  const { branch } = useAuth();
+  const info = branchBySlug(branch);
+  const showEce = !info || info.slug === "ece";
+
   return (
     <div className="container mx-auto px-4 py-16">
       <header className="mx-auto max-w-3xl text-center">
         <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-          Mini Projects
+          Projects
         </h1>
         <p className="mt-4 text-lg text-muted-foreground">
-          Buildable ECE projects with clear objectives, component lists, and
-          ordered procedures you can follow end to end.
+          Buildable {info?.short ?? "engineering"} projects with clear objectives, component
+          lists, and ordered procedures you can follow end to end.
         </p>
         <Link
           to="/luna-ai"
@@ -53,7 +57,11 @@ function ProjectsPage() {
         </Link>
       </header>
 
+      <BranchContentPanel section="projects" heading="Your branch project library" />
+
+      {showEce && (
       <div className="mt-14 space-y-8">
+        <h2 className="text-2xl font-bold tracking-tight text-foreground">ECE hardware project library</h2>
         {miniProjects.map((project) => (
           <Card key={project.slug} id={project.slug}>
             <CardHeader>
