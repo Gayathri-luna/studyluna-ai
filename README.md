@@ -2,7 +2,7 @@
 
 =====================================================
 
-ABOUT LUNA.IO
+ABOUT LUNA.ai
 
 =====================================================
 
@@ -10,15 +10,16 @@ Create a dedicated "About" page.
 
 Title:
 
-About Luna.io
+About Luna.ai
 
 Mission:
 
-Luna.io is an AI-powered platform built to make Electronics & Communication Engineering accessible, practical, and career-focused. The goal is to help learners confidently navigate ECE by providing structured learning paths, career roadmaps, project guidance, AI mentorship, industry updates, and a collaborative community.
+Luna AI is an AI-powered platform built to make engineering education accessible, practical, and career-focused for every student, regardless of their branch. It helps learners discover what to learn, build skills and projects, explore career opportunities, and confidently plan their future — all in one platform.
+
 
 Vision:
 
-To become the world's most trusted AI-powered platform for Electronics & Communication Engineering, empowering learners, professionals, and innovators with the knowledge and tools they need to succeed.
+To become the world’s most trusted AI-powered learning and career platform for engineering students, empowering learners, professionals, and innovators from every branch with the knowledge, skills, and opportunities they need to succeed.
 
 Core Values:
 
@@ -50,11 +51,11 @@ M. Gayathri
 
 Role:
 
-Founder & Developer of Luna.io
+Founder & Developer of Luna.ai
 
 Bio:
 
-"I created Luna.io to solve a problem faced by many ECE learners—knowing what to learn, where to start, and how to build a successful career. My vision is to create a platform where anyone interested in Electronics & Communication Engineering can find structured learning paths, practical projects, career guidance, AI-powered mentorship, and the latest industry insights, all in one place."
+I created Luna AI to solve a common challenge faced by engineering students — knowing what to learn, where to start, and how to turn knowledge into a meaningful career. My vision is to build one inclusive platform where students from every engineering branch can discover structured learning paths, build practical projects, explore career opportunities, gain AI-powered guidance, and stay connected with the skills and opportunities shaping the future. 🌙🚀
 
 Display:
 
@@ -78,13 +79,14 @@ FOOTER
 
 Include:
 
-© 2026 Luna.io. All Rights Reserved.
+© 2026 Luna.ai. All Rights Reserved.
 
-Built with ❤️ by M. Gayathri
+Built by Gayathri Marasani 🚀
+
 
 Tagline:
 
-"Empowering the Future of Electronics Engineers."
+"Learn. Build. Level Up. 🚀"
 
 Footer Links:
 
