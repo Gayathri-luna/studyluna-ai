@@ -43,7 +43,7 @@ export function Footer() {
               </li>
               <li>
                 <Link to="/luna-ai" className="hover:text-foreground">
-                  Luna AI
+                  LunaAI 7.0
                 </Link>
               </li>
             </ul>

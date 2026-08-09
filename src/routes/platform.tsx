@@ -37,8 +37,8 @@ export const Route = createFileRoute("/platform")({
 const FEATURES = [
   {
     icon: Bot,
-    title: "AI Learning Assistant",
-    text: "Luna AI answers concept doubts, explains circuits and code, and mentors you like a senior engineer.",
+    title: "LunaAI 7.0 — Multimodal AI Learning Assistant",
+    text: "LunaAI understands text, photos, audio and podcasts, answers concept doubts, explains circuits and code, and mentors you like a senior engineer.",
   },
   {
     icon: RouteIcon,

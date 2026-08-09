@@ -34,8 +34,8 @@ const FEATURES = [
   {
     to: "/luna-ai",
     icon: Bot,
-    title: "Luna AI",
-    text: "Ask anything. Get a personal engineering mentor, 24/7.",
+    title: "LunaAI 7.0 🚀",
+    text: "Your multimodal AI learning assistant — text, photos, audio and podcasts.",
   },
   {
     to: "/roadmaps",

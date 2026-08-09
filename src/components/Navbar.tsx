@@ -93,7 +93,7 @@ export function Navbar() {
       {open && (
         <div className="border-t border-border/60 xl:hidden">
           <div className="container mx-auto grid grid-cols-2 gap-1 px-4 py-3">
-            {[...NAV_LINKS, { to: "/luna-ai", label: "Luna AI" } as const, { to: user ? "/dashboard" : "/auth", label: user ? "Dashboard" : "Login" } as const].map(
+            {[...NAV_LINKS, { to: "/luna-ai", label: "LunaAI 7.0" } as const, { to: user ? "/dashboard" : "/auth", label: user ? "Dashboard" : "Login" } as const].map(
               (link) => (
                 <Link
                   key={link.label}
