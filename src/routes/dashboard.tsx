@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
-import { BRANCHES } from "@/data/branches";
+import { branchBySlug } from "@/data/branches";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
@@ -35,7 +35,7 @@ const QUICK_LINKS = [
 
 function DashboardPage() {
   const { user, loading, branch } = useAuth();
-  const branchName = BRANCHES.find((b) => b.slug === branch)?.name ?? "Not selected";
+  const branchName = (branch ? branchBySlug(branch)?.name : null) ?? "Not selected";
 
   return (
     <div className="container mx-auto max-w-5xl px-4 py-12">
