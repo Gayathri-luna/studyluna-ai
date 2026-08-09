@@ -15,6 +15,15 @@ const BRANCH_CONTEXT: Record<string, string> = {
   Biotech: "biotechnology: molecular biology, genetics, microbiology, bioprocessing, bioinformatics, healthcare technology, and research",
   Aerospace: "aerospace engineering: aerodynamics, flight mechanics, propulsion, aerospace structures, avionics, CFD, UAVs, and space systems",
   "AI & DS": "AI and data science: Python, statistics, linear algebra, machine learning, deep learning, data engineering, NLP, computer vision, and applied AI",
+  "AI & Machine Learning": "AI and machine learning: Python, statistics, linear algebra, machine learning, deep learning, neural networks, NLP, computer vision, generative AI, MLOps, data science, and applied AI",
+"Cyber Security": "cybersecurity: network security, ethical hacking, cryptography, penetration testing, digital forensics, secure coding, cloud security, threat detection, incident response, and cyber defense",
+"Robotics & Automation": "robotics and automation: robotics, control systems, sensors, actuators, PLC, SCADA, industrial automation, ROS, computer vision, embedded systems, robot programming, and autonomous systems",
+"Mechatronics": "mechatronics: mechanical systems, electronics, sensors, actuators, control systems, embedded systems, robotics, automation, PLC, CAD, and intelligent machines",
+"Environmental Engineering": "environmental engineering: environmental science, water treatment, wastewater management, air pollution control, solid waste management, environmental monitoring, sustainability, renewable energy, and environmental impact assessment",
+"Food Technology": "food technology: food processing, food chemistry, microbiology, food safety, preservation, packaging technology, quality control, nutrition, food engineering, and food product development",
+"Agricultural Engineering": "agricultural engineering: farm machinery, irrigation systems, soil and water management, precision agriculture, agricultural automation, renewable energy, food processing, sensors, IoT, and smart farming",
+"Mining Engineering": "mining engineering: mine planning, mineral processing, rock mechanics, drilling and blasting, mine surveying, excavation, mining machinery, safety engineering, environmental management, and sustainable mining",
+"Petroleum Engineering": "petroleum engineering: reservoir engineering, drilling engineering, production engineering, petroleum geology, well logging, well completion, enhanced oil recovery, natural gas engineering, offshore engineering, and petroleum technology",
 };
 
 const MODE_INSTRUCTIONS: Record<string, string> = {
