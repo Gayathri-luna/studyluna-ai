@@ -27,6 +27,7 @@ import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as GovernmentJobsIndexRouteImport } from './routes/government-jobs.index'
 import { Route as GovernmentJobsSlugRouteImport } from './routes/government-jobs.$slug'
+import { Route as LunaAiIndexRouteImport } from './routes/luna-ai.index'
 import { Route as ResourcesIndexRouteImport } from './routes/resources.index'
 import { Route as ResourcesSlugRouteImport } from './routes/resources.$slug'
 import { Route as RoadmapsIndexRouteImport } from './routes/roadmaps.index'
@@ -124,6 +125,11 @@ const GovernmentJobsSlugRoute = GovernmentJobsSlugRouteImport.update({
   path: '/government-jobs/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LunaAiIndexRoute = LunaAiIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LunaAiRoute,
+} as any)
 const ResourcesIndexRoute = ResourcesIndexRouteImport.update({
   id: '/resources/',
   path: '/resources/',
@@ -165,7 +171,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/industry-news': typeof IndustryNewsRoute
   '/learning-hub': typeof LearningHubRoute
-  '/luna-ai': typeof LunaAiRoute
+  '/luna-ai': typeof LunaAiRouteWithChildren
   '/platform': typeof PlatformRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/projects': typeof ProjectsRoute
@@ -177,6 +183,7 @@ export interface FileRoutesByFullPath {
   '/roadmaps/$branch': typeof RoadmapsBranchRoute
   '/skills/$slug': typeof SkillsSlugRoute
   '/government-jobs/': typeof GovernmentJobsIndexRoute
+  '/luna-ai/': typeof LunaAiIndexRoute
   '/resources/': typeof ResourcesIndexRoute
   '/roadmaps/': typeof RoadmapsIndexRoute
   '/skills/': typeof SkillsIndexRoute
@@ -191,7 +198,6 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/industry-news': typeof IndustryNewsRoute
   '/learning-hub': typeof LearningHubRoute
-  '/luna-ai': typeof LunaAiRoute
   '/platform': typeof PlatformRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/projects': typeof ProjectsRoute
@@ -203,6 +209,7 @@ export interface FileRoutesByTo {
   '/roadmaps/$branch': typeof RoadmapsBranchRoute
   '/skills/$slug': typeof SkillsSlugRoute
   '/government-jobs': typeof GovernmentJobsIndexRoute
+  '/luna-ai': typeof LunaAiIndexRoute
   '/resources': typeof ResourcesIndexRoute
   '/roadmaps': typeof RoadmapsIndexRoute
   '/skills': typeof SkillsIndexRoute
@@ -218,7 +225,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/industry-news': typeof IndustryNewsRoute
   '/learning-hub': typeof LearningHubRoute
-  '/luna-ai': typeof LunaAiRoute
+  '/luna-ai': typeof LunaAiRouteWithChildren
   '/platform': typeof PlatformRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/projects': typeof ProjectsRoute
@@ -230,6 +237,7 @@ export interface FileRoutesById {
   '/roadmaps/$branch': typeof RoadmapsBranchRoute
   '/skills/$slug': typeof SkillsSlugRoute
   '/government-jobs/': typeof GovernmentJobsIndexRoute
+  '/luna-ai/': typeof LunaAiIndexRoute
   '/resources/': typeof ResourcesIndexRoute
   '/roadmaps/': typeof RoadmapsIndexRoute
   '/skills/': typeof SkillsIndexRoute
@@ -258,6 +266,7 @@ export interface FileRouteTypes {
     | '/roadmaps/$branch'
     | '/skills/$slug'
     | '/government-jobs/'
+    | '/luna-ai/'
     | '/resources/'
     | '/roadmaps/'
     | '/skills/'
@@ -272,7 +281,6 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/industry-news'
     | '/learning-hub'
-    | '/luna-ai'
     | '/platform'
     | '/privacy-policy'
     | '/projects'
@@ -284,6 +292,7 @@ export interface FileRouteTypes {
     | '/roadmaps/$branch'
     | '/skills/$slug'
     | '/government-jobs'
+    | '/luna-ai'
     | '/resources'
     | '/roadmaps'
     | '/skills'
@@ -310,6 +319,7 @@ export interface FileRouteTypes {
     | '/roadmaps/$branch'
     | '/skills/$slug'
     | '/government-jobs/'
+    | '/luna-ai/'
     | '/resources/'
     | '/roadmaps/'
     | '/skills/'
@@ -325,7 +335,7 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   IndustryNewsRoute: typeof IndustryNewsRoute
   LearningHubRoute: typeof LearningHubRoute
-  LunaAiRoute: typeof LunaAiRoute
+  LunaAiRoute: typeof LunaAiRouteWithChildren
   PlatformRoute: typeof PlatformRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   ProjectsRoute: typeof ProjectsRoute
@@ -470,6 +480,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GovernmentJobsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/luna-ai/': {
+      id: '/luna-ai/'
+      path: '/'
+      fullPath: '/luna-ai/'
+      preLoaderRoute: typeof LunaAiIndexRouteImport
+      parentRoute: typeof LunaAiRoute
+    }
     '/resources/': {
       id: '/resources/'
       path: '/resources'
@@ -515,6 +532,17 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface LunaAiRouteChildren {
+  LunaAiIndexRoute: typeof LunaAiIndexRoute
+}
+
+const LunaAiRouteChildren: LunaAiRouteChildren = {
+  LunaAiIndexRoute: LunaAiIndexRoute,
+}
+
+const LunaAiRouteWithChildren =
+  LunaAiRoute._addFileChildren(LunaAiRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -525,7 +553,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   IndustryNewsRoute: IndustryNewsRoute,
   LearningHubRoute: LearningHubRoute,
-  LunaAiRoute: LunaAiRoute,
+  LunaAiRoute: LunaAiRouteWithChildren,
   PlatformRoute: PlatformRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   ProjectsRoute: ProjectsRoute,
