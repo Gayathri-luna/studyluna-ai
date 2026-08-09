@@ -28,6 +28,7 @@ import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as GovernmentJobsIndexRouteImport } from './routes/government-jobs.index'
 import { Route as GovernmentJobsSlugRouteImport } from './routes/government-jobs.$slug'
 import { Route as LunaAiIndexRouteImport } from './routes/luna-ai.index'
+import { Route as LunaAiThreadIdRouteImport } from './routes/luna-ai.$threadId'
 import { Route as ResourcesIndexRouteImport } from './routes/resources.index'
 import { Route as ResourcesSlugRouteImport } from './routes/resources.$slug'
 import { Route as RoadmapsIndexRouteImport } from './routes/roadmaps.index'
@@ -130,6 +131,11 @@ const LunaAiIndexRoute = LunaAiIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LunaAiRoute,
 } as any)
+const LunaAiThreadIdRoute = LunaAiThreadIdRouteImport.update({
+  id: '/$threadId',
+  path: '/$threadId',
+  getParentRoute: () => LunaAiRoute,
+} as any)
 const ResourcesIndexRoute = ResourcesIndexRouteImport.update({
   id: '/resources/',
   path: '/resources/',
@@ -179,6 +185,7 @@ export interface FileRoutesByFullPath {
   '/terms-of-service': typeof TermsOfServiceRoute
   '/api/chat': typeof ApiChatRoute
   '/government-jobs/$slug': typeof GovernmentJobsSlugRoute
+  '/luna-ai/$threadId': typeof LunaAiThreadIdRoute
   '/resources/$slug': typeof ResourcesSlugRoute
   '/roadmaps/$branch': typeof RoadmapsBranchRoute
   '/skills/$slug': typeof SkillsSlugRoute
@@ -205,6 +212,7 @@ export interface FileRoutesByTo {
   '/terms-of-service': typeof TermsOfServiceRoute
   '/api/chat': typeof ApiChatRoute
   '/government-jobs/$slug': typeof GovernmentJobsSlugRoute
+  '/luna-ai/$threadId': typeof LunaAiThreadIdRoute
   '/resources/$slug': typeof ResourcesSlugRoute
   '/roadmaps/$branch': typeof RoadmapsBranchRoute
   '/skills/$slug': typeof SkillsSlugRoute
@@ -233,6 +241,7 @@ export interface FileRoutesById {
   '/terms-of-service': typeof TermsOfServiceRoute
   '/api/chat': typeof ApiChatRoute
   '/government-jobs/$slug': typeof GovernmentJobsSlugRoute
+  '/luna-ai/$threadId': typeof LunaAiThreadIdRoute
   '/resources/$slug': typeof ResourcesSlugRoute
   '/roadmaps/$branch': typeof RoadmapsBranchRoute
   '/skills/$slug': typeof SkillsSlugRoute
@@ -262,6 +271,7 @@ export interface FileRouteTypes {
     | '/terms-of-service'
     | '/api/chat'
     | '/government-jobs/$slug'
+    | '/luna-ai/$threadId'
     | '/resources/$slug'
     | '/roadmaps/$branch'
     | '/skills/$slug'
@@ -288,6 +298,7 @@ export interface FileRouteTypes {
     | '/terms-of-service'
     | '/api/chat'
     | '/government-jobs/$slug'
+    | '/luna-ai/$threadId'
     | '/resources/$slug'
     | '/roadmaps/$branch'
     | '/skills/$slug'
@@ -315,6 +326,7 @@ export interface FileRouteTypes {
     | '/terms-of-service'
     | '/api/chat'
     | '/government-jobs/$slug'
+    | '/luna-ai/$threadId'
     | '/resources/$slug'
     | '/roadmaps/$branch'
     | '/skills/$slug'
@@ -487,6 +499,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LunaAiIndexRouteImport
       parentRoute: typeof LunaAiRoute
     }
+    '/luna-ai/$threadId': {
+      id: '/luna-ai/$threadId'
+      path: '/$threadId'
+      fullPath: '/luna-ai/$threadId'
+      preLoaderRoute: typeof LunaAiThreadIdRouteImport
+      parentRoute: typeof LunaAiRoute
+    }
     '/resources/': {
       id: '/resources/'
       path: '/resources'
@@ -533,10 +552,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface LunaAiRouteChildren {
+  LunaAiThreadIdRoute: typeof LunaAiThreadIdRoute
   LunaAiIndexRoute: typeof LunaAiIndexRoute
 }
 
 const LunaAiRouteChildren: LunaAiRouteChildren = {
+  LunaAiThreadIdRoute: LunaAiThreadIdRoute,
   LunaAiIndexRoute: LunaAiIndexRoute,
 }
 
