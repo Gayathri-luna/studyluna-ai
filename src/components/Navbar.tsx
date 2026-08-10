@@ -13,6 +13,7 @@ const NAV_LINKS = [
   { to: "/skills", label: "Skills" },
   { to: "/projects", label: "Projects" },
   { to: "/government-jobs", label: "Government Jobs" },
+  { to: "/industry-news", label: "Career Updates" },
   { to: "/resources", label: "Resources" },
   { to: "/community", label: "Community" },
   { to: "/about", label: "About" },

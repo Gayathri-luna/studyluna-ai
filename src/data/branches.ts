@@ -320,6 +320,222 @@ export const branches: Branch[] = [
     projectIdeas: ["LLM-powered study assistant", "Image classification web app", "Sales forecasting dashboard"],
     careers: ["Data Scientist", "ML Engineer", "Data Analyst", "AI Researcher"],
   },
+  {
+    slug: "cyber-security",
+    name: "Cyber Security",
+    short: "Cyber Sec",
+    tagline: "Securing networks, applications, cloud and data against attacks.",
+    phases: [
+      {
+        title: "Phase 1 — Foundations",
+        items: ["Networking (TCP/IP, DNS, HTTP)", "Linux and Windows internals", "Python or Bash scripting", "Security fundamentals: CIA triad, threat models"],
+      },
+      {
+        title: "Phase 2 — Core subjects",
+        items: ["Cryptography basics", "Web application security (OWASP Top 10)", "Network security and firewalls", "Operating system and endpoint hardening"],
+      },
+      {
+        title: "Phase 3 — Specialise",
+        items: ["Pick one: offensive security, SOC/blue team, cloud security, or forensics", "Practise on TryHackMe / HackTheBox labs", "Learn SIEM tooling and incident response"],
+      },
+      {
+        title: "Phase 4 — Job ready",
+        items: ["Entry certification (CompTIA Security+, CEH or eJPT)", "Write-ups and a public lab portfolio", "Interview prep on networking + scenarios"],
+      },
+    ],
+    coreSkills: ["Networking", "Linux", "Python", "OWASP", "SIEM", "Cryptography"],
+    projectIdeas: ["Home SOC with ELK stack", "Vulnerable web app + pentest report", "Automated phishing detector"],
+    careers: ["Security Analyst", "Penetration Tester", "SOC Analyst", "Cloud Security Engineer"],
+  },
+  {
+    slug: "robotics",
+    name: "Robotics & Automation",
+    short: "Robotics",
+    tagline: "Robots, motion control, industrial automation and perception.",
+    phases: [
+      {
+        title: "Phase 1 — Foundations",
+        items: ["Basic electronics and sensors", "C/C++ and Python", "Engineering mechanics and kinematics", "Arduino / Raspberry Pi prototyping"],
+      },
+      {
+        title: "Phase 2 — Core subjects",
+        items: ["Control systems and PID tuning", "Robot kinematics and dynamics", "ROS 2 fundamentals", "PLC, SCADA and industrial automation"],
+      },
+      {
+        title: "Phase 3 — Specialise",
+        items: ["Pick one: industrial automation, mobile robots, robotic vision, or drones", "Simulation in Gazebo or CoppeliaSim", "Build two working robots"],
+      },
+      {
+        title: "Phase 4 — Job ready",
+        items: ["Portfolio videos of working robots", "GATE / core interview preparation", "Learn one industrial robot brand (ABB, FANUC, KUKA)"],
+      },
+    ],
+    coreSkills: ["ROS", "C++", "Python", "PLC", "Control Systems", "Computer Vision"],
+    projectIdeas: ["Line-following and obstacle-avoiding robot", "6-DOF robotic arm with inverse kinematics", "Autonomous warehouse bot in ROS"],
+    careers: ["Robotics Engineer", "Automation Engineer", "Controls Engineer", "Field Application Engineer"],
+  },
+  {
+    slug: "mechatronics",
+    name: "Mechatronics Engineering",
+    short: "Mechatronics",
+    tagline: "Where mechanical design, electronics, control and software meet.",
+    phases: [
+      {
+        title: "Phase 1 — Foundations",
+        items: ["Engineering mechanics and materials", "Basic electronics and circuits", "C programming and microcontrollers", "CAD with SolidWorks"],
+      },
+      {
+        title: "Phase 2 — Core subjects",
+        items: ["Sensors and actuators", "Control systems", "Hydraulics and pneumatics", "Embedded systems and PLC programming"],
+      },
+      {
+        title: "Phase 3 — Specialise",
+        items: ["Pick one: automation, automotive mechatronics, medical devices, or robotics", "System-level simulation in MATLAB/Simulink", "Design and build one integrated machine"],
+      },
+      {
+        title: "Phase 4 — Job ready",
+        items: ["GATE / PSU preparation", "Portfolio of CAD + firmware + control work", "Industry internship on a shop floor"],
+      },
+    ],
+    coreSkills: ["SolidWorks", "Embedded C", "PLC", "Simulink", "Sensors", "Pneumatics"],
+    projectIdeas: ["Automated sorting conveyor", "Self-balancing robot", "CNC pen plotter"],
+    careers: ["Mechatronics Engineer", "Automation Engineer", "Product Design Engineer", "Maintenance Engineer"],
+  },
+  {
+    slug: "environmental",
+    name: "Environmental Engineering",
+    short: "Environmental",
+    tagline: "Water, air, waste, climate and sustainable infrastructure.",
+    phases: [
+      {
+        title: "Phase 1 — Foundations",
+        items: ["Environmental chemistry and microbiology", "Fluid mechanics", "Ecology and pollution basics", "Excel and basic statistics"],
+      },
+      {
+        title: "Phase 2 — Core subjects",
+        items: ["Water and wastewater treatment", "Air pollution control", "Solid and hazardous waste management", "Environmental impact assessment (EIA)"],
+      },
+      {
+        title: "Phase 3 — Specialise",
+        items: ["Pick one: water treatment, air quality, waste management, or climate & ESG", "Learn GIS (QGIS/ArcGIS) and modelling tools", "Field or plant internship"],
+      },
+      {
+        title: "Phase 4 — Job ready",
+        items: ["GATE (Civil/Environmental) preparation", "Regulatory knowledge: CPCB/SPCB norms", "Report-writing and audit practice"],
+      },
+    ],
+    coreSkills: ["Water Treatment", "GIS", "EIA", "Air Quality Modelling", "Waste Management"],
+    projectIdeas: ["Low-cost greywater treatment unit", "Air quality monitoring network", "Campus waste audit and plan"],
+    careers: ["Environmental Engineer", "EHS Officer", "Sustainability Analyst", "Pollution Control Board Engineer"],
+  },
+  {
+    slug: "food-technology",
+    name: "Food Technology",
+    short: "Food Tech",
+    tagline: "Food processing, preservation, safety and product development.",
+    phases: [
+      {
+        title: "Phase 1 — Foundations",
+        items: ["Food chemistry and biochemistry", "Food microbiology", "Unit operations basics", "Lab hygiene and safety"],
+      },
+      {
+        title: "Phase 2 — Core subjects",
+        items: ["Food processing and preservation", "Food packaging technology", "Quality control and sensory evaluation", "Food safety standards (FSSAI, HACCP, ISO 22000)"],
+      },
+      {
+        title: "Phase 3 — Specialise",
+        items: ["Pick one: product development, quality assurance, dairy, or beverages", "Plant internship in a processing unit", "Develop and test one new product"],
+      },
+      {
+        title: "Phase 4 — Job ready",
+        items: ["FSSAI / HACCP certification", "GATE (Food Technology / XL) if going for PG", "Portfolio of product and QA reports"],
+      },
+    ],
+    coreSkills: ["HACCP", "Food Microbiology", "Processing", "Quality Control", "Packaging"],
+    projectIdeas: ["Shelf-life study of a bakery product", "Millet-based health snack development", "Low-cost solar food dryer"],
+    careers: ["Food Technologist", "Quality Assurance Officer", "Product Development Executive", "FSSAI / FCI Officer"],
+  },
+  {
+    slug: "agricultural",
+    name: "Agricultural Engineering",
+    short: "Agri Engg",
+    tagline: "Farm machinery, irrigation, soil, post-harvest and agri-tech.",
+    phases: [
+      {
+        title: "Phase 1 — Foundations",
+        items: ["Soil science and crop basics", "Engineering mechanics and thermodynamics", "Surveying", "AutoCAD basics"],
+      },
+      {
+        title: "Phase 2 — Core subjects",
+        items: ["Farm machinery and power", "Irrigation and drainage engineering", "Soil and water conservation", "Post-harvest and food process engineering"],
+      },
+      {
+        title: "Phase 3 — Specialise",
+        items: ["Pick one: farm machinery, irrigation, agri-tech/precision farming, or post-harvest", "Learn GIS and remote sensing", "Field project with a farm or FPO"],
+      },
+      {
+        title: "Phase 4 — Job ready",
+        items: ["ICAR / GATE (AG) preparation", "Government scheme and subsidy knowledge", "Portfolio of field studies and designs"],
+      },
+    ],
+    coreSkills: ["Farm Machinery", "Irrigation Design", "GIS", "Remote Sensing", "AutoCAD"],
+    projectIdeas: ["Sensor-based drip irrigation controller", "Low-cost multi-crop thresher", "Drone-based crop health survey"],
+    careers: ["Agricultural Engineer", "Irrigation Engineer", "Agri-Tech Product Engineer", "ICAR / NABARD Officer"],
+  },
+  {
+    slug: "mining",
+    name: "Mining Engineering",
+    short: "Mining",
+    tagline: "Extraction, mine planning, safety and mineral processing.",
+    phases: [
+      {
+        title: "Phase 1 — Foundations",
+        items: ["Geology and mineralogy", "Engineering mechanics", "Surveying", "Mine terminology and safety basics"],
+      },
+      {
+        title: "Phase 2 — Core subjects",
+        items: ["Surface and underground mining methods", "Rock mechanics and ground control", "Drilling, blasting and mine ventilation", "Mineral processing"],
+      },
+      {
+        title: "Phase 3 — Specialise",
+        items: ["Pick one: mine planning, geotechnics, mineral processing, or mine safety", "Learn Surpac / Datamine / MineSched", "Mine site internship"],
+      },
+      {
+        title: "Phase 4 — Job ready",
+        items: ["GATE (MN) and PSU preparation (Coal India, NMDC)", "DGMS statutory knowledge", "Site reports and survey portfolio"],
+      },
+    ],
+    coreSkills: ["Mine Planning", "Rock Mechanics", "Surpac", "Blasting", "Mine Safety"],
+    projectIdeas: ["Open-pit mine design in Surpac", "Ventilation network simulation", "Slope stability analysis of a bench"],
+    careers: ["Mining Engineer", "Mine Planner", "Geotechnical Engineer", "Coal India / NMDC Executive"],
+  },
+  {
+    slug: "petroleum",
+    name: "Petroleum Engineering",
+    short: "Petroleum",
+    tagline: "Drilling, reservoirs, production and energy transition.",
+    phases: [
+      {
+        title: "Phase 1 — Foundations",
+        items: ["Petroleum geology", "Fluid mechanics and thermodynamics", "Mathematics for reservoir problems", "Excel / Python for calculations"],
+      },
+      {
+        title: "Phase 2 — Core subjects",
+        items: ["Drilling engineering", "Reservoir engineering", "Production and well completion", "Petroleum refining basics"],
+      },
+      {
+        title: "Phase 3 — Specialise",
+        items: ["Pick one: drilling, reservoir simulation, production, or energy transition", "Learn Eclipse / CMG / PIPESIM", "Rig or refinery internship"],
+      },
+      {
+        title: "Phase 4 — Job ready",
+        items: ["GATE (PE) and PSU preparation (ONGC, OIL, IOCL)", "HSE and well-control fundamentals", "Simulation case-study portfolio"],
+      },
+    ],
+    coreSkills: ["Reservoir Simulation", "Drilling", "PIPESIM", "Thermodynamics", "HSE"],
+    projectIdeas: ["Decline curve analysis of a well", "Drilling fluid property study", "CO2 storage feasibility study"],
+    careers: ["Drilling Engineer", "Reservoir Engineer", "Production Engineer", "ONGC / OIL Executive"],
+  },
 ];
 
 export const branchBySlug = (slug: string) => branches.find((b) => b.slug === slug);
