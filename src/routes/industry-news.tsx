@@ -25,7 +25,7 @@ export const Route = createFileRoute("/industry-news")({
 
 function CareerUpdatesPage() {
   const { branch } = useAuth();
-  const slug = branch ?? branches[0].slug;
+  const slug = branch ?? branches[0]!.slug;
   const current = branchBySlug(slug);
   const detail = branchDetailBySlug(slug);
 
