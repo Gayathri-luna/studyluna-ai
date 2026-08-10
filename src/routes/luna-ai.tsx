@@ -6,441 +6,105 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Sparkles,
-  Send,
-  Paperclip,
-  Image as ImageIcon,
-  Mic,
-  X,
-  Copy,
-  Check,
-  RotateCcw,
-  Plus,
-  Square,
-} from "lucide-react";
+import { Sparkles, Send, Plus, Square, Copy, Check, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
 
-const DESCRIPTION =
-  "Luna AI is an ECE mentor that summarises podcasts and photos, builds personalised roadmaps, and guides you through mini projects step by step.";
+const MODES = [
+  { id: "Learn", version: "V1", title: "Learn", prompt: "Explain a concept clearly from the basics." },
+  { id: "Practice", version: "V2", title: "Practice", prompt: "Give me practice questions on my current topic." },
+  { id: "Solve", version: "V3", title: "Solve", prompt: "Help me solve this problem step by step with hints." },
+  { id: "Projects", version: "V4", title: "Projects", prompt: "Suggest a practical project for my branch." },
+  { id: "Revision", version: "V5", title: "Revision", prompt: "Make quick revision notes and a self-test." },
+  { id: "Assess", version: "V6", title: "Assess", prompt: "Test me and identify my weak topics." },
+  { id: "Personalized", version: "V7", title: "Personalized", prompt: "Recommend what I should learn next." },
+] as const;
+
+const BRANCHES = ["ECE", "CSE", "IT", "EEE", "Mechanical", "Civil", "Chemical", "Biotech", "Aerospace", "AI & DS"];
+const SUGGESTIONS: Record<string, string[]> = {
+  Learn: ["Explain Kirchhoff's laws with a simple example", "Teach me microcontrollers from the basics", "Explain DSA like I am a beginner"],
+  Practice: ["Give me 10 MCQs on digital electronics", "Practice Python loops with me", "Quiz me on signals and systems"],
+  Solve: ["Help me solve this circuit step by step", "Give me hints for this programming problem", "Help me find my mistake"],
+  Projects: ["Suggest an IoT project I can actually build", "Give me an AI + embedded project", "Plan a beginner FPGA project"],
+  Revision: ["Make a one-page revision sheet", "Give me flashcards for this topic", "Test my important formulas"],
+  Assess: ["Give me a 10-question test", "Evaluate my answers and find weak topics", "Create a branch-specific mock test"],
+  Personalized: ["What should I learn next?", "Build my weekly learning plan", "Suggest a path based on my interests"],
+};
 
 export const Route = createFileRoute("/luna-ai")({
-  head: () => ({
-    meta: [
-      { title: "Luna AI — Your ECE Mentor | Luna.io" },
-      { name: "description", content: DESCRIPTION },
-      { property: "og:title", content: "Luna AI — Your ECE Mentor" },
-      { property: "og:description", content: DESCRIPTION },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () => ({ meta: [{ title: "LUNA.AI — Learning Assistant | LUNA.IO" }, { name: "description", content: "LUNA.AI learning assistant: Learn, Practice, Solve, Build, Revise, Assess and Improve." }] }),
   component: LunaAIPage,
 });
 
-const SUGGESTIONS = [
-  "Build me a 6-month VLSI roadmap for a 5th-semester student",
-  "Summarise this podcast episode and list the key takeaways",
-  "Explain the circuit in this photo and what it does",
-  "Give me a step-by-step procedure for a TinyML mini project",
-];
-
-const IMAGE_TYPES = "image/png,image/jpeg,image/jpg,image/webp,image/gif";
-const AUDIO_TYPES = "audio/mpeg,audio/mp3,audio/wav,audio/x-wav";
-const MAX_FILE_MB = 20;
-
-type Attachment = { id: string; file: File; url: string };
-
 function MessageMarkdown({ text }: { text: string }) {
-  return (
-    <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground prose-code:text-primary">
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>
-    </div>
-  );
-}
-
-function CopyButton({ text }: { text: string }) {
-  const [copied, setCopied] = useState(false);
-  return (
-    <button
-      type="button"
-      aria-label="Copy response"
-      onClick={async () => {
-        await navigator.clipboard.writeText(text);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 1500);
-      }}
-      className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-    >
-      {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
-      {copied ? "Copied" : "Copy"}
-    </button>
-  );
+  return <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground"><ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown></div>;
 }
 
 function LunaAIPage() {
-  const transport = useMemo(
-    () => new DefaultChatTransport({ api: "/api/chat" }),
-    [],
-  );
+  const [branch, setBranch] = useState("ECE");
+  const [mode, setMode] = useState("Learn");
   const [input, setInput] = useState("");
-  const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [lastPrompt, setLastPrompt] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const imageInputRef = useRef<HTMLInputElement>(null);
-  const audioInputRef = useRef<HTMLInputElement>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
+  const transport = useMemo(() => new DefaultChatTransport({ api: "/api/chat" }), []);
   const { messages, sendMessage, status, stop, setMessages } = useChat({
     transport,
-    onError: (error) => {
-      toast.error(
-        error.message.includes("429")
-          ? "Too many requests right now — please try again in a moment."
-          : error.message.includes("402")
-            ? "AI credits are exhausted. Please add credits to continue."
-            : "Luna AI could not respond. Please try again.",
-      );
-    },
+    onError: (error) => toast.error(error.message || "LUNA.AI could not respond. Please try again."),
   });
-
   const isLoading = status === "submitted" || status === "streaming";
+  const selectedMode = MODES.find((item) => item.id === mode) ?? MODES[0];
 
-  useEffect(() => {
-    textareaRef.current?.focus();
-  }, []);
-
-  useEffect(() => {
-    if (!isLoading) textareaRef.current?.focus();
-  }, [isLoading]);
-
-  useEffect(() => {
-    scrollRef.current?.scrollTo({
-      top: scrollRef.current.scrollHeight,
-      behavior: "smooth",
-    });
-  }, [messages, status]);
-
-  useEffect(() => {
-    return () => {
-      attachments.forEach((a) => URL.revokeObjectURL(a.url));
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const addFiles = (list: FileList | null) => {
-    if (!list) return;
-    const next: Attachment[] = [];
-    for (const file of Array.from(list)) {
-      if (file.size > MAX_FILE_MB * 1024 * 1024) {
-        toast.error(`${file.name} is larger than ${MAX_FILE_MB}MB.`);
-        continue;
-      }
-      next.push({
-        id: `${file.name}-${file.lastModified}-${Math.random()}`,
-        file,
-        url: URL.createObjectURL(file),
-      });
-    }
-    if (next.length) setAttachments((prev) => [...prev, ...next]);
-  };
-
-  const removeAttachment = (id: string) => {
-    setAttachments((prev) => {
-      const target = prev.find((a) => a.id === id);
-      if (target) URL.revokeObjectURL(target.url);
-      return prev.filter((a) => a.id !== id);
-    });
-  };
+  useEffect(() => { textareaRef.current?.focus(); }, [isLoading]);
+  useEffect(() => { scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" }); }, [messages, status]);
 
   const submit = (text: string) => {
     const trimmed = text.trim();
-    if ((!trimmed && attachments.length === 0) || isLoading) return;
-
-    const dataTransfer = new DataTransfer();
-    attachments.forEach((a) => dataTransfer.items.add(a.file));
-
-    const prompt =
-      trimmed ||
-      (attachments.some((a) => a.file.type.startsWith("audio"))
-        ? "Summarise this audio and list the key takeaways."
-        : "Summarise this and explain it clearly.");
-
+    if (!trimmed || isLoading) return;
     setInput("");
-    setLastPrompt(prompt);
-    void sendMessage(
-      attachments.length
-        ? { text: prompt, files: dataTransfer.files }
-        : { text: prompt },
-    );
-    attachments.forEach((a) => URL.revokeObjectURL(a.url));
-    setAttachments([]);
+    setLastPrompt(trimmed);
+    void sendMessage({ text: trimmed, body: { branch, mode } });
   };
 
-  const newChat = () => {
-    stop();
-    setMessages([]);
-    setInput("");
-    setAttachments([]);
-    textareaRef.current?.focus();
-  };
-
-  const regenerate = () => {
-    if (!lastPrompt || isLoading) return;
-    void sendMessage({ text: lastPrompt });
-  };
+  const newChat = () => { stop(); setMessages([]); setInput(""); setLastPrompt(""); };
+  const regenerate = () => { if (lastPrompt && !isLoading) void sendMessage({ text: lastPrompt, body: { branch, mode } }); };
 
   return (
-    <div className="container mx-auto flex min-h-[calc(100vh-4rem)] max-w-3xl flex-col px-4 py-10">
+    <div className="container mx-auto flex min-h-[calc(100vh-4rem)] max-w-4xl flex-col px-4 py-8 sm:py-10">
       <header className="text-center">
-        <h1 className="flex items-center justify-center gap-2 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
-          <Sparkles className="h-7 w-7 text-primary" />
-          Luna AI
-        </h1>
-        <p className="mt-3 text-muted-foreground">
-          Ask anything, drop a photo, or upload a podcast — Luna summarises it and
-          turns it into an action plan.
-        </p>
-        <div className="mt-4 flex justify-center">
-          <Button variant="outline" size="sm" onClick={newChat}>
-            <Plus className="mr-1 h-4 w-4" />
-            New chat
-          </Button>
-        </div>
+        <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary"><Sparkles className="h-3.5 w-3.5" /> LUNA.AI</div>
+        <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">Your AI Learning Assistant</h1>
+        <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground sm:text-base">Learn → Practice → Solve → Build → Revise → Assess → Improve</p>
       </header>
 
-      <div
-        ref={scrollRef}
-        className="mt-6 flex-1 space-y-5 overflow-y-auto rounded-lg border border-border bg-muted/30 p-4"
-      >
+      <section className="mt-6 rounded-2xl border border-border bg-card/70 p-4 shadow-sm">
+        <div className="grid gap-3 sm:grid-cols-[1fr_1fr]">
+          <label className="text-sm font-medium">Engineering branch<select value={branch} onChange={(e) => setBranch(e.target.value)} className="mt-1.5 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/30">{BRANCHES.map((item) => <option key={item}>{item}</option>)}</select></label>
+          <div><p className="text-sm font-medium">Learning mode</p><div className="mt-1.5 flex flex-wrap gap-1.5">{MODES.map((item) => <button key={item.id} type="button" onClick={() => setMode(item.id)} className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${mode === item.id ? "border-primary bg-primary text-primary-foreground" : "border-border bg-background text-muted-foreground hover:bg-accent"}`} title={item.prompt}>{item.version} {item.title}</button>)}</div></div>
+        </div>
+        <div className="mt-3 rounded-lg bg-muted/40 px-3 py-2 text-xs text-muted-foreground"><span className="font-semibold text-foreground">{selectedMode.version} {selectedMode.title}:</span> {selectedMode.prompt} <span className="ml-1">• Focus: {branch}</span></div>
+      </section>
+
+      <div ref={scrollRef} className="mt-4 flex-1 space-y-5 overflow-y-auto rounded-2xl border border-border bg-muted/20 p-4 sm:p-6">
         {messages.length === 0 ? (
-          <div className="flex h-full flex-col items-center justify-center gap-3 py-10">
-            <p className="text-sm text-muted-foreground">
-              Try one of these to get started:
-            </p>
-            <div className="flex flex-wrap justify-center gap-2">
-              {SUGGESTIONS.map((suggestion) => (
-                <button
-                  key={suggestion}
-                  type="button"
-                  onClick={() => submit(suggestion)}
-                  className="rounded-full border border-border bg-background px-4 py-2 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-                >
-                  {suggestion}
-                </button>
-              ))}
-            </div>
+          <div className="flex min-h-[360px] flex-col items-center justify-center py-10 text-center">
+            <div className="rounded-full bg-primary/10 p-4 text-primary"><Sparkles className="h-7 w-7" /></div>
+            <h2 className="mt-4 text-lg font-bold">Ready to learn {branch}</h2>
+            <p className="mt-1 max-w-md text-sm text-muted-foreground">Choose a mode above, then ask LUNA.AI a question.</p>
+            <div className="mt-5 flex max-w-2xl flex-wrap justify-center gap-2">{(SUGGESTIONS[mode] ?? SUGGESTIONS.Learn).map((suggestion) => <button key={suggestion} type="button" onClick={() => submit(suggestion)} className="rounded-full border border-border bg-background px-4 py-2 text-xs text-muted-foreground hover:bg-accent hover:text-foreground">{suggestion}</button>)}</div>
           </div>
-        ) : (
-          messages.map((message) => {
-            const isUser = message.role === "user";
-            const text = message.parts
-              .map((part) => (part.type === "text" ? part.text : ""))
-              .join("");
-            const files = message.parts.filter(
-              (part): part is Extract<typeof part, { type: "file" }> =>
-                part.type === "file",
-            );
-
-            if (isUser) {
-              return (
-                <div key={message.id} className="flex justify-end">
-                  <div className="max-w-[85%] space-y-2">
-                    {files.length > 0 && (
-                      <div className="flex flex-wrap justify-end gap-2">
-                        {files.map((file, index) =>
-                          file.mediaType?.startsWith("image/") ? (
-                            <img
-                              key={index}
-                              src={file.url}
-                              alt={file.filename ?? "Uploaded image"}
-                              className="h-28 w-28 rounded-lg border border-border object-cover"
-                            />
-                          ) : (
-                            <span
-                              key={index}
-                              className="inline-flex items-center gap-1 rounded-lg border border-border bg-background px-3 py-2 text-xs text-muted-foreground"
-                            >
-                              <Mic className="h-3 w-3" />
-                              {file.filename ?? "Attachment"}
-                            </span>
-                          ),
-                        )}
-                      </div>
-                    )}
-                    {text && (
-                      <div className="whitespace-pre-wrap rounded-lg bg-primary px-4 py-3 text-sm text-primary-foreground">
-                        {text}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            }
-
-            return (
-              <div key={message.id} className="space-y-1">
-                <MessageMarkdown text={text} />
-                {text && !isLoading && (
-                  <div className="flex items-center gap-1">
-                    <CopyButton text={text} />
-                    <button
-                      type="button"
-                      onClick={regenerate}
-                      className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-                    >
-                      <RotateCcw className="h-3 w-3" />
-                      Regenerate
-                    </button>
-                  </div>
-                )}
-              </div>
-            );
-          })
-        )}
-
-        {status === "submitted" && (
-          <p className="animate-pulse text-sm text-muted-foreground">
-            Luna AI is thinking…
-          </p>
-        )}
+        ) : messages.map((message) => {
+          const text = message.parts.map((part) => part.type === "text" ? part.text : "").join("");
+          const isUser = message.role === "user";
+          return <div key={message.id} className={isUser ? "flex justify-end" : "space-y-1"}><div className={isUser ? "max-w-[85%] rounded-xl bg-primary px-4 py-3 text-sm text-primary-foreground" : "max-w-[95%]"}>{isUser ? <div className="whitespace-pre-wrap">{text}</div> : <MessageMarkdown text={text} />}</div>{!isUser && text && !isLoading && <div className="flex gap-1"><button type="button" onClick={() => navigator.clipboard.writeText(text).then(() => toast.success("Copied"))} className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs text-muted-foreground hover:bg-accent"><Copy className="h-3 w-3" /> Copy</button><button type="button" onClick={regenerate} className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs text-muted-foreground hover:bg-accent"><RotateCcw className="h-3 w-3" /> Regenerate</button></div>}</div>;
+        })}
+        {status === "submitted" && <p className="animate-pulse text-sm text-muted-foreground">LUNA.AI is thinking…</p>}
       </div>
 
-      {attachments.length > 0 && (
-        <div className="mt-3 flex flex-wrap gap-2">
-          {attachments.map((attachment) => (
-            <div
-              key={attachment.id}
-              className="relative flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2 text-xs text-muted-foreground"
-            >
-              {attachment.file.type.startsWith("image/") ? (
-                <img
-                  src={attachment.url}
-                  alt={attachment.file.name}
-                  className="h-8 w-8 rounded object-cover"
-                />
-              ) : (
-                <Mic className="h-4 w-4 text-primary" />
-              )}
-              <span className="max-w-[10rem] truncate">{attachment.file.name}</span>
-              <button
-                type="button"
-                aria-label={`Remove ${attachment.file.name}`}
-                onClick={() => removeAttachment(attachment.id)}
-                className="text-muted-foreground hover:text-foreground"
-              >
-                <X className="h-3 w-3" />
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-
-      <form
-        className="mt-3 flex items-end gap-2"
-        onSubmit={(event) => {
-          event.preventDefault();
-          submit(input);
-        }}
-      >
-        <input
-          ref={imageInputRef}
-          type="file"
-          accept={IMAGE_TYPES}
-          multiple
-          hidden
-          onChange={(event) => {
-            addFiles(event.target.files);
-            event.target.value = "";
-          }}
-        />
-        <input
-          ref={audioInputRef}
-          type="file"
-          accept={AUDIO_TYPES}
-          hidden
-          onChange={(event) => {
-            addFiles(event.target.files);
-            event.target.value = "";
-          }}
-        />
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept={`${IMAGE_TYPES},${AUDIO_TYPES}`}
-          multiple
-          hidden
-          onChange={(event) => {
-            addFiles(event.target.files);
-            event.target.value = "";
-          }}
-        />
-
-        <div className="flex gap-1">
-          <Button
-            type="button"
-            size="icon"
-            variant="outline"
-            aria-label="Upload photo"
-            onClick={() => imageInputRef.current?.click()}
-          >
-            <ImageIcon className="h-4 w-4" />
-          </Button>
-          <Button
-            type="button"
-            size="icon"
-            variant="outline"
-            aria-label="Upload podcast audio (mp3 or wav)"
-            onClick={() => audioInputRef.current?.click()}
-          >
-            <Mic className="h-4 w-4" />
-          </Button>
-          <Button
-            type="button"
-            size="icon"
-            variant="outline"
-            aria-label="Attach file"
-            onClick={() => fileInputRef.current?.click()}
-          >
-            <Paperclip className="h-4 w-4" />
-          </Button>
-        </div>
-
-        <Textarea
-          ref={textareaRef}
-          value={input}
-          onChange={(event) => setInput(event.target.value)}
-          onKeyDown={(event) => {
-            if (event.key === "Enter" && !event.shiftKey) {
-              event.preventDefault();
-              submit(input);
-            }
-          }}
-          placeholder="Ask anything, or attach a photo / podcast to summarise…"
-          rows={2}
-          className="resize-none"
-        />
-
-        {isLoading ? (
-          <Button type="button" size="icon" variant="outline" onClick={() => stop()}>
-            <Square className="h-4 w-4" />
-            <span className="sr-only">Stop</span>
-          </Button>
-        ) : (
-          <Button
-            type="submit"
-            size="icon"
-            disabled={!input.trim() && attachments.length === 0}
-          >
-            <Send className="h-4 w-4" />
-            <span className="sr-only">Send</span>
-          </Button>
-        )}
+      <form className="mt-3 flex items-end gap-2" onSubmit={(e) => { e.preventDefault(); submit(input); }}>
+        <Textarea ref={textareaRef} value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submit(input); } }} placeholder={`Ask LUNA.AI to ${mode.toLowerCase()} ${branch}…`} rows={2} className="resize-none" />
+        {isLoading ? <Button type="button" size="icon" variant="outline" onClick={stop}><Square className="h-4 w-4" /></Button> : <Button type="submit" size="icon" disabled={!input.trim()}><Send className="h-4 w-4" /></Button>}
       </form>
-      <p className="mt-2 text-center text-[11px] text-muted-foreground">
-        Photos and mp3/wav podcasts up to {MAX_FILE_MB}MB. Enter to send, Shift+Enter for a new line.
-      </p>
+      <div className="mt-2 flex items-center justify-between"><p className="text-[11px] text-muted-foreground">LUNA.AI • {branch} • {selectedMode.version} {selectedMode.title}</p><Button type="button" variant="outline" size="sm" onClick={newChat}><Plus className="mr-1 h-3.5 w-3.5" /> New chat</Button></div>
     </div>
   );
 }
