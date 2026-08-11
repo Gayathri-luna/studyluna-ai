@@ -299,14 +299,14 @@ function AboutPage() {
                 <div className="flex-1 space-y-3">
                   <div>
                     <h3 className="text-xl font-semibold text-card-foreground">
-                      Y. Varshini
+                      Varshini Yarramsetty
                     </h3>
                     <p className="text-sm font-medium text-primary">
-                      Co-Partner of Luna.io
+                      Co-Founder of Luna.io
                     </p>
                   </div>
                   <p className="text-sm leading-relaxed text-muted-foreground">
-                    Co-partner at Luna.io, working alongside the founder on
+                    Co-Founder at Luna.io, working alongside the founder on
                     content, learning experience, and community growth for
                     engineering students.
                   </p>
