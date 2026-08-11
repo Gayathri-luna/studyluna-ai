@@ -21,6 +21,7 @@ import {
   Eraser,
 } from "lucide-react";
 import { toast } from "sonner";
+import { readLunaModel } from "@/lib/luna-models";
 import {
   LEARN_MODES,
   PODCAST_OUTPUTS,
@@ -123,7 +124,7 @@ function ChatWindow({
       new DefaultChatTransport({
         api: "/api/chat",
         prepareSendMessagesRequest: ({ messages }) => ({
-          body: { messages, mode: modeRef.current },
+          body: { messages, mode: modeRef.current, model: readLunaModel() },
         }),
       }),
     [],

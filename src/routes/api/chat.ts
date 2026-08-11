@@ -32,13 +32,20 @@ const MODE_PROMPTS: Record<string, string> = {
     "MODE: Project. Give project guidance: objective, block diagram description, component/tool list with specs, step-by-step build procedure, testing plan, and extensions.",
 };
 
-type ChatRequestBody = { messages?: unknown; mode?: unknown };
+const MODEL_MAP: Record<string, string> = {
+  lite: "google/gemini-3.1-flash-lite",
+  v3: "google/gemini-3.6-flash",
+  pro: "google/gemini-3.1-pro-preview",
+  research: "google/gemini-2.5-pro",
+};
+
+type ChatRequestBody = { messages?: unknown; mode?: unknown; model?: unknown };
 
 export const Route = createFileRoute("/api/chat")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const { messages, mode } = (await request.json()) as ChatRequestBody;
+        const { messages, mode, model } = (await request.json()) as ChatRequestBody;
         if (!Array.isArray(messages)) {
           return new Response("Messages are required", { status: 400 });
         }
@@ -53,7 +60,9 @@ export const Route = createFileRoute("/api/chat")({
 
         const gateway = createLovableAiGatewayProvider(key);
         const result = streamText({
-          model: gateway("google/gemini-3.6-flash"),
+          model: gateway(
+            (typeof model === "string" && MODEL_MAP[model]) || MODEL_MAP["v3"]!,
+          ),
           system: `${BASE_PROMPT}\n\n${modePrompt}`,
           messages: await convertToModelMessages(messages as UIMessage[]),
         });

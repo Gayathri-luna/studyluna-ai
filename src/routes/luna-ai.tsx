@@ -2,9 +2,11 @@ import { createFileRoute, Link, Outlet, useNavigate, useParams } from "@tanstack
 import { useCallback, useEffect, useState } from "react";
 import { MessageSquare, Plus, Trash2, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { LunaModelSelector } from "@/components/LunaModelSelector";
+import { LUNA_CAPABILITIES, getLunaModel, useLunaModel } from "@/lib/luna-models";
 import {
   LUNA_SUBTITLE,
-  LUNA_VERSION,
+
   createThread,
   deleteThread,
   loadThreads,
@@ -33,6 +35,8 @@ function LunaLayout() {
   const navigate = useNavigate();
   const params = useParams({ strict: false }) as { threadId?: string };
   const [threads, setThreads] = useState<LunaThread[]>([]);
+  const { model } = useLunaModel();
+  const activeModel = getLunaModel(model);
 
   const refresh = useCallback(() => setThreads(loadThreads()), []);
 
@@ -58,11 +62,26 @@ function LunaLayout() {
   return (
     <div className="container mx-auto max-w-7xl px-4 py-8">
       <header className="mb-6">
-        <h1 className="flex flex-wrap items-center gap-2 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
-          <Rocket className="h-7 w-7 text-primary" />
-          {LUNA_VERSION}
-        </h1>
-        <p className="mt-2 text-muted-foreground">{LUNA_SUBTITLE}</p>
+        <div className="flex flex-wrap items-center gap-3">
+          <h1 className="flex items-center gap-2 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+            <Rocket className="h-7 w-7 text-primary" />
+            {activeModel.name}
+          </h1>
+          <LunaModelSelector />
+        </div>
+        <p className="mt-2 text-muted-foreground">
+          {activeModel.tagline} · {LUNA_SUBTITLE}
+        </p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {LUNA_CAPABILITIES.map((capability) => (
+            <span
+              key={capability}
+              className="rounded-full border border-border bg-card/60 px-3 py-1 text-[11px] font-medium text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+            >
+              {capability}
+            </span>
+          ))}
+        </div>
       </header>
 
       <div className="grid gap-6 lg:grid-cols-[260px_1fr]">
