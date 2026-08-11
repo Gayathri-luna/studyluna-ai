@@ -57,8 +57,8 @@ function ContactPage() {
         <p className="mt-1 text-sm text-muted-foreground">Founder &amp; Developer of LUNA</p>
 
         <div className="mt-4 border-t border-border/70 pt-4">
-          <p className="text-[11px] font-medium uppercase tracking-wider text-primary">Co-Partner</p>
-          <h3 className="mt-1 text-xl font-bold text-foreground">Y. Varshini</h3>
+          <p className="text-[11px] font-medium uppercase tracking-wider text-primary">Co-Founder</p>
+          <h3 className="mt-1 text-xl font-bold text-foreground">Varshini Yarramsetty</h3>
           <a
             href="https://www.linkedin.com/in/varshini-yarramsetty"
             target="_blank"
