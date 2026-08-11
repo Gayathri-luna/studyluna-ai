@@ -6,7 +6,7 @@ import { LunaModelSelector } from "@/components/LunaModelSelector";
 import { LUNA_CAPABILITIES, getLunaModel, useLunaModel } from "@/lib/luna-models";
 import {
   LUNA_SUBTITLE,
-  LUNA_VERSION,
+
   createThread,
   deleteThread,
   loadThreads,
