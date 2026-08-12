@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -16,6 +17,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { Navbar } from "@/components/Navbar";
 import { BranchWelcome } from "@/components/BranchWelcome";
 import { AuthProvider } from "@/lib/auth";
+import { LearningReminders } from "@/components/LearningReminders";
 
 
 
@@ -155,14 +157,25 @@ function RootComponent() {
 
           <main className="flex-1">
             {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-            <Outlet />
+            <PageTransition />
           </main>
           <Footer />
         </div>
         <BranchWelcome />
+        <LearningReminders />
         <Toaster />
       </AuthProvider>
     </QueryClientProvider>
   );
 }
 
+
+/** Fades route content in on navigation. Reduced-motion users see no animation. */
+function PageTransition() {
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  return (
+    <div key={pathname} className="animate-page">
+      <Outlet />
+    </div>
+  );
+}

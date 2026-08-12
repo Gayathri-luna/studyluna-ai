@@ -284,7 +284,7 @@ function ChatWindow({
             type="button"
             title={item.hint}
             onClick={() => setMode(item.id)}
-            className={`rounded-full border px-3 py-1.5 text-xs transition-colors ${
+            className={`rounded-full border px-3 py-1.5 text-xs transition-all duration-200 hover:scale-[1.04] active:scale-95 motion-reduce:hover:scale-100 ${
               mode === item.id
                 ? "border-primary bg-primary text-primary-foreground"
                 : "border-border bg-background text-muted-foreground hover:bg-accent hover:text-foreground"

@@ -10,6 +10,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import lunaLogo from "@/assets/luna-logo.png";
+import { WhatsNew } from "@/components/WhatsNew";
 
 const DESCRIPTION =
   "LUNA is an AI-powered learning platform for engineering students — roadmaps, skills, projects, government jobs, resources and an AI mentor in one place.";
@@ -116,11 +117,12 @@ function HomePage() {
       <section className="container mx-auto px-4 py-16 sm:py-20">
         <h2 className="sr-only">What you can do on LUNA</h2>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {FEATURES.map(({ to, icon: Icon, title, text }) => (
+          {FEATURES.map(({ to, icon: Icon, title, text }, index) => (
             <Link
               key={to}
+              style={{ animationDelay: `${index * 60}ms` }}
               to={to}
-              className="group rounded-2xl border border-border/70 bg-card/50 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/60 hover:shadow-lg active:translate-y-0 active:scale-[0.98]"
+              className="group animate-rise rounded-2xl border border-border/70 bg-card/50 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/60 hover:shadow-lg active:translate-y-0 active:scale-[0.98]"
             >
               <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-110">
                 <Icon className="h-6 w-6" />
@@ -134,6 +136,8 @@ function HomePage() {
           ))}
         </div>
       </section>
+
+      <WhatsNew limit={6} />
     </div>
   );
 }

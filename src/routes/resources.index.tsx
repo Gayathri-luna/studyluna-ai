@@ -35,12 +35,13 @@ function ResourcesPage() {
       </header>
 
       <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {resourceCategories.map((category) => (
+        {resourceCategories.map((category, index) => (
           <Link
             key={category.slug}
             to="/resources/$slug"
             params={{ slug: category.slug }}
-            className="group rounded-xl border border-border/70 bg-card/50 p-5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 active:scale-[0.98]"
+            style={{ animationDelay: `${index * 60}ms` }}
+            className="group animate-rise rounded-xl border border-border/70 bg-card/50 p-5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 active:scale-[0.98]"
           >
             <h2 className="flex items-center gap-2 text-lg font-bold text-foreground">
               {category.title}

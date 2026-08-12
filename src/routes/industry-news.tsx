@@ -53,7 +53,8 @@ function CareerUpdatesPage() {
             {(detail?.careerFocus ?? []).map((focus, index) => (
               <article
                 key={focus.area}
-                className="rounded-2xl border border-border/70 bg-card/50 p-5 backdrop-blur-xl sm:p-6"
+                style={{ animationDelay: `${index * 70}ms` }}
+                className="animate-rise rounded-2xl border border-border/70 bg-card/50 p-5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 sm:p-6"
               >
                 <div className="flex items-start gap-3">
                   <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/15 text-xs font-bold text-primary">
