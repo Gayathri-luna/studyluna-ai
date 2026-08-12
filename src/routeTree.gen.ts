@@ -19,6 +19,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndustryNewsRouteImport } from './routes/industry-news'
 import { Route as LearningHubRouteImport } from './routes/learning-hub'
 import { Route as LunaAiRouteImport } from './routes/luna-ai'
+import { Route as MyPlanRouteImport } from './routes/my-plan'
 import { Route as PlatformRouteImport } from './routes/platform'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as ProjectsRouteImport } from './routes/projects'
@@ -84,6 +85,11 @@ const LearningHubRoute = LearningHubRouteImport.update({
 const LunaAiRoute = LunaAiRouteImport.update({
   id: '/luna-ai',
   path: '/luna-ai',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyPlanRoute = MyPlanRouteImport.update({
+  id: '/my-plan',
+  path: '/my-plan',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PlatformRoute = PlatformRouteImport.update({
@@ -178,6 +184,7 @@ export interface FileRoutesByFullPath {
   '/industry-news': typeof IndustryNewsRoute
   '/learning-hub': typeof LearningHubRoute
   '/luna-ai': typeof LunaAiRouteWithChildren
+  '/my-plan': typeof MyPlanRoute
   '/platform': typeof PlatformRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/projects': typeof ProjectsRoute
@@ -205,6 +212,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/industry-news': typeof IndustryNewsRoute
   '/learning-hub': typeof LearningHubRoute
+  '/my-plan': typeof MyPlanRoute
   '/platform': typeof PlatformRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/projects': typeof ProjectsRoute
@@ -234,6 +242,7 @@ export interface FileRoutesById {
   '/industry-news': typeof IndustryNewsRoute
   '/learning-hub': typeof LearningHubRoute
   '/luna-ai': typeof LunaAiRouteWithChildren
+  '/my-plan': typeof MyPlanRoute
   '/platform': typeof PlatformRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/projects': typeof ProjectsRoute
@@ -264,6 +273,7 @@ export interface FileRouteTypes {
     | '/industry-news'
     | '/learning-hub'
     | '/luna-ai'
+    | '/my-plan'
     | '/platform'
     | '/privacy-policy'
     | '/projects'
@@ -291,6 +301,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/industry-news'
     | '/learning-hub'
+    | '/my-plan'
     | '/platform'
     | '/privacy-policy'
     | '/projects'
@@ -319,6 +330,7 @@ export interface FileRouteTypes {
     | '/industry-news'
     | '/learning-hub'
     | '/luna-ai'
+    | '/my-plan'
     | '/platform'
     | '/privacy-policy'
     | '/projects'
@@ -348,6 +360,7 @@ export interface RootRouteChildren {
   IndustryNewsRoute: typeof IndustryNewsRoute
   LearningHubRoute: typeof LearningHubRoute
   LunaAiRoute: typeof LunaAiRouteWithChildren
+  MyPlanRoute: typeof MyPlanRoute
   PlatformRoute: typeof PlatformRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   ProjectsRoute: typeof ProjectsRoute
@@ -434,6 +447,13 @@ declare module '@tanstack/react-router' {
       path: '/luna-ai'
       fullPath: '/luna-ai'
       preLoaderRoute: typeof LunaAiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-plan': {
+      id: '/my-plan'
+      path: '/my-plan'
+      fullPath: '/my-plan'
+      preLoaderRoute: typeof MyPlanRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/platform': {
@@ -575,6 +595,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndustryNewsRoute: IndustryNewsRoute,
   LearningHubRoute: LearningHubRoute,
   LunaAiRoute: LunaAiRouteWithChildren,
+  MyPlanRoute: MyPlanRoute,
   PlatformRoute: PlatformRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   ProjectsRoute: ProjectsRoute,
@@ -593,13 +614,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

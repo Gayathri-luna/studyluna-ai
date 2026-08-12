@@ -30,15 +30,15 @@ export interface LearningGoal {
   goal: string;
   schedule: ScheduleId;
   /** "HH:MM" 24h local time, optional. */
-  reminderTime?: string;
+  reminderTime?: string | undefined;
   /** ISO date (yyyy-mm-dd), optional. */
-  targetDate?: string;
+  targetDate?: string | undefined;
   /** Optional daily study minutes. */
-  dailyMinutes?: number;
+  dailyMinutes?: number | undefined;
   status: StatusId;
   createdAt: number;
   /** Timestamp of last reminder fired, used to fire at most once a day. */
-  lastRemindedAt?: number;
+  lastRemindedAt?: number | undefined;
 }
 
 const KEY = "luna-learning-plan-v1";
@@ -87,7 +87,7 @@ export function usePlan() {
     };
   }, []);
 
-  const addGoal = useCallback((goal: Omit<LearningGoal, "id" | "createdAt" | "status"> & { status?: StatusId }) => {
+  const addGoal = useCallback((goal: Omit<LearningGoal, "id" | "createdAt" | "status"> & { status?: StatusId | undefined }) => {
     const next: LearningGoal = {
       ...goal,
       status: goal.status ?? "not-started",
