@@ -25,6 +25,7 @@ export const Route = createFileRoute("/dashboard")({
 });
 
 const QUICK_LINKS = [
+  { to: "/my-plan", label: "My Learning Plan", desc: "Your goals, reminders and progress" },
   { to: "/luna-ai", label: "LunaAI 7.0", desc: "Multimodal AI learning assistant" },
   { to: "/roadmaps", label: "Roadmaps", desc: "Branch-wise learning paths" },
   { to: "/skills", label: "Skills", desc: "Technical & soft skills" },
@@ -70,7 +71,7 @@ function DashboardPage() {
           <Link
             key={link.to}
             to={link.to}
-            className="rounded-xl border border-border bg-card p-5 transition-colors hover:border-primary/60 hover:bg-accent/40"
+            className="animate-rise rounded-xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:bg-accent/40"
           >
             <p className="font-semibold text-foreground">{link.label}</p>
             <p className="mt-1 text-sm text-muted-foreground">{link.desc}</p>

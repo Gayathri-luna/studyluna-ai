@@ -59,7 +59,7 @@ export function WhatsNew({ limit }: { limit?: number }) {
                   {inner}
                 </a>
               ) : (
-                <Link to={update.href} className={className}>
+                <Link to={update.href as never} className={className}>
                   {inner}
                 </Link>
               )}
