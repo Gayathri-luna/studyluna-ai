@@ -32,7 +32,7 @@ export function BranchSwitcher({ value, onSelect, className, label = "Your branc
               type="button"
               onClick={() => choose(b.slug)}
               aria-pressed={selected}
-              className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition-all ${
+              className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition-all duration-200 hover:scale-[1.04] active:scale-95 motion-reduce:hover:scale-100 ${
                 selected
                   ? "border-primary/70 bg-primary/15 text-primary"
                   : "border-border/70 bg-card/50 text-muted-foreground hover:border-primary/50 hover:text-foreground"
