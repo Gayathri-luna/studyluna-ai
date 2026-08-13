@@ -54,14 +54,14 @@ export function GlobalSearch({ open, onOpenChange }: Props) {
         </CommandGroup>
         <CommandGroup heading="Projects">
           {miniProjects.map((p) => (
-            <CommandItem key={p.slug} value={`${p.title} ${p.domain} project`} onSelect={() => go("/projects")}>
+            <CommandItem key={p.slug} value={`${p.title} ${p.domain} project`} onSelect={() => go(`/projects#${p.slug}`)}>
               {p.title}
             </CommandItem>
           ))}
         </CommandGroup>
         <CommandGroup heading="Resources">
           {resourceCategories.map((c) => (
-            <CommandItem key={c.slug} value={`${c.title} resources`} onSelect={() => go("/resources")}>
+            <CommandItem key={c.slug} value={`${c.title} resources`} onSelect={() => go(`/resources/${c.slug}`)}>
               {c.title}
             </CommandItem>
           ))}

@@ -60,7 +60,7 @@ function DashboardPage() {
             Sign in to save your branch, progress and bookmarks across devices.
           </p>
           <Button asChild className="mt-4">
-            <Link to="/auth">Sign in</Link>
+            <Link to="/auth" search={{}}>Sign in</Link>
           </Button>
         </div>
       )}
