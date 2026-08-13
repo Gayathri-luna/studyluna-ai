@@ -17,10 +17,13 @@ export function RequireAuth({
   title = "Sign in to continue",
   message = "This feature is available to signed-in students.",
   redirect = true,
+  redirectTo,
 }: {
   children: ReactNode;
   title?: string;
   message?: string;
+  /** Where to send the user back after login. Defaults to the current location. */
+  redirectTo?: string;
   /** true = auto-redirect to /auth, false = show an inline prompt */
   redirect?: boolean;
 }) {
@@ -29,7 +32,8 @@ export function RequireAuth({
   const href = useRouterState({ select: (s) => s.location.href });
   // Capture the first location so the redirect target never chains onto /auth.
   const target = useRef(href);
-  const pathname = target.current.startsWith("/auth") ? "/dashboard" : target.current;
+  const captured = redirectTo ?? target.current;
+  const pathname = captured.startsWith("/auth") ? "/dashboard" : captured;
 
   useEffect(() => {
     if (!loading && !user && redirect) {

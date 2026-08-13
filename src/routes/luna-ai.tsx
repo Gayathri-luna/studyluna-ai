@@ -62,6 +62,7 @@ function LunaLayout() {
 
   return (
     <RequireAuth
+      redirectTo="/luna-ai"
       title="Sign in to use LunaAI"
       message="LunaAI conversations are tied to your account, so please log in or create a free account to continue."
     >
