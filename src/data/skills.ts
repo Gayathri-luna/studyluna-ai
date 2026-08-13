@@ -44,7 +44,11 @@ export const skills: Skill[] = [
       "Learn functions, arrays, files and error handling.",
       "Build one tool you personally use.",
     ],
-    [r("freeCodeCamp", "https://www.freecodecamp.org/"), r("Exercism", "https://exercism.org/")],
+    [
+      r("freeCodeCamp", "https://www.freecodecamp.org/"),
+      r("Exercism", "https://exercism.org/"),
+      r("Codedex — interactive, game-like coding lessons", "https://www.codedex.io/"),
+    ],
   ),
   tech(
     "c",
@@ -57,7 +61,7 @@ export const skills: Skill[] = [
       "Read datasheets and map registers to C code.",
       "Blink an LED on a real microcontroller.",
     ],
-    [r("Learn-C.org", "https://www.learn-c.org/"), r("GeeksforGeeks C", "https://www.geeksforgeeks.org/c-programming-language/")],
+    [r("Codedex — interactive C track", "https://www.codedex.io/c"), r("Learn-C.org", "https://www.learn-c.org/"), r("GeeksforGeeks C", "https://www.geeksforgeeks.org/c-programming-language/")],
   ),
   tech(
     "cpp",
@@ -83,7 +87,7 @@ export const skills: Skill[] = [
       "Automate one boring task in your life.",
       "Build a small app with Flask or Streamlit.",
     ],
-    [r("Python docs tutorial", "https://docs.python.org/3/tutorial/"), r("Automate the Boring Stuff", "https://automatetheboringstuff.com/")],
+    [r("Codedex — beginner-friendly Python course", "https://www.codedex.io/python"), r("Python docs tutorial", "https://docs.python.org/3/tutorial/"), r("Automate the Boring Stuff", "https://automatetheboringstuff.com/")],
   ),
   tech(
     "java",
