@@ -75,6 +75,7 @@ export function Navbar() {
           ) : (
             <Link
               to="/auth"
+              search={{}}
               className="hidden items-center gap-1.5 rounded-full bg-primary px-3.5 py-2 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03] sm:inline-flex"
             >
               <LogIn className="h-4 w-4" /> Login

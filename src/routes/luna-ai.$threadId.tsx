@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { readLunaModel } from "@/lib/luna-models";
+import { supabase } from "@/integrations/supabase/client";
 import {
   LEARN_MODES,
   PODCAST_OUTPUTS,
@@ -43,10 +44,10 @@ const DOC_TYPES = "application/pdf,text/plain,text/markdown,text/csv";
 const MAX_FILE_MB = 20;
 
 const SUGGESTIONS = [
-  "Explain MOSFET operating regions with a worked example",
-  "Upload a circuit photo and I'll identify the components",
+  "Explain a tough concept from my subject with a worked example",
+  "Upload a photo of a problem or diagram and I'll explain it",
   "Turn my lecture recording into revision notes",
-  "Give me a step-by-step TinyML mini project",
+  "Give me a step-by-step mini project for my branch",
 ];
 
 const PODCAST_PROMPTS: Record<PodcastOutput, string> = {
@@ -123,9 +124,14 @@ function ChatWindow({
     () =>
       new DefaultChatTransport({
         api: "/api/chat",
-        prepareSendMessagesRequest: ({ messages }) => ({
-          body: { messages, mode: modeRef.current, model: readLunaModel() },
-        }),
+        prepareSendMessagesRequest: async ({ messages }) => {
+          const { data } = await supabase.auth.getSession();
+          const token = data.session?.access_token;
+          return {
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
+            body: { messages, mode: modeRef.current, model: readLunaModel() },
+          };
+        },
       }),
     [],
   );
@@ -147,8 +153,10 @@ function ChatWindow({
     transport,
     onError: (error) => {
       toast.error(
-        error.message.includes("429")
-          ? "Too many requests right now — please try again in a moment."
+        error.message.includes("401")
+          ? "Please log in again to keep chatting with LunaAI."
+          : error.message.includes("429")
+          ? "You have reached your LunaAI limit for now — please try again later."
           : error.message.includes("402")
             ? "AI credits are exhausted. Please add credits to continue."
             : "LunaAI could not respond. Please try again.",

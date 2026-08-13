@@ -23,6 +23,9 @@ export const Route = createFileRoute("/auth")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  validateSearch: (search: Record<string, unknown>): { redirect?: string } =>
+    typeof search["redirect"] === "string" ? { redirect: search["redirect"] as string } : {},
+
   component: AuthPage,
 });
 
@@ -34,10 +37,12 @@ function AuthPage() {
   const [busy, setBusy] = useState(false);
   const { user, loading } = useAuth();
   const navigate = useNavigate();
+  const { redirect } = Route.useSearch();
+  const destination = redirect && redirect.startsWith("/") ? redirect : "/dashboard";
 
   useEffect(() => {
-    if (!loading && user) void navigate({ to: "/dashboard", replace: true });
-  }, [user, loading, navigate]);
+    if (!loading && user) void navigate({ to: destination, replace: true });
+  }, [user, loading, navigate, destination]);
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -61,7 +66,7 @@ function AuthPage() {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
       }
-      void navigate({ to: "/dashboard" });
+      void navigate({ to: destination });
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Something went wrong.");
     } finally {
@@ -71,14 +76,16 @@ function AuthPage() {
 
   const google = async () => {
     const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
+      redirect_uri: `${window.location.origin}/auth${
+        destination === "/dashboard" ? "" : `?redirect=${encodeURIComponent(destination)}`
+      }`,
     });
     if (result.error) {
       toast.error("Google sign-in failed. Please try again.");
       return;
     }
     if (result.redirected) return;
-    void navigate({ to: "/dashboard" });
+    void navigate({ to: destination });
   };
 
   return (

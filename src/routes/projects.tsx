@@ -1,5 +1,10 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { miniProjects } from "@/data/ece";
+import { branches } from "@/data/branches";
+import { branchDetails } from "@/data/branchDetails";
+import { BranchSwitcher } from "@/components/BranchSwitcher";
+import { BranchSection, BulletGrid } from "@/components/BranchSection";
+import { useAuth } from "@/lib/auth";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -11,14 +16,14 @@ import {
 import { Sparkles } from "lucide-react";
 
 const DESCRIPTION =
-  "ECE mini projects with objectives, component lists, and step-by-step procedures across IoT, VLSI, RF, DSP, embedded, and edge AI.";
+  "Branch-wise engineering mini and major project ideas, plus detailed build guides with objectives, components and step-by-step procedures.";
 
 export const Route = createFileRoute("/projects")({
   head: () => ({
     meta: [
-      { title: "ECE Mini Projects with Procedures | Luna.io" },
+      { title: "Engineering Mini Projects with Procedures | LUNA" },
       { name: "description", content: DESCRIPTION },
-      { property: "og:title", content: "ECE Mini Projects with Procedures" },
+      { property: "og:title", content: "Engineering Mini Projects with Procedures" },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -34,6 +39,11 @@ const levelVariant: Record<string, "secondary" | "default" | "destructive"> = {
 };
 
 function ProjectsPage() {
+  const { branch } = useAuth();
+  const active = branch && branchDetails[branch] ? branch : "ece";
+  const detail = branchDetails[active]!;
+  const branchName = branches.find((b) => b.slug === active)?.name ?? "your branch";
+
   return (
     <div className="container mx-auto px-4 py-16">
       <header className="mx-auto max-w-3xl text-center">
@@ -41,8 +51,8 @@ function ProjectsPage() {
           Mini Projects
         </h1>
         <p className="mt-4 text-lg text-muted-foreground">
-          Buildable ECE projects with clear objectives, component lists, and
-          ordered procedures you can follow end to end.
+          Project ideas for your branch, plus detailed build guides with clear
+          objectives, component lists and ordered procedures.
         </p>
         <Link
           to="/luna-ai"
@@ -53,7 +63,25 @@ function ProjectsPage() {
         </Link>
       </header>
 
-      <div className="mt-14 space-y-8">
+      <BranchSwitcher className="mx-auto mt-10 max-w-3xl" label="Show projects for" />
+
+      <div className="mx-auto max-w-4xl">
+        <BranchSection title={`Mini project ideas — ${branchName}`}>
+          <BulletGrid items={detail.miniProjects} />
+        </BranchSection>
+        <BranchSection title={`Major project ideas — ${branchName}`}>
+          <BulletGrid items={detail.majorProjects} />
+        </BranchSection>
+      </div>
+
+      <h2 className="mt-16 text-center text-2xl font-bold text-foreground">
+        Detailed build guides
+      </h2>
+      <p className="mx-auto mt-2 max-w-2xl text-center text-sm text-muted-foreground">
+        Full step-by-step guides (currently electronics and embedded focused — more branches coming).
+      </p>
+
+      <div className="mt-10 space-y-8">
         {miniProjects.map((project) => (
           <Card key={project.slug} id={project.slug}>
             <CardHeader>

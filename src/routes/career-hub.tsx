@@ -22,14 +22,14 @@ import {
 import { Sparkles } from "lucide-react";
 
 const DESCRIPTION =
-  "ECE career roadmaps for core jobs, technical and non-technical skills, and the latest hiring updates — with Luna AI guidance.";
+  "Engineering career roadmaps for core jobs, technical and non-technical skills, and the latest hiring updates — with Luna AI guidance.";
 
 export const Route = createFileRoute("/career-hub")({
   head: () => ({
     meta: [
-      { title: "Career Hub — ECE Roadmaps & Skills | Luna.io" },
+      { title: "Career Hub — Engineering Roadmaps & Skills | LUNA" },
       { name: "description", content: DESCRIPTION },
-      { property: "og:title", content: "Career Hub — ECE Roadmaps & Skills" },
+      { property: "og:title", content: "Career Hub — Engineering Roadmaps & Skills" },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -43,10 +43,10 @@ function CareerHubPage() {
     <div className="container mx-auto px-4 py-16">
       <header className="mx-auto max-w-3xl text-center">
         <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-          ECE Career Hub
+          Career Hub
         </h1>
         <p className="mt-4 text-lg text-muted-foreground">
-          Stage-by-stage roadmaps for the core Electronics &amp; Communication
+          Stage-by-stage roadmaps for core engineering
           jobs, the skills each one demands, and what the industry is hiring for
           right now.
         </p>
@@ -67,7 +67,7 @@ function CareerHubPage() {
           Core job roadmaps
         </h2>
         <p className="mt-2 text-muted-foreground">
-          Eight core ECE career tracks, each broken into foundation, core
+          Eight core electronics and communication career tracks, each broken into foundation, core
           skills, specialisation, and job-ready stages.
         </p>
 
@@ -168,7 +168,7 @@ function CareerHubPage() {
           Career updates
         </h2>
         <p className="mt-2 text-muted-foreground">
-          Hiring trends shaping ECE roles and what to learn in response.
+          Hiring trends shaping engineering roles and what to learn in response.
         </p>
         <div className="mt-6 space-y-4">
           {careerUpdates.map((update) => (

@@ -27,14 +27,14 @@ import {
 } from "@/components/ui/card";
 
 const DESCRIPTION =
-  "Generate a personalised ECE learning roadmap from your current level and target job, with phase-by-phase steps and recommended mini projects.";
+  "Generate a personalised engineering learning roadmap from your current level and target job, with phase-by-phase steps and recommended mini projects.";
 
 export const Route = createFileRoute("/learning-hub")({
   head: () => ({
     meta: [
-      { title: "Personalised ECE Learning Roadmap | Luna.io" },
+      { title: "Personalised Engineering Learning Roadmap | LUNA" },
       { name: "description", content: DESCRIPTION },
-      { property: "og:title", content: "Personalised ECE Learning Roadmap" },
+      { property: "og:title", content: "Personalised Engineering Learning Roadmap" },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -48,7 +48,7 @@ const LEVELS = [
   "Basics done (2nd year)",
   "Intermediate (3rd year)",
   "Final year / graduating",
-  "Graduate switching into ECE roles",
+  "Graduate switching into core roles",
   "Working professional upskilling",
 ];
 
@@ -75,7 +75,7 @@ function LearningHubPage() {
           <Sparkles className="mr-1 size-3" /> AI-powered
         </Badge>
         <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-          Your personalised ECE learning roadmap
+          Your personalised learning roadmap
         </h1>
         <p className="mt-4 text-lg text-muted-foreground">
           Tell Luna AI where you are and where you want to land. You get a phased

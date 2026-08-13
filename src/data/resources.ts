@@ -45,6 +45,7 @@ export const resourceCategories: ResourceCategory[] = [
     items: [
       { label: "NPTEL / SWAYAM", href: "https://swayam.gov.in/", note: "Credit-eligible Indian courses" },
       { label: "freeCodeCamp", href: "https://www.freecodecamp.org/", note: "Programming and web development" },
+      { label: "Codedex", href: "https://www.codedex.io/", note: "Interactive, game-like coding lessons (Python, JavaScript, HTML/CSS) — great for beginners" },
       { label: "Kaggle Learn", href: "https://www.kaggle.com/learn", note: "Data science micro-courses" },
       { label: "MATLAB Onramp", href: "https://matlabacademy.mathworks.com/", note: "Free official MATLAB training" },
     ],
