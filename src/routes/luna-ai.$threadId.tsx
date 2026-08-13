@@ -44,10 +44,10 @@ const DOC_TYPES = "application/pdf,text/plain,text/markdown,text/csv";
 const MAX_FILE_MB = 20;
 
 const SUGGESTIONS = [
-  "Explain MOSFET operating regions with a worked example",
-  "Upload a circuit photo and I'll identify the components",
+  "Explain a tough concept from my subject with a worked example",
+  "Upload a photo of a problem or diagram and I'll explain it",
   "Turn my lecture recording into revision notes",
-  "Give me a step-by-step TinyML mini project",
+  "Give me a step-by-step mini project for my branch",
 ];
 
 const PODCAST_PROMPTS: Record<PodcastOutput, string> = {

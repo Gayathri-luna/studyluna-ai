@@ -11,14 +11,14 @@ import {
 import { Sparkles } from "lucide-react";
 
 const DESCRIPTION =
-  "ECE mini projects with objectives, component lists, and step-by-step procedures across IoT, VLSI, RF, DSP, embedded, and edge AI.";
+  "Branch-wise engineering mini and major project ideas, plus detailed build guides with objectives, components and step-by-step procedures.";
 
 export const Route = createFileRoute("/projects")({
   head: () => ({
     meta: [
-      { title: "ECE Mini Projects with Procedures | Luna.io" },
+      { title: "Engineering Mini Projects with Procedures | LUNA" },
       { name: "description", content: DESCRIPTION },
-      { property: "og:title", content: "ECE Mini Projects with Procedures" },
+      { property: "og:title", content: "Engineering Mini Projects with Procedures" },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -41,8 +41,8 @@ function ProjectsPage() {
           Mini Projects
         </h1>
         <p className="mt-4 text-lg text-muted-foreground">
-          Buildable ECE projects with clear objectives, component lists, and
-          ordered procedures you can follow end to end.
+          Project ideas for your branch, plus detailed build guides with clear
+          objectives, component lists and ordered procedures.
         </p>
         <Link
           to="/luna-ai"

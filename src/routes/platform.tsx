@@ -16,7 +16,7 @@ import {
 const TITLE = "Platform — LUNA | One Platform. Endless Learning.";
 const DESCRIPTION =
   "LUNA is an AI-powered learning platform for engineering students: roadmaps, technical and non-technical skills, mini projects, career guidance, government jobs, industry updates and community.";
-const URL = "https://studywithluna.lovable.app/platform";
+const URL = "https://studyluna-ai.lovable.app/platform";
 
 export const Route = createFileRoute("/platform")({
   head: () => ({

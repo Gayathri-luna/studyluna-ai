@@ -116,7 +116,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@type": "WebSite",
           name: "LUNA",
           alternateName: "LUNA — One Platform. Endless Learning",
-          url: "https://studywithluna.lovable.app",
+          url: "https://studyluna-ai.lovable.app",
           description: SITE_DESCRIPTION,
         }),
       },

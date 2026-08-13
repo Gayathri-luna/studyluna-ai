@@ -45,7 +45,7 @@ export const generateRoadmap = createServerFn({ method: "POST" })
       .join("\n");
     const tracks = roadmaps.map((r) => `${r.slug}: ${r.title}`).join("\n");
 
-    const prompt = `Build a personalised ECE (Electronics & Communication Engineering) learning roadmap.
+    const prompt = `Build a personalised engineering learning roadmap for the learner's target role.
 
 Learner profile:
 - Current level: ${data.level}
