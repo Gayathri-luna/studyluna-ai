@@ -1,5 +1,10 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { miniProjects } from "@/data/ece";
+import { branches } from "@/data/branches";
+import { branchDetails } from "@/data/branchDetails";
+import { BranchSwitcher } from "@/components/BranchSwitcher";
+import { BranchSection, BulletGrid } from "@/components/BranchSection";
+import { useAuth } from "@/lib/auth";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -34,6 +39,11 @@ const levelVariant: Record<string, "secondary" | "default" | "destructive"> = {
 };
 
 function ProjectsPage() {
+  const { branch } = useAuth();
+  const active = branch && branchDetails[branch] ? branch : "ece";
+  const detail = branchDetails[active]!;
+  const branchName = branches.find((b) => b.slug === active)?.name ?? "your branch";
+
   return (
     <div className="container mx-auto px-4 py-16">
       <header className="mx-auto max-w-3xl text-center">
@@ -53,7 +63,25 @@ function ProjectsPage() {
         </Link>
       </header>
 
-      <div className="mt-14 space-y-8">
+      <BranchSwitcher className="mx-auto mt-10 max-w-3xl" label="Show projects for" />
+
+      <div className="mx-auto max-w-4xl">
+        <BranchSection title={`Mini project ideas — ${branchName}`}>
+          <BulletGrid items={detail.miniProjects} />
+        </BranchSection>
+        <BranchSection title={`Major project ideas — ${branchName}`}>
+          <BulletGrid items={detail.majorProjects} />
+        </BranchSection>
+      </div>
+
+      <h2 className="mt-16 text-center text-2xl font-bold text-foreground">
+        Detailed build guides
+      </h2>
+      <p className="mx-auto mt-2 max-w-2xl text-center text-sm text-muted-foreground">
+        Full step-by-step guides (currently electronics and embedded focused — more branches coming).
+      </p>
+
+      <div className="mt-10 space-y-8">
         {miniProjects.map((project) => (
           <Card key={project.slug} id={project.slug}>
             <CardHeader>
