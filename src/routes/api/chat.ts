@@ -1,4 +1,5 @@
 import { createLovableAiGatewayProvider } from "@/lib/ai-gateway.server";
+import { consumeAiQuota, verifyRequestUser } from "@/lib/ai-limit.server";
 import { createFileRoute } from "@tanstack/react-router";
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
 
@@ -51,6 +52,12 @@ export const Route = createFileRoute("/api/chat")({
   server: {
     handlers: {
       POST: async ({ request }) => {
+        const verified = await verifyRequestUser(request);
+        if ("error" in verified) return verified.error;
+
+        const limited = await consumeAiQuota(verified.userId);
+        if (limited) return limited;
+
         const { messages, mode, model } = (await request.json()) as ChatRequestBody;
         if (!Array.isArray(messages)) {
           return new Response("Messages are required", { status: 400 });
