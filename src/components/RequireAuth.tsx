@@ -1,5 +1,5 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { LogIn, Lock } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 
@@ -26,7 +26,10 @@ export function RequireAuth({
 }) {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
-  const pathname = useRouterState({ select: (s) => s.location.href });
+  const href = useRouterState({ select: (s) => s.location.href });
+  // Capture the first location so the redirect target never chains onto /auth.
+  const target = useRef(href);
+  const pathname = target.current.startsWith("/auth") ? "/dashboard" : target.current;
 
   useEffect(() => {
     if (!loading && !user && redirect) {
