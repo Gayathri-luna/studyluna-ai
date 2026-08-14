@@ -1,15 +1,20 @@
+import { extraBranches } from "./fieldPrograms";
+
 export interface Branch {
   slug: string;
   name: string;
   short: string;
   tagline: string;
+  /** Field(s) of study this branch belongs to. Defaults to ["engineering"]. */
+  fields?: string[];
   phases: { title: string; items: string[] }[];
   coreSkills: string[];
   projectIdeas: string[];
   careers: string[];
 }
 
-export const branches: Branch[] = [
+const engineeringBranches: Branch[] = [
+
   {
     slug: "ece",
     name: "Electronics & Communication",
