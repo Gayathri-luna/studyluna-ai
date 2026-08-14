@@ -368,8 +368,179 @@ export const skills: Skill[] = [
     ],
     [r("TED speaking guide", "https://www.ted.com/participate/organize-a-local-tedx-event/tedx-organizer-guide/speakers-program")],
   ),
+
+  // ---------- Non-technical / domain skills ----------
+  domain(
+    "case-law-reading",
+    "Case Law Reading & Briefing",
+    "Extracting facts, issues, ratio and holding from a judgment.",
+    "Every legal task — drafting, advising, arguing — starts with reading judgments accurately.",
+    [
+      "Read one judgment a day and write a 200-word brief.",
+      "Separate facts, issues, arguments, ratio decidendi and obiter.",
+      "Trace how later benches treated the case.",
+      "Build a personal digest of 50 landmark cases.",
+    ],
+    [r("Indian Kanoon", "https://indiankanoon.org/"), r("Supreme Court of India judgments", "https://main.sci.gov.in/judgments")],
+    { fields: ["law"], careerRelevance: "Core competence for litigation, judicial services, in-house counsel and legal research roles." },
+  ),
+  domain(
+    "legal-drafting",
+    "Legal Drafting",
+    "Writing pleadings, notices, contracts and legal opinions precisely.",
+    "Firms and chambers judge juniors almost entirely on drafting quality.",
+    [
+      "Learn the standard structure of a plaint, written statement and notice.",
+      "Draft one contract clause set per week and get it reviewed.",
+      "Study definitions, indemnity, termination and dispute clauses.",
+      "Rewrite one badly drafted clause into plain, unambiguous language.",
+    ],
+    [r("Bar Council of India resources", "https://www.barcouncilofindia.org/"), r("Indian Kanoon (precedent drafting)", "https://indiankanoon.org/")],
+    { fields: ["law"], careerRelevance: "Directly determines your value as a litigation junior, corporate associate or compliance officer." },
+  ),
+  domain(
+    "statutory-interpretation",
+    "Statutory Interpretation",
+    "Reading bare acts and applying rules of construction.",
+    "Judicial services and advisory work test your handling of the text of the law.",
+    [
+      "Read bare acts before commentaries — always.",
+      "Learn literal, golden and mischief rules with examples.",
+      "Track amendments and notification dates for key statutes.",
+      "Practise applying a provision to fresh factual scenarios.",
+    ],
+    [r("India Code (bare acts)", "https://www.indiacode.nic.in/")],
+    { fields: ["law"], careerRelevance: "Essential for judicial services, drafting and regulatory advisory work." },
+  ),
+  domain(
+    "financial-literacy",
+    "Financial Literacy & Analysis",
+    "Reading financial statements and judging business health.",
+    "Every management role eventually asks: is this decision financially sound?",
+    [
+      "Learn the three statements and how they connect.",
+      "Compute liquidity, leverage and profitability ratios for a real company.",
+      "Build a simple three-year projection in a spreadsheet.",
+      "Read one annual report cover to cover each month.",
+    ],
+    [r("NSE / SEBI investor education", "https://investor.sebi.gov.in/"), r("Corporate Finance Institute resources", "https://corporatefinanceinstitute.com/resources/")],
+    { fields: ["management"], careerRelevance: "Prerequisite for finance, consulting, banking and any general-management track." },
+  ),
+  domain(
+    "market-research",
+    "Market Research",
+    "Designing studies that actually answer a business question.",
+    "Bad research produces confident, wrong decisions.",
+    [
+      "Write the decision the research must support, first.",
+      "Design a questionnaire with unbiased, testable questions.",
+      "Collect at least 100 responses and clean the data.",
+      "Present findings as recommendations, not raw charts.",
+    ],
+    [r("Google Analytics Academy", "https://analytics.google.com/analytics/academy/"), r("Pew Research methods guide", "https://www.pewresearch.org/methods/")],
+    { fields: ["management"], careerRelevance: "Used daily in marketing, product, consulting and startup roles." },
+  ),
+  domain(
+    "business-strategy",
+    "Business Strategy Frameworks",
+    "Structuring messy business problems into clear options.",
+    "Consulting and management interviews are almost entirely structure tests.",
+    [
+      "Learn SWOT, Porter's five forces, 4Ps and value chain — and their limits.",
+      "Solve two case studies a week out loud.",
+      "Practise market sizing with clean assumptions.",
+      "Write one-page recommendations with a clear so-what.",
+    ],
+    [r("Harvard Business Review", "https://hbr.org/"), r("Case interview basics", "https://www.preplounge.com/")],
+    { fields: ["management"], careerRelevance: "Directly tested in consulting, strategy and product-management hiring." },
+  ),
+  domain(
+    "forensic-protocols",
+    "Forensic Protocols & Chain of Custody",
+    "Handling evidence so it survives cross-examination.",
+    "Perfect lab work is worthless if custody or documentation breaks.",
+    [
+      "Learn packaging and labelling rules for each evidence type.",
+      "Maintain a complete custody register for every mock case.",
+      "Practise contamination control and negative controls.",
+      "Write reports that an untrained judge can follow.",
+    ],
+    [r("Directorate of Forensic Science Services", "https://dfs.nic.in/"), r("NIST forensic science resources", "https://www.nist.gov/forensic-science")],
+    { fields: ["forensic-science"], careerRelevance: "Non-negotiable for FSL, police and private forensic laboratory roles." },
+  ),
+  domain(
+    "crime-scene-investigation",
+    "Crime Scene Investigation",
+    "Systematically documenting and recovering evidence from a scene.",
+    "The scene is only searched once — mistakes are permanent.",
+    [
+      "Learn search patterns: spiral, grid, zone and strip.",
+      "Photograph with scale, orientation and close-up shots.",
+      "Sketch the scene with accurate measurements.",
+      "Practise a full mock scene end to end with a written report.",
+    ],
+    [r("NIST crime scene guidance", "https://www.nist.gov/forensic-science"), r("Bureau of Police Research & Development", "https://bprd.nic.in/")],
+    { fields: ["forensic-science"], careerRelevance: "Core skill for crime-scene units, police scientific assistants and investigators." },
+  ),
+  domain(
+    "engineering-standards",
+    "Engineering Standards & Compliance",
+    "Working to IS, IEC, ISO, IEEE and safety codes.",
+    "Industry designs are judged against standards, not just against theory.",
+    [
+      "Identify the standards that govern your branch's core deliverable.",
+      "Read one standard's scope and key clauses in full.",
+      "Apply a relevant code to one of your own projects.",
+      "Document compliance in your project report.",
+    ],
+    [r("Bureau of Indian Standards", "https://www.bis.gov.in/"), r("IEEE standards", "https://standards.ieee.org/")],
+    { fields: ["engineering"], careerRelevance: "Valued in core, manufacturing, construction and product-safety roles." },
+  ),
+  domain(
+    "technical-documentation",
+    "Technical Documentation",
+    "Datasheets, specifications, test reports and design documents.",
+    "Engineering work is transferred through documents, not conversations.",
+    [
+      "Read one datasheet fully and summarise its ratings.",
+      "Write a specification before building your next project.",
+      "Record test results in a repeatable format.",
+      "Maintain a README and design note for every repository.",
+    ],
+    [r("Google technical writing course", "https://developers.google.com/tech-writing")],
+    { careerRelevance: "Every engineering, IT and research employer relies on clear documentation." },
+  ),
+  domain(
+    "data-privacy-compliance",
+    "Data Privacy & Compliance",
+    "Handling personal data lawfully under the DPDP Act and GDPR.",
+    "Any product that touches user data now carries legal obligations.",
+    [
+      "Learn what counts as personal and sensitive data.",
+      "Understand consent, purpose limitation and retention.",
+      "Map data flows for one application you have built.",
+      "Write a simple privacy notice for that application.",
+    ],
+    [r("MeitY DPDP Act", "https://www.meity.gov.in/"), r("GDPR text", "https://gdpr-info.eu/")],
+    { fields: ["emerging-tech", "computer-applications", "law"], careerRelevance: "Required in fintech, health-tech, cloud and any consumer product team." },
+  ),
 ];
 
-export const technicalSkillList = skills.filter((s) => s.type === "technical");
-export const softSkillList = skills.filter((s) => s.type === "soft");
+const inList = (list: string[] | undefined, value: string) => !list || list.length === 0 || list.includes(value);
+
+export const skillsByCategory = (category: SkillCategory) => skills.filter((s) => s.category === category);
+
+/** Filter by category plus the active field/branch from the branch selector. */
+export function filterSkills(category: SkillCategory, field?: string, branch?: string | null) {
+  return skills.filter(
+    (s) =>
+      s.category === category &&
+      (!field || field === "all" || inList(s.fields, field)) &&
+      (!branch || inList(s.branches, branch)),
+  );
+}
+
+export const technicalSkillList = skills.filter((s) => s.category === "technical");
+export const domainSkillList = skills.filter((s) => s.category === "domain");
+export const softSkillList = skills.filter((s) => s.category === "soft");
 export const skillBySlug = (slug: string) => skills.find((s) => s.slug === slug);
