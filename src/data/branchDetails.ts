@@ -1,3 +1,5 @@
+import { extraBranchDetails } from "./fieldPrograms";
+
 /**
  * Branch-specific structured learning data.
  *
@@ -31,7 +33,7 @@ export interface BranchDetail {
   careerFocus: CareerFocus[];
 }
 
-export const branchDetails: Record<string, BranchDetail> = {
+const engineeringBranchDetails: Record<string, BranchDetail> = {
   ece: {
     subjects: [
       "Basic Electrical & Electronics Engineering (BEEE)",
@@ -600,6 +602,11 @@ export const branchDetails: Record<string, BranchDetail> = {
       { area: "Energy Transition", detail: "CCS, geothermal and hydrogen projects reuse subsurface skills in new markets.", skills: ["CO2 storage", "Techno-economics", "Subsurface modelling"] },
     ],
   },
+};
+
+export const branchDetails: Record<string, BranchDetail> = {
+  ...engineeringBranchDetails,
+  ...extraBranchDetails,
 };
 
 export const branchDetailBySlug = (slug: string): BranchDetail | undefined => branchDetails[slug];
