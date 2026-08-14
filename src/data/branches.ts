@@ -332,6 +332,8 @@ const engineeringBranches: Branch[] = [
     name: "Cyber Security",
     short: "Cyber Sec",
     tagline: "Securing networks, applications, cloud and data against attacks.",
+    fields: ["engineering", "emerging-tech"],
+
     phases: [
       {
         title: "Phase 1 — Foundations",
