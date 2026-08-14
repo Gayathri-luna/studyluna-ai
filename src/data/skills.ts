@@ -1,36 +1,67 @@
+export type SkillCategory = "technical" | "domain" | "soft";
+
 export interface Skill {
   slug: string;
   name: string;
-  type: "technical" | "soft";
+  /** Kept for backwards compatibility with existing links and cards. */
+  type: SkillCategory;
+  category: SkillCategory;
+  /** Fields of study this skill is most relevant to. Empty = relevant to everyone. */
+  fields?: string[];
+  /** Specific branch slugs this skill is most relevant to. Empty = all branches. */
+  branches?: string[];
   summary: string;
   why: string;
   steps: string[];
   resources: { label: string; href: string }[];
+  /** Why this skill matters for a career, shown on the guide page. */
+  careerRelevance?: string;
 }
 
 const r = (label: string, href: string) => ({ label, href });
 
-function tech(
+function make(
+  category: SkillCategory,
   slug: string,
   name: string,
   summary: string,
   why: string,
   steps: string[],
   resources: { label: string; href: string }[],
+  extra: { fields?: string[]; branches?: string[]; careerRelevance?: string } = {},
 ): Skill {
-  return { slug, name, type: "technical", summary, why, steps, resources };
+  return { slug, name, type: category, category, summary, why, steps, resources, ...extra };
 }
 
-function soft(
+const tech = (
   slug: string,
   name: string,
   summary: string,
   why: string,
   steps: string[],
   resources: { label: string; href: string }[],
-): Skill {
-  return { slug, name, type: "soft", summary, why, steps, resources };
-}
+  extra: { fields?: string[]; branches?: string[]; careerRelevance?: string } = {},
+) => make("technical", slug, name, summary, why, steps, resources, extra);
+
+const domain = (
+  slug: string,
+  name: string,
+  summary: string,
+  why: string,
+  steps: string[],
+  resources: { label: string; href: string }[],
+  extra: { fields?: string[]; branches?: string[]; careerRelevance?: string } = {},
+) => make("domain", slug, name, summary, why, steps, resources, extra);
+
+const soft = (
+  slug: string,
+  name: string,
+  summary: string,
+  why: string,
+  steps: string[],
+  resources: { label: string; href: string }[],
+  extra: { fields?: string[]; branches?: string[]; careerRelevance?: string } = {},
+) => make("soft", slug, name, summary, why, steps, resources, extra);
 
 export const skills: Skill[] = [
   tech(
