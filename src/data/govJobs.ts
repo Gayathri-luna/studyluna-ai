@@ -20,6 +20,7 @@ export const govJobs: GovJob[] = [
     org: "ISRO",
     full: "Indian Space Research Organisation",
     category: "Space & Research",
+    fields: ["engineering", "emerging-tech"],
     summary: "Scientist/Engineer 'SC' roles in satellite, avionics and communication systems.",
     eligibility: [
       "BE/BTech in ECE, EEE, CSE, Mechanical or Aerospace",
@@ -51,6 +52,7 @@ export const govJobs: GovJob[] = [
     org: "DRDO",
     full: "Defence Research and Development Organisation",
     category: "Defence & Research",
+    fields: ["engineering", "emerging-tech"],
     summary: "Scientist 'B' roles via DRDO RAC / GATE score in defence electronics and systems.",
     eligibility: [
       "BE/BTech with minimum 60% in a relevant branch",
@@ -81,6 +83,7 @@ export const govJobs: GovJob[] = [
     org: "BEL",
     full: "Bharat Electronics Limited",
     category: "PSU",
+    fields: ["engineering", "emerging-tech"],
     summary: "Probationary Engineer roles in defence electronics manufacturing and R&D.",
     eligibility: [
       "BE/BTech in ECE, EEE, CSE or Mechanical",
@@ -103,6 +106,7 @@ export const govJobs: GovJob[] = [
     org: "HAL",
     full: "Hindustan Aeronautics Limited",
     category: "PSU",
+    fields: ["engineering", "emerging-tech"],
     summary: "Design and Management Trainee roles in aircraft systems and avionics.",
     eligibility: [
       "BE/BTech in Aerospace, Mechanical, ECE, EEE or CSE",
@@ -125,6 +129,7 @@ export const govJobs: GovJob[] = [
     org: "ECIL",
     full: "Electronics Corporation of India Limited",
     category: "PSU",
+    fields: ["engineering", "emerging-tech"],
     summary: "Graduate Engineer Trainee roles in nuclear, defence and e-governance electronics.",
     eligibility: [
       "BE/BTech in ECE, EEE, CSE or Mechanical",
@@ -147,6 +152,7 @@ export const govJobs: GovJob[] = [
     org: "BHEL",
     full: "Bharat Heavy Electricals Limited",
     category: "PSU",
+    fields: ["engineering", "emerging-tech"],
     summary: "Engineer Trainee roles in power plant equipment and heavy electrical systems.",
     eligibility: [
       "BE/BTech in Mechanical, Electrical, ECE or Civil",
@@ -169,6 +175,7 @@ export const govJobs: GovJob[] = [
     org: "Railways",
     full: "RRB — Junior Engineer & Special Class Apprentice",
     category: "Government",
+    fields: ["engineering", "emerging-tech"],
     summary: "Junior Engineer roles across signalling, telecom, electrical and mechanical departments.",
     eligibility: [
       "Diploma or BE/BTech in a relevant branch",
@@ -195,6 +202,7 @@ export const govJobs: GovJob[] = [
     org: "BSNL",
     full: "Bharat Sanchar Nigam Limited",
     category: "PSU",
+    fields: ["engineering", "emerging-tech"],
     summary: "Junior Telecom Officer roles in network operations and telecom infrastructure.",
     eligibility: [
       "BE/BTech in ECE, EEE, CSE or IT",
@@ -217,6 +225,7 @@ export const govJobs: GovJob[] = [
     org: "GATE",
     full: "Graduate Aptitude Test in Engineering",
     category: "Exam",
+    fields: ["engineering", "emerging-tech"],
     summary: "The single exam that unlocks PSUs, MTech admissions and many research roles.",
     eligibility: [
       "Final year students or graduates of BE/BTech/BSc(Research)",
@@ -248,6 +257,7 @@ export const govJobs: GovJob[] = [
     org: "SSC JE",
     full: "Staff Selection Commission — Junior Engineer",
     category: "Government",
+    fields: ["engineering", "emerging-tech"],
     summary: "Junior Engineer posts in central government departments (Civil, Electrical, Mechanical).",
     eligibility: [
       "Diploma or degree in Civil, Electrical or Mechanical engineering",
