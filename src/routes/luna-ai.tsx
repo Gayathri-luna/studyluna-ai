@@ -19,6 +19,9 @@ const DESCRIPTION =
   "LunaAI 7.0 is a multimodal AI learning assistant for engineering students — chat, photos, audio, podcasts and documents turned into explanations, notes and questions.";
 
 export const Route = createFileRoute("/luna-ai")({
+  validateSearch: (search: Record<string, unknown>): { topic?: string } =>
+    typeof search.topic === "string" && search.topic ? { topic: search.topic } : {},
+
   head: () => ({
     meta: [
       { title: "LunaAI 7.0 — Multimodal AI Learning Assistant | StudyLUNA" },
