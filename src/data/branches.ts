@@ -303,6 +303,8 @@ const engineeringBranches: Branch[] = [
     name: "AI & Data Science",
     short: "AI & DS",
     tagline: "Machine learning, data engineering and applied AI.",
+    fields: ["engineering", "emerging-tech"],
+
     phases: [
       {
         title: "Phase 1 — Foundations",
