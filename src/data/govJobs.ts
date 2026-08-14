@@ -3,6 +3,8 @@ export interface GovJob {
   org: string;
   full: string;
   category: string;
+  /** Fields of study this exam is most relevant to. Empty = open to all fields. */
+  fields?: string[];
   summary: string;
   eligibility: string[];
   skills: string[];
@@ -267,6 +269,198 @@ export const govJobs: GovJob[] = [
     ],
     resources: [{ label: "SSC official", href: "https://ssc.gov.in/" }],
   },
+  {
+    slug: "upsc-civil-services",
+    org: "UPSC",
+    full: "Civil Services Examination (IAS / IPS / IFS)",
+    category: "Civil Services",
+    fields: ["engineering", "management", "computer-applications", "law", "forensic-science", "emerging-tech"],
+    summary: "India's flagship administrative service exam, open to graduates of every discipline.",
+    eligibility: [
+      "Bachelor's degree in any discipline from a recognised university",
+      "Age 21–32 years for general category (relaxations apply)",
+      "6 attempts for general category",
+    ],
+    skills: ["Current affairs", "Answer writing", "Analytical reasoning", "Essay writing", "Optional subject depth"],
+    salary: "Level 10 entry — approx ₹56,100 basic, ₹85K–₹1L gross per month plus service benefits",
+    examPattern: [
+      "Prelims: GS Paper 1 (200 marks) + CSAT Paper 2 (qualifying, 33%)",
+      "Mains: 9 papers including essay, 4 GS papers and 2 optional papers",
+      "Personality Test (interview): 275 marks",
+      "Final merit from Mains (1750) + interview (275)",
+    ],
+    roadmap: [
+      "Read NCERTs class 6–12 for history, polity, geography and economy.",
+      "Follow one newspaper daily and make monthly current-affairs notes.",
+      "Choose an optional subject you genuinely enjoy and finish its syllabus early.",
+      "Write 2 answers daily and take weekly full-length tests.",
+      "Revise 4 times before prelims — revision beats new sources.",
+    ],
+    resources: [
+      { label: "UPSC official", href: "https://www.upsc.gov.in/" },
+      { label: "NCERT textbooks", href: "https://ncert.nic.in/textbook.php" },
+    ],
+  },
+  {
+    slug: "banking",
+    org: "IBPS / SBI / RBI",
+    full: "Banking Recruitment (PO, Clerk, RBI Grade B)",
+    category: "Banking & Finance",
+    fields: ["management", "computer-applications", "engineering", "emerging-tech"],
+    summary: "Probationary Officer, Clerk and RBI Grade B roles across public sector banks.",
+    eligibility: [
+      "Bachelor's degree in any discipline",
+      "Age 20–30 years for PO (relaxations apply)",
+      "Computer literacy and regional language proficiency for some posts",
+    ],
+    skills: ["Quantitative aptitude", "Reasoning", "English", "Banking awareness", "Financial awareness"],
+    salary: "IBPS PO — approx ₹52,000–₹58,000 gross per month; RBI Grade B — approx ₹1.1L gross",
+    examPattern: [
+      "Prelims: English, Quant and Reasoning — sectional timing",
+      "Mains: adds General/Economy/Banking Awareness and Data Interpretation",
+      "Descriptive paper (letter and essay) for PO",
+      "Interview for PO and RBI Grade B",
+    ],
+    roadmap: [
+      "Build speed: 30 minutes of mental maths daily.",
+      "Master DI sets and puzzles — they decide the Mains score.",
+      "Read banking and economy news for 20 minutes a day.",
+      "Take 3 sectional tests plus 1 full mock every week.",
+      "Practise descriptive writing in 20-minute timed blocks.",
+    ],
+    resources: [
+      { label: "IBPS official", href: "https://www.ibps.in/" },
+      { label: "RBI opportunities", href: "https://opportunities.rbi.org.in/" },
+    ],
+  },
+  {
+    slug: "ssc-cgl",
+    org: "SSC",
+    full: "Combined Graduate Level & CHSL",
+    category: "Central Government",
+    fields: ["engineering", "management", "computer-applications", "law", "forensic-science", "emerging-tech"],
+    summary: "Group B and C posts across ministries — Inspector, Assistant, Auditor and Data Entry roles.",
+    eligibility: [
+      "Bachelor's degree in any discipline for CGL; 12th pass for CHSL",
+      "Age 18–32 years depending on post",
+      "Physical standards for a few enforcement posts",
+    ],
+    skills: ["Quantitative aptitude", "General awareness", "English comprehension", "Reasoning", "Typing speed (CHSL)"],
+    salary: "CGL — approx ₹44,900–₹60,000 gross per month depending on post and city",
+    examPattern: [
+      "Tier 1: 100 objective questions, 60 minutes",
+      "Tier 2: Quant, English, Reasoning, General Awareness and Computer module",
+      "Skill test / typing test for specific posts",
+      "Document verification and final merit",
+    ],
+    roadmap: [
+      "Finish arithmetic and advanced maths chapter by chapter.",
+      "Learn 20 vocabulary words and 1 grammar rule daily.",
+      "Cover static GK through one compact source only.",
+      "Solve 5 years of previous papers, timed.",
+      "Reach 35+ wpm typing if you are targeting CHSL.",
+    ],
+    resources: [{ label: "SSC official", href: "https://ssc.gov.in/" }],
+  },
+  {
+    slug: "judicial-services",
+    org: "State PSCs / High Courts",
+    full: "Judicial Services (Civil Judge — Junior Division)",
+    category: "Judiciary",
+    fields: ["law"],
+    summary: "Entry into the judiciary as a Civil Judge, recruited state-wise through the judgeship exam.",
+    eligibility: [
+      "LLB from a recognised university and enrolment with a State Bar Council",
+      "Age generally 21–35 years (varies by state)",
+      "Some states require practice experience for higher judicial services",
+    ],
+    skills: ["Bare act command", "Case law reading", "Legal drafting", "Local language proficiency", "Judgment writing"],
+    salary: "Civil Judge (Jr Div) — approx ₹77,840 basic per pay commission, ₹1.1L+ gross with allowances",
+    examPattern: [
+      "Prelims: objective paper on major central and state acts",
+      "Mains: descriptive papers on civil law, criminal law, language and translation",
+      "Viva voce / interview",
+      "Final merit from Mains plus interview",
+    ],
+    roadmap: [
+      "Read bare acts repeatedly — CPC, CrPC/BNSS, IPC/BNS, Evidence, Contract, Transfer of Property.",
+      "Note state-specific local laws and the local-language paper early.",
+      "Practise judgment writing and translation weekly.",
+      "Follow recent Supreme Court and High Court judgments.",
+      "Take full-length Mains mocks in handwriting.",
+    ],
+    resources: [
+      { label: "India Code (bare acts)", href: "https://www.indiacode.nic.in/" },
+      { label: "Supreme Court judgments", href: "https://main.sci.gov.in/judgments" },
+    ],
+  },
+  {
+    slug: "forensic-labs",
+    org: "CFSL / State FSL",
+    full: "Government Forensic Science Laboratories",
+    category: "Forensic & Investigation",
+    fields: ["forensic-science"],
+    summary: "Scientific Assistant, Scientific Officer and Assistant Director roles in central and state forensic labs.",
+    eligibility: [
+      "BSc/MSc in Forensic Science, Chemistry, Biology, Physics or allied science",
+      "Age generally 21–30 years (relaxations apply)",
+      "Some posts recruited through SSC or state PSCs",
+    ],
+    skills: ["Instrumental analysis", "DNA and serology", "Toxicology", "Chain of custody", "Report writing"],
+    salary: "Scientific Assistant — approx ₹44,900 basic; Assistant Director — approx ₹56,100 basic",
+    examPattern: [
+      "Written test on forensic science and allied science fundamentals",
+      "Subject-specific paper for specialised divisions",
+      "Practical or laboratory assessment for some posts",
+      "Interview and document verification",
+    ],
+    roadmap: [
+      "Master core forensic subjects: questioned documents, ballistics, toxicology, DNA.",
+      "Learn instrument principles — GC-MS, FTIR, PCR, SEM-EDX.",
+      "Revise the Evidence Act provisions on expert testimony.",
+      "Do a lab internship or dissertation with real casework exposure.",
+      "Solve previous SSC and state FSL papers.",
+    ],
+    resources: [
+      { label: "Directorate of Forensic Science Services", href: "https://dfs.nic.in/" },
+      { label: "National Forensic Sciences University", href: "https://www.nfsu.ac.in/" },
+    ],
+  },
+  {
+    slug: "teaching-faculty",
+    org: "UGC NET / CSIR NET / KVS",
+    full: "Government Teaching & Faculty Routes",
+    category: "Teaching & Academia",
+    fields: ["engineering", "management", "computer-applications", "law", "forensic-science", "emerging-tech"],
+    summary: "Assistant Professor eligibility, JRF fellowships and school teaching posts in central schools.",
+    eligibility: [
+      "Master's degree with 55% for UGC NET (relaxations apply)",
+      "BEd plus graduation/post-graduation for school teaching posts",
+      "Age limit 30 years for JRF; no upper limit for Assistant Professor eligibility",
+    ],
+    skills: ["Subject mastery", "Teaching aptitude", "Research methodology", "Communication", "Paper writing"],
+    salary: "Assistant Professor — approx ₹57,700 basic, ₹90K+ gross; JRF — ₹37,000 per month plus HRA",
+    examPattern: [
+      "Paper 1: teaching and research aptitude (100 marks)",
+      "Paper 2: subject-specific (200 marks)",
+      "Both papers objective, single sitting, no negative marking for NET",
+      "Separate interview/demo for institutional recruitment",
+    ],
+    roadmap: [
+      "Finish the official syllabus unit by unit with one standard book each.",
+      "Practise Paper 1 aptitude daily — it is fully scoring.",
+      "Solve 10 years of previous subject papers.",
+      "Write one review paper to build research aptitude.",
+      "Prepare a 10-minute demo lecture for interviews.",
+    ],
+    resources: [
+      { label: "UGC NET (NTA)", href: "https://ugcnet.nta.ac.in/" },
+      { label: "CSIR NET", href: "https://csirnet.nta.ac.in/" },
+    ],
+  },
 ];
+
+export const govJobsByField = (field: string) =>
+  field === "all" ? govJobs : govJobs.filter((j) => !j.fields || j.fields.length === 0 || j.fields.includes(field));
 
 export const govJobBySlug = (slug: string) => govJobs.find((j) => j.slug === slug);
