@@ -1,15 +1,20 @@
+import { extraBranches } from "./fieldPrograms";
+
 export interface Branch {
   slug: string;
   name: string;
   short: string;
   tagline: string;
+  /** Field(s) of study this branch belongs to. Defaults to ["engineering"]. */
+  fields?: string[];
   phases: { title: string; items: string[] }[];
   coreSkills: string[];
   projectIdeas: string[];
   careers: string[];
 }
 
-export const branches: Branch[] = [
+const engineeringBranches: Branch[] = [
+
   {
     slug: "ece",
     name: "Electronics & Communication",
@@ -298,6 +303,8 @@ export const branches: Branch[] = [
     name: "AI & Data Science",
     short: "AI & DS",
     tagline: "Machine learning, data engineering and applied AI.",
+    fields: ["engineering", "emerging-tech"],
+
     phases: [
       {
         title: "Phase 1 — Foundations",
@@ -325,6 +332,8 @@ export const branches: Branch[] = [
     name: "Cyber Security",
     short: "Cyber Sec",
     tagline: "Securing networks, applications, cloud and data against attacks.",
+    fields: ["engineering", "emerging-tech"],
+
     phases: [
       {
         title: "Phase 1 — Foundations",
@@ -538,4 +547,12 @@ export const branches: Branch[] = [
   },
 ];
 
+export const branches: Branch[] = [...engineeringBranches, ...extraBranches];
+
+export const branchFields = (b: Branch): string[] => b.fields ?? ["engineering"];
+
+export const branchesByField = (field: string): Branch[] =>
+  field === "all" ? branches : branches.filter((b) => branchFields(b).includes(field));
+
 export const branchBySlug = (slug: string) => branches.find((b) => b.slug === slug);
+
