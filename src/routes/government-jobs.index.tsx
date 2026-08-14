@@ -1,14 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { govJobs } from "@/data/govJobs";
+import { useMemo, useState } from "react";
+import { govJobsByField } from "@/data/govJobs";
+import { studyFields, ALL_FIELDS } from "@/data/fields";
+import { AskLunaButton } from "@/components/AskLunaButton";
 import { ArrowRight, Landmark } from "lucide-react";
 
 const DESCRIPTION =
-  "ISRO, DRDO, BEL, HAL, ECIL, BHEL, Railways, BSNL, GATE and SSC JE — eligibility, salary, exam pattern, roadmap and resources for engineering government jobs.";
+  "UPSC, Banking, SSC, Judicial Services, Forensic labs, teaching routes, ISRO, DRDO, GATE and PSUs — eligibility, salary, exam pattern and preparation roadmaps.";
 
 export const Route = createFileRoute("/government-jobs/")({
   head: () => ({
     meta: [
-      { title: "Engineering Government Jobs — ISRO, DRDO, GATE, PSU | LUNA" },
+      { title: "Government Jobs — UPSC, Banking, SSC, Judiciary, PSU | LUNA" },
       { name: "description", content: DESCRIPTION },
       { property: "og:title", content: "Engineering Government Jobs — LUNA" },
       { property: "og:description", content: DESCRIPTION },
@@ -20,6 +23,9 @@ export const Route = createFileRoute("/government-jobs/")({
 });
 
 function GovJobsPage() {
+  const [field, setField] = useState<string>(ALL_FIELDS);
+  const jobs = useMemo(() => govJobsByField(field), [field]);
+
   return (
     <div className="container mx-auto px-4 py-14">
       <header className="mx-auto max-w-2xl text-center">
@@ -35,8 +41,29 @@ function GovJobsPage() {
         </p>
       </header>
 
+      <div className="mx-auto mt-10 max-w-4xl">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">Field of study</p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {[{ slug: ALL_FIELDS, label: "Browse everything" }, ...studyFields].map((f) => (
+            <button
+              key={f.slug}
+              type="button"
+              onClick={() => setField(f.slug)}
+              aria-pressed={field === f.slug}
+              className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-all duration-200 hover:scale-[1.04] active:scale-95 motion-reduce:hover:scale-100 ${
+                field === f.slug
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-border/70 bg-card/50 text-muted-foreground hover:border-primary/50 hover:text-foreground"
+              }`}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {govJobs.map((job) => (
+        {jobs.map((job) => (
           <Link
             key={job.slug}
             to="/government-jobs/$slug"
@@ -56,6 +83,8 @@ function GovJobsPage() {
           </Link>
         ))}
       </div>
+
+      <AskLunaButton topic="government job exams and preparation strategy" />
     </div>
   );
 }
