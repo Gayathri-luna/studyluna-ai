@@ -543,4 +543,12 @@ const engineeringBranches: Branch[] = [
   },
 ];
 
+export const branches: Branch[] = [...engineeringBranches, ...extraBranches];
+
+export const branchFields = (b: Branch): string[] => b.fields ?? ["engineering"];
+
+export const branchesByField = (field: string): Branch[] =>
+  field === "all" ? branches : branches.filter((b) => branchFields(b).includes(field));
+
 export const branchBySlug = (slug: string) => branches.find((b) => b.slug === slug);
+
