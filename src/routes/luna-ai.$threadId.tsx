@@ -92,6 +92,7 @@ function CopyButton({ text }: { text: string }) {
 
 function LunaThreadPage() {
   const { threadId } = Route.useParams();
+  const { topic } = useSearch({ from: "/luna-ai" }) as { topic?: string };
   const stored = useMemo<LunaThread | undefined>(
     () => loadThreads().find((t) => t.id === threadId),
     [threadId],
@@ -103,6 +104,7 @@ function LunaThreadPage() {
       threadId={threadId}
       initialMessages={stored?.messages ?? []}
       initialMode={stored?.mode ?? "learn"}
+      initialInput={topic ? `Explain ${topic} to me in simple terms, and how I should learn it.` : ""}
     />
   );
 }
@@ -111,10 +113,12 @@ function ChatWindow({
   threadId,
   initialMessages,
   initialMode,
+  initialInput,
 }: {
   threadId: string;
   initialMessages: LunaThread["messages"];
   initialMode: LunaMode;
+  initialInput: string;
 }) {
   const [mode, setMode] = useState<LunaMode>(initialMode);
   const modeRef = useRef(mode);
@@ -136,7 +140,7 @@ function ChatWindow({
     [],
   );
 
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState(initialInput);
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [podcastOpen, setPodcastOpen] = useState(false);
   const [lastPrompt, setLastPrompt] = useState("");
