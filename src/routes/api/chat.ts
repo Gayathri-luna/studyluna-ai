@@ -82,7 +82,7 @@ export const Route = createFileRoute("/api/chat")({
 
         let modelMessages;
         try {
-          modelMessages = convertToModelMessages(messages);
+          modelMessages = await convertToModelMessages(messages);
         } catch (error) {
           console.error("[luna] failed to convert messages", error);
           return new Response(
