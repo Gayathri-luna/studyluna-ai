@@ -255,35 +255,46 @@ function ChatWindow({
 
   const submit = async (text: string) => {
     const trimmed = text.trim();
-    if ((!trimmed && attachments.length === 0) || isLoading) return;
+    if (!trimmed && attachments.length === 0) return;
+    // Guards rapid double clicks / Enter presses before React flushes status.
+    if (isLoading || sendingRef.current) return;
+    sendingRef.current = true;
+    setErrorText(null);
 
-    const textFiles = attachments.filter(
-      (a) => a.file.type.startsWith("text/") || a.file.name.endsWith(".md"),
-    );
-    const binaryFiles = attachments.filter((a) => !textFiles.includes(a));
+    try {
+      const textFiles = attachments.filter(
+        (a) => a.file.type.startsWith("text/") || a.file.name.endsWith(".md"),
+      );
+      const binaryFiles = attachments.filter((a) => !textFiles.includes(a));
 
-    let prompt =
-      trimmed ||
-      (binaryFiles.some((a) => a.file.type.startsWith("audio"))
-        ? "Summarise this audio: key points, difficult parts explained, and revision notes."
-        : "Analyse this attachment and explain it clearly, step by step.");
+      let prompt =
+        trimmed ||
+        (binaryFiles.some((a) => a.file.type.startsWith("audio"))
+          ? "Summarise this audio: key points, difficult parts explained, and revision notes."
+          : "Analyse this attachment and explain it clearly, step by step.");
 
-    for (const doc of textFiles) {
-      const content = await doc.file.text();
-      prompt += `\n\n--- Document: ${doc.file.name} ---\n${content.slice(0, 20000)}`;
+      for (const doc of textFiles) {
+        const content = await doc.file.text();
+        prompt += `\n\n--- Document: ${doc.file.name} ---\n${content.slice(0, 20000)}`;
+      }
+
+      const dataTransfer = new DataTransfer();
+      binaryFiles.forEach((a) => dataTransfer.items.add(a.file));
+
+      setInput("");
+      setLastPrompt(prompt);
+      void sendMessage(
+        binaryFiles.length ? { text: prompt, files: dataTransfer.files } : { text: prompt },
+      );
+      attachments.forEach((a) => URL.revokeObjectURL(a.url));
+      setAttachments([]);
+      setPodcastOpen(false);
+    } catch (error) {
+      sendingRef.current = false;
+      const message = friendlyError(error);
+      setErrorText(message);
+      toast.error(message);
     }
-
-    const dataTransfer = new DataTransfer();
-    binaryFiles.forEach((a) => dataTransfer.items.add(a.file));
-
-    setInput("");
-    setLastPrompt(prompt);
-    void sendMessage(
-      binaryFiles.length ? { text: prompt, files: dataTransfer.files } : { text: prompt },
-    );
-    attachments.forEach((a) => URL.revokeObjectURL(a.url));
-    setAttachments([]);
-    setPodcastOpen(false);
   };
 
   const runPodcast = (output: PodcastOutput) => {
@@ -298,8 +309,10 @@ function ChatWindow({
 
   const clearChat = () => {
     stop();
+    sendingRef.current = false;
     setMessages([]);
     setInput("");
+    setErrorText(null);
     setAttachments([]);
     upsertThread({ id: threadId, title: "New chat", updatedAt: Date.now(), mode, messages: [] });
     window.dispatchEvent(new Event("luna-threads-changed"));
@@ -307,9 +320,12 @@ function ChatWindow({
   };
 
   const regenerate = () => {
-    if (!lastPrompt || isLoading) return;
+    if (!lastPrompt || isLoading || sendingRef.current) return;
+    sendingRef.current = true;
+    setErrorText(null);
     void sendMessage({ text: lastPrompt });
   };
+
 
   return (
     <section className="flex min-h-[70vh] flex-col">
