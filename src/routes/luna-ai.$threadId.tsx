@@ -151,24 +151,32 @@ function ChatWindow({
   const podcastInputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [errorText, setErrorText] = useState<string | null>(null);
+  const sendingRef = useRef(false);
+
   const { messages, sendMessage, status, stop, setMessages } = useChat({
     id: threadId,
     messages: initialMessages,
     transport,
     onError: (error) => {
-      toast.error(
-        error.message.includes("401")
-          ? "Please log in again to keep chatting with LunaAI."
-          : error.message.includes("429")
-          ? "You have reached your LunaAI limit for now — please try again later."
-          : error.message.includes("402")
-            ? "AI credits are exhausted. Please add credits to continue."
-            : "LunaAI could not respond. Please try again.",
-      );
+      sendingRef.current = false;
+      const message = friendlyError(error);
+      setErrorText(message);
+      toast.error(message);
+    },
+    onFinish: () => {
+      sendingRef.current = false;
+      setErrorText(null);
     },
   });
 
   const isLoading = status === "submitted" || status === "streaming";
+
+  // Never leave the UI stuck on "Thinking…" if the stream ends abnormally.
+  useEffect(() => {
+    if (!isLoading) sendingRef.current = false;
+  }, [isLoading]);
+
 
   useEffect(() => {
     textareaRef.current?.focus();
