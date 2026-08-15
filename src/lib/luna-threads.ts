@@ -50,11 +50,29 @@ export function loadThreads(): LunaThread[] {
   try {
     const raw = window.localStorage.getItem(KEY);
     const parsed = raw ? (JSON.parse(raw) as LunaThread[]) : [];
-    return Array.isArray(parsed) ? parsed.sort((a, b) => b.updatedAt - a.updatedAt) : [];
+    if (!Array.isArray(parsed)) return [];
+    return parsed
+      .filter((thread) => thread && typeof thread.id === "string")
+      .map((thread) => ({
+        ...thread,
+        updatedAt: typeof thread.updatedAt === "number" ? thread.updatedAt : 0,
+        // A corrupted message would otherwise crash rendering or the API call.
+        messages: Array.isArray(thread.messages)
+          ? thread.messages.filter(
+              (message) =>
+                message &&
+                typeof message.role === "string" &&
+                Array.isArray(message.parts) &&
+                message.parts.length > 0,
+            )
+          : [],
+      }))
+      .sort((a, b) => b.updatedAt - a.updatedAt);
   } catch {
     return [];
   }
 }
+
 
 /** Newest threads kept in localStorage. */
 const MAX_THREADS = 30;
