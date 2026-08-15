@@ -63,6 +63,22 @@ const PODCAST_PROMPTS: Record<PodcastOutput, string> = {
 
 type Attachment = { id: string; file: File; url: string };
 
+/**
+ * The backend already maps every failure to a friendly sentence, so prefer its
+ * text and only fall back for transport-level failures it never reached.
+ */
+function friendlyError(error: unknown): string {
+  const raw = (error instanceof Error ? error.message : String(error ?? "")).trim();
+  if (!raw || /^(error|failed to fetch|load failed)$/i.test(raw)) {
+    return "Could not reach LunaAI. Check your connection and try again.";
+  }
+  if (/<\/?[a-z]/i.test(raw) || raw.length > 220) {
+    return "LunaAI could not respond. Please try again.";
+  }
+  return raw;
+}
+
+
 function MessageMarkdown({ text }: { text: string }) {
   return (
     <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground prose-code:text-primary">
@@ -151,24 +167,32 @@ function ChatWindow({
   const podcastInputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [errorText, setErrorText] = useState<string | null>(null);
+  const sendingRef = useRef(false);
+
   const { messages, sendMessage, status, stop, setMessages } = useChat({
     id: threadId,
     messages: initialMessages,
     transport,
     onError: (error) => {
-      toast.error(
-        error.message.includes("401")
-          ? "Please log in again to keep chatting with LunaAI."
-          : error.message.includes("429")
-          ? "You have reached your LunaAI limit for now — please try again later."
-          : error.message.includes("402")
-            ? "AI credits are exhausted. Please add credits to continue."
-            : "LunaAI could not respond. Please try again.",
-      );
+      sendingRef.current = false;
+      const message = friendlyError(error);
+      setErrorText(message);
+      toast.error(message);
+    },
+    onFinish: () => {
+      sendingRef.current = false;
+      setErrorText(null);
     },
   });
 
   const isLoading = status === "submitted" || status === "streaming";
+
+  // Never leave the UI stuck on "Thinking…" if the stream ends abnormally.
+  useEffect(() => {
+    if (!isLoading) sendingRef.current = false;
+  }, [isLoading]);
+
 
   useEffect(() => {
     textareaRef.current?.focus();
@@ -231,35 +255,46 @@ function ChatWindow({
 
   const submit = async (text: string) => {
     const trimmed = text.trim();
-    if ((!trimmed && attachments.length === 0) || isLoading) return;
+    if (!trimmed && attachments.length === 0) return;
+    // Guards rapid double clicks / Enter presses before React flushes status.
+    if (isLoading || sendingRef.current) return;
+    sendingRef.current = true;
+    setErrorText(null);
 
-    const textFiles = attachments.filter(
-      (a) => a.file.type.startsWith("text/") || a.file.name.endsWith(".md"),
-    );
-    const binaryFiles = attachments.filter((a) => !textFiles.includes(a));
+    try {
+      const textFiles = attachments.filter(
+        (a) => a.file.type.startsWith("text/") || a.file.name.endsWith(".md"),
+      );
+      const binaryFiles = attachments.filter((a) => !textFiles.includes(a));
 
-    let prompt =
-      trimmed ||
-      (binaryFiles.some((a) => a.file.type.startsWith("audio"))
-        ? "Summarise this audio: key points, difficult parts explained, and revision notes."
-        : "Analyse this attachment and explain it clearly, step by step.");
+      let prompt =
+        trimmed ||
+        (binaryFiles.some((a) => a.file.type.startsWith("audio"))
+          ? "Summarise this audio: key points, difficult parts explained, and revision notes."
+          : "Analyse this attachment and explain it clearly, step by step.");
 
-    for (const doc of textFiles) {
-      const content = await doc.file.text();
-      prompt += `\n\n--- Document: ${doc.file.name} ---\n${content.slice(0, 20000)}`;
+      for (const doc of textFiles) {
+        const content = await doc.file.text();
+        prompt += `\n\n--- Document: ${doc.file.name} ---\n${content.slice(0, 20000)}`;
+      }
+
+      const dataTransfer = new DataTransfer();
+      binaryFiles.forEach((a) => dataTransfer.items.add(a.file));
+
+      setInput("");
+      setLastPrompt(prompt);
+      void sendMessage(
+        binaryFiles.length ? { text: prompt, files: dataTransfer.files } : { text: prompt },
+      );
+      attachments.forEach((a) => URL.revokeObjectURL(a.url));
+      setAttachments([]);
+      setPodcastOpen(false);
+    } catch (error) {
+      sendingRef.current = false;
+      const message = friendlyError(error);
+      setErrorText(message);
+      toast.error(message);
     }
-
-    const dataTransfer = new DataTransfer();
-    binaryFiles.forEach((a) => dataTransfer.items.add(a.file));
-
-    setInput("");
-    setLastPrompt(prompt);
-    void sendMessage(
-      binaryFiles.length ? { text: prompt, files: dataTransfer.files } : { text: prompt },
-    );
-    attachments.forEach((a) => URL.revokeObjectURL(a.url));
-    setAttachments([]);
-    setPodcastOpen(false);
   };
 
   const runPodcast = (output: PodcastOutput) => {
@@ -274,8 +309,10 @@ function ChatWindow({
 
   const clearChat = () => {
     stop();
+    sendingRef.current = false;
     setMessages([]);
     setInput("");
+    setErrorText(null);
     setAttachments([]);
     upsertThread({ id: threadId, title: "New chat", updatedAt: Date.now(), mode, messages: [] });
     window.dispatchEvent(new Event("luna-threads-changed"));
@@ -283,9 +320,12 @@ function ChatWindow({
   };
 
   const regenerate = () => {
-    if (!lastPrompt || isLoading) return;
+    if (!lastPrompt || isLoading || sendingRef.current) return;
+    sendingRef.current = true;
+    setErrorText(null);
     void sendMessage({ text: lastPrompt });
   };
+
 
   return (
     <section className="flex min-h-[70vh] flex-col">

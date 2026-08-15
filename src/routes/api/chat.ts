@@ -1,7 +1,9 @@
 import { createLovableAiGatewayProvider } from "@/lib/ai-gateway.server";
 import { consumeAiQuota, verifyRequestUser } from "@/lib/ai-limit.server";
+import { describeAiFailure, sanitizeMessages } from "@/lib/luna-chat.server";
 import { createFileRoute } from "@tanstack/react-router";
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
+
 
 const BASE_PROMPT = `You are Luna AI, a friendly and intelligent learning assistant for engineering students across every branch (CSE, IT, ECE, EEE, Mechanical, Civil, Chemical, AI/ML, Robotics and more), covering core subjects, programming, maths, physics and chemistry.
 
@@ -55,35 +57,64 @@ export const Route = createFileRoute("/api/chat")({
         const verified = await verifyRequestUser(request);
         if ("error" in verified) return verified.error;
 
-        const limited = await consumeAiQuota(verified.userId);
-        if (limited) return limited;
-
-        const { messages, mode, model } = (await request.json()) as ChatRequestBody;
-        if (!Array.isArray(messages)) {
-          return new Response("Messages are required", { status: 400 });
-        }
-
         const key = process.env["LOVABLE_API_KEY"];
         if (!key) {
-          return new Response("Missing LOVABLE_API_KEY", { status: 500 });
+          return new Response(
+            "LunaAI is not configured yet (missing AI credentials). Please contact support.",
+            { status: 500 },
+          );
         }
+
+        let body: ChatRequestBody;
+        try {
+          body = (await request.json()) as ChatRequestBody;
+        } catch {
+          return new Response("LunaAI received an invalid request. Please try again.", {
+            status: 400,
+          });
+        }
+
+        const { mode, model } = body;
+        const messages = sanitizeMessages(body.messages);
+        if (messages.length === 0) {
+          return new Response("Please type a message before sending.", { status: 400 });
+        }
+
+        let modelMessages;
+        try {
+          modelMessages = await convertToModelMessages(messages);
+        } catch (error) {
+          console.error("[luna] failed to convert messages", error);
+          return new Response(
+            "This conversation could not be read. Start a new chat and try again.",
+            { status: 400 },
+          );
+        }
+
+        const limited = await consumeAiQuota(verified.userId);
+        if (limited) return limited;
 
         const modePrompt =
           typeof mode === "string" && MODE_PROMPTS[mode] ? MODE_PROMPTS[mode] : MODE_PROMPTS["learn"];
 
         const gateway = createLovableAiGatewayProvider(key);
         const result = streamText({
-          model: gateway(
-            (typeof model === "string" && MODEL_MAP[model]) || MODEL_MAP["v3"]!,
-          ),
+          model: gateway((typeof model === "string" && MODEL_MAP[model]) || MODEL_MAP["v3"]!),
           system: `${BASE_PROMPT}\n\n${modePrompt}`,
-          messages: await convertToModelMessages(messages as UIMessage[]),
+          messages: modelMessages,
+          // Only aborts when the user presses Stop or closes the tab.
+          abortSignal: request.signal,
+          onError: ({ error }) => {
+            console.error("[luna] stream error", error);
+          },
         });
 
         return result.toUIMessageStreamResponse({
           originalMessages: messages as UIMessage[],
+          onError: (error) => describeAiFailure(error),
         });
       },
+
     },
   },
 });

@@ -50,18 +50,63 @@ export function loadThreads(): LunaThread[] {
   try {
     const raw = window.localStorage.getItem(KEY);
     const parsed = raw ? (JSON.parse(raw) as LunaThread[]) : [];
-    return Array.isArray(parsed) ? parsed.sort((a, b) => b.updatedAt - a.updatedAt) : [];
+    if (!Array.isArray(parsed)) return [];
+    return parsed
+      .filter((thread) => thread && typeof thread.id === "string")
+      .map((thread) => ({
+        ...thread,
+        updatedAt: typeof thread.updatedAt === "number" ? thread.updatedAt : 0,
+        // A corrupted message would otherwise crash rendering or the API call.
+        messages: Array.isArray(thread.messages)
+          ? thread.messages.filter(
+              (message) =>
+                message &&
+                typeof message.role === "string" &&
+                Array.isArray(message.parts) &&
+                message.parts.length > 0,
+            )
+          : [],
+      }))
+      .sort((a, b) => b.updatedAt - a.updatedAt);
   } catch {
     return [];
   }
 }
 
+
+/** Newest threads kept in localStorage. */
+const MAX_THREADS = 30;
+/** Newest messages kept per thread. */
+const MAX_MESSAGES = 40;
+
+/**
+ * Attachments arrive as base64 data URLs. Persisting them blows the
+ * localStorage quota and, worse, re-sends megabytes of history on every later
+ * turn. Keep a lightweight text marker instead.
+ */
+function stripHeavyParts(messages: UIMessage[]): UIMessage[] {
+  return messages.slice(-MAX_MESSAGES).map((message) => ({
+    ...message,
+    parts: message.parts.map((part) =>
+      part.type === "file" && typeof part.url === "string" && part.url.startsWith("data:")
+        ? { type: "text" as const, text: `📎 ${part.filename ?? "Attachment"}` }
+        : part,
+    ),
+  })) as UIMessage[];
+}
+
 export function saveThreads(threads: LunaThread[]) {
   if (!isBrowser()) return;
+  const capped = threads.slice(0, MAX_THREADS);
   try {
-    window.localStorage.setItem(KEY, JSON.stringify(threads));
+    window.localStorage.setItem(KEY, JSON.stringify(capped));
   } catch {
-    /* quota — ignore */
+    // Quota exceeded — keep only the most recent conversations.
+    try {
+      window.localStorage.setItem(KEY, JSON.stringify(capped.slice(0, 5)));
+    } catch {
+      /* give up silently rather than break the chat */
+    }
   }
 }
 
@@ -71,12 +116,14 @@ export function createThread(mode: LunaMode = "learn"): LunaThread {
 
 export function upsertThread(thread: LunaThread): LunaThread[] {
   const rest = loadThreads().filter((t) => t.id !== thread.id);
-  const next = [{ ...thread, updatedAt: Date.now() }, ...rest].sort(
-    (a, b) => b.updatedAt - a.updatedAt,
-  );
+  const next = [
+    { ...thread, messages: stripHeavyParts(thread.messages), updatedAt: Date.now() },
+    ...rest,
+  ].sort((a, b) => b.updatedAt - a.updatedAt);
   saveThreads(next);
   return next;
 }
+
 
 export function deleteThread(id: string): LunaThread[] {
   const next = loadThreads().filter((t) => t.id !== id);
