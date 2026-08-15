@@ -63,6 +63,22 @@ const PODCAST_PROMPTS: Record<PodcastOutput, string> = {
 
 type Attachment = { id: string; file: File; url: string };
 
+/**
+ * The backend already maps every failure to a friendly sentence, so prefer its
+ * text and only fall back for transport-level failures it never reached.
+ */
+function friendlyError(error: unknown): string {
+  const raw = (error instanceof Error ? error.message : String(error ?? "")).trim();
+  if (!raw || /^(error|failed to fetch|load failed)$/i.test(raw)) {
+    return "Could not reach LunaAI. Check your connection and try again.";
+  }
+  if (/<\/?[a-z]/i.test(raw) || raw.length > 220) {
+    return "LunaAI could not respond. Please try again.";
+  }
+  return raw;
+}
+
+
 function MessageMarkdown({ text }: { text: string }) {
   return (
     <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground prose-code:text-primary">
