@@ -39,7 +39,11 @@ export function ProjectGuide({ project }: { project: BranchProject }) {
         <CardTitle className="pt-1 text-xl">{project.title}</CardTitle>
         <CardDescription>{project.description}</CardDescription>
         <div className="pt-2">
-          <AskLunaButton topic={`Help me build this project: ${project.title}. ${project.aim}`} />
+          <AskLunaButton
+            variant="inline"
+            topic={`building the project "${project.title}" (${project.aim})`}
+            label="Ask Luna AI about this project"
+          />
         </div>
       </CardHeader>
 
