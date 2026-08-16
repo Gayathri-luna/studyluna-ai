@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import lunaLogo from "@/assets/luna-logo.png";
 import { WhatsNew } from "@/components/WhatsNew";
+import { HoverLift, LunaGlow, Reveal, Stagger } from "@/components/motion";
 
 const DESCRIPTION =
   "LUNA is an AI-powered learning platform for engineering students — roadmaps, skills, projects, government jobs, resources and an AI mentor in one place.";
