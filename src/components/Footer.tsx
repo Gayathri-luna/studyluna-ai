@@ -26,13 +26,13 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/career-hub" className="hover:text-foreground">
+                <Link to="/hub" search={{ tab: "career" }} className="hover:text-foreground">
                   Career Hub
                 </Link>
               </li>
 
               <li>
-                <Link to="/learning-hub" className="hover:text-foreground">
+                <Link to="/hub" search={{ tab: "learning" }} className="hover:text-foreground">
                   Learning Hub
                 </Link>
               </li>

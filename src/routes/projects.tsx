@@ -1,5 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { miniProjects } from "@/data/ece";
+import { projectsForBranch } from "@/data/branchProjects";
+import { ProjectGuide } from "@/components/ProjectGuide";
 import { branches } from "@/data/branches";
 import { branchDetails } from "@/data/branchDetails";
 import { BranchSwitcher } from "@/components/BranchSwitcher";
@@ -43,6 +44,7 @@ function ProjectsPage() {
   const active = branch && branchDetails[branch] ? branch : "ece";
   const detail = branchDetails[active]!;
   const branchName = branches.find((b) => b.slug === active)?.name ?? "your branch";
+  const guides = projectsForBranch(active);
 
   return (
     <div className="container mx-auto px-4 py-16">
@@ -75,70 +77,21 @@ function ProjectsPage() {
       </div>
 
       <h2 className="mt-16 text-center text-2xl font-bold text-foreground">
-        Detailed build guides
+        Detailed build guides — {branchName}
       </h2>
       <p className="mx-auto mt-2 max-w-2xl text-center text-sm text-muted-foreground">
-        Full step-by-step guides (currently electronics and embedded focused — more branches coming).
+        Aim, tools, components, ordered procedure and outcome — expand any section.
       </p>
 
-      <div className="mt-10 space-y-8">
-        {miniProjects.map((project) => (
-          <Card key={project.slug} id={project.slug}>
-            <CardHeader>
-              <div className="flex flex-wrap items-center gap-2">
-                <Badge variant="outline">{project.domain}</Badge>
-                <Badge variant={levelVariant[project.level] ?? "secondary"}>
-                  {project.level}
-                </Badge>
-                <span className="text-xs text-muted-foreground">
-                  {project.duration}
-                </span>
-              </div>
-              <CardTitle className="text-2xl">{project.title}</CardTitle>
-              <CardDescription>{project.objective}</CardDescription>
-            </CardHeader>
-            <CardContent className="grid gap-8 md:grid-cols-[1fr_1.6fr]">
-              <div>
-                <h3 className="text-sm font-semibold text-foreground">
-                  Components
-                </h3>
-                <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
-                  {project.components.map((component) => (
-                    <li key={component} className="flex gap-2">
-                      <span aria-hidden className="text-primary">
-                        •
-                      </span>
-                      {component}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-foreground">
-                  Procedure
-                </h3>
-                <ol className="mt-3 space-y-2 text-sm text-muted-foreground">
-                  {project.procedure.map((step, index) => (
-                    <li key={step} className="flex gap-3">
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
-                        {index + 1}
-                      </span>
-                      {step}
-                    </li>
-                  ))}
-                </ol>
-                <p className="mt-4 text-sm">
-                  <span className="font-semibold text-foreground">
-                    Outcome:{" "}
-                  </span>
-                  <span className="text-muted-foreground">
-                    {project.outcome}
-                  </span>
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+      <div className="mx-auto mt-10 max-w-4xl space-y-6">
+        {guides.length > 0 ? (
+          guides.map((project) => <ProjectGuide key={project.slug} project={project} />)
+        ) : (
+          <p className="text-center text-sm text-muted-foreground">
+            Detailed guides for this branch are coming soon — meanwhile use the project ideas above
+            and ask Luna AI for a full procedure.
+          </p>
+        )}
       </div>
     </div>
   );
