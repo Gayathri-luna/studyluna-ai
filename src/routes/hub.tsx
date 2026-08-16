@@ -89,7 +89,7 @@ function HubPage() {
           key={tab}
           initial={reduced ? false : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={reduced ? undefined : { opacity: 0, y: -8 }}
+          exit={reduced ? { opacity: 1 } : { opacity: 0, y: -8 }}
           transition={{ duration: reduced ? 0 : 0.25, ease: [0.22, 1, 0.36, 1] }}
         >
           {tab === "career" ? <CareerHubPanel /> : <LearningHubPanel />}
