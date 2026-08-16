@@ -82,8 +82,8 @@ export function HoverLift({
   return (
     <motion.div
       className={className}
-      whileHover={reduced ? undefined : { y: -4, boxShadow: "var(--glow-primary)" }}
-      whileTap={reduced ? undefined : { scale: 0.99 }}
+      whileHover={reduced ? {} : { y: -4, boxShadow: "var(--glow-primary)" }}
+      whileTap={reduced ? {} : { scale: 0.99 }}
       transition={{ duration: 0.2, ease: EASE }}
       {...rest}
     >
