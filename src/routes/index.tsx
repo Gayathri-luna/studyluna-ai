@@ -135,8 +135,10 @@ function HomePage() {
                 Open <ArrowRight className="h-3.5 w-3.5" />
               </span>
             </Link>
+            </HoverLift>
+            </Reveal>
           ))}
-        </div>
+        </Stagger>
       </section>
 
       <WhatsNew limit={6} />
