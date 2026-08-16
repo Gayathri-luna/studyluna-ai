@@ -19,6 +19,7 @@ import { BranchWelcome } from "@/components/BranchWelcome";
 import { AuthProvider } from "@/lib/auth";
 import { LearningReminders } from "@/components/LearningReminders";
 import { MotionPage } from "@/components/motion";
+import { AnimatePresence } from "framer-motion";
 
 
 
@@ -183,8 +184,10 @@ function RootComponent() {
 function PageTransition() {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   return (
-    <MotionPage key={pathname}>
-      <Outlet />
-    </MotionPage>
+    <AnimatePresence mode="wait" initial={false}>
+      <MotionPage key={pathname}>
+        <Outlet />
+      </MotionPage>
+    </AnimatePresence>
   );
 }

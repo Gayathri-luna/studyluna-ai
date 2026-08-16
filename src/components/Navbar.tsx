@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "@tanstack/react-router";
+import { motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { Menu, X, Search, LogIn, LayoutDashboard } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -27,8 +28,15 @@ export function Navbar() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
+  const reduced = useReducedMotion();
+
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-xl">
+    <motion.header
+      initial={reduced ? false : { y: -24, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: reduced ? 0 : 0.35, ease: [0.22, 1, 0.36, 1] }}
+      className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-xl"
+    >
       <nav className="container mx-auto flex items-center gap-3 px-4 py-3">
         <Link to="/" className="flex shrink-0 items-center gap-2.5" onClick={() => setOpen(false)}>
           <img src={lunaLogo} alt="LUNA logo" width={36} height={36} className="h-9 w-9 object-contain" />
@@ -113,6 +121,6 @@ export function Navbar() {
       )}
 
       <GlobalSearch open={searchOpen} onOpenChange={setSearchOpen} />
-    </header>
+    </motion.header>
   );
 }
