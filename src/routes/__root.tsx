@@ -182,8 +182,8 @@ function RootComponent() {
 function PageTransition() {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   return (
-    <div key={pathname} className="animate-page">
+    <MotionPage key={pathname}>
       <Outlet />
-    </div>
+    </MotionPage>
   );
 }
