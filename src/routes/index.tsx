@@ -81,6 +81,7 @@ function HomePage() {
   return (
     <div>
       <section className="circuit-grid relative overflow-hidden border-b border-border/60">
+        <LunaGlow />
         <div className="container mx-auto flex flex-col items-center px-4 py-20 text-center sm:py-28">
           <img
             src={lunaLogo}
