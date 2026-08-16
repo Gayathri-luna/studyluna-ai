@@ -34,15 +34,16 @@ export async function verifyRequestUser(request: Request): Promise<Verified> {
 /** Increments the caller's daily LunaAI counter and enforces the cap. */
 export async function consumeAiQuota(userId: string): Promise<Response | null> {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const rpc = supabaseAdmin.rpc as unknown as (
-    fn: string,
-    args: Record<string, unknown>,
-  ) => Promise<{ data: { allowed: boolean; used: number }[] | null; error: unknown }>;
-
-  const { data, error } = await rpc("increment_ai_usage", {
+  // NOTE: `rpc` must stay bound to the client — detaching it loses `this`.
+  const { data, error } = (await (
+    supabaseAdmin.rpc as unknown as (
+      fn: string,
+      args: Record<string, unknown>,
+    ) => Promise<{ data: { allowed: boolean; used: number }[] | null; error: unknown }>
+  ).call(supabaseAdmin, "increment_ai_usage", {
     _user_id: userId,
     _limit: DAILY_AI_MESSAGE_LIMIT,
-  });
+  })) as { data: { allowed: boolean; used: number }[] | null; error: unknown };
 
   if (error) {
     console.error("[luna] usage check failed", error);
