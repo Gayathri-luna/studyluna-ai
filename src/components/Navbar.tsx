@@ -10,7 +10,7 @@ import lunaLogo from "@/assets/luna-logo.png";
 const NAV_LINKS = [
   { to: "/", label: "Home" },
   { to: "/platform", label: "Platform" },
-  { to: "/hub", label: "Hub" },
+  { to: "/hub", label: "Hub", search: { tab: "learning" } },
   { to: "/roadmaps", label: "Roadmaps" },
   { to: "/my-plan", label: "My Plan" },
   { to: "/skills", label: "Skills" },
@@ -54,6 +54,7 @@ export function Navbar() {
             <Link
               key={link.to}
               to={link.to}
+              search={"search" in link ? (link.search as never) : undefined}
               activeOptions={{ exact: link.to === "/" }}
               activeProps={{ className: "text-foreground bg-accent/60" }}
               className="rounded-full px-2.5 py-2 text-[13px] font-medium text-muted-foreground transition-colors hover:bg-accent/60 hover:text-foreground"
@@ -110,6 +111,7 @@ export function Navbar() {
                 <Link
                   key={link.label}
                   to={link.to}
+                  search={"search" in link ? (link.search as never) : undefined}
                   onClick={() => setOpen(false)}
                   className="rounded-md px-2 py-2.5 text-sm font-medium text-muted-foreground hover:bg-accent/60 hover:text-foreground"
                 >

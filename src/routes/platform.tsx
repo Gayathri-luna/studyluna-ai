@@ -205,6 +205,7 @@ function PlatformPage() {
           </p>
           <Link
             to="/hub"
+            search={{ tab: "learning" as const }}
             className="glow-primary inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
           >
             Generate My Roadmap
