@@ -120,7 +120,7 @@ function HomePage() {
         <h2 className="sr-only">What you can do on LUNA</h2>
         <Stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map(({ to, icon: Icon, title, text }) => (
-            <Reveal key={to} asChild={false}>
+            <Reveal key={to}>
             <HoverLift className="h-full rounded-2xl">
             <Link
               to={to}
