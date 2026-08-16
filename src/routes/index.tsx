@@ -80,41 +80,48 @@ const FEATURES = [
 function HomePage() {
   return (
     <div>
-      <section className="circuit-grid relative overflow-hidden border-b border-border/60">
-        <LunaGlow />
-        <div className="container mx-auto flex flex-col items-center px-4 py-20 text-center sm:py-28">
-          <img
-            src={lunaLogo}
-            alt="LUNA logo"
-            width={96}
-            height={96}
-            className="glow-primary h-24 w-24 rounded-full object-contain"
-          />
-          <h1 className="mt-8 text-5xl font-extrabold tracking-tight text-foreground sm:text-7xl">
-            LUNA
-          </h1>
-          <p className="mt-4 text-2xl font-bold tracking-tight text-primary sm:text-3xl">
-            One Platform. Endless Learning.
-          </p>
-          <p className="mt-4 max-w-xl text-base text-muted-foreground sm:text-lg">
-            AI-powered learning platform for engineering students.
-          </p>
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <Link
-              to="/roadmaps"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.04]"
+      <HeroIntro>
+        <section className="circuit-grid relative overflow-hidden border-b border-border/60">
+          <LunaGlow />
+          <div className="container mx-auto flex flex-col items-center px-4 py-20 text-center sm:py-28">
+            <img
+              data-hero-item
+              src={lunaLogo}
+              alt="LUNA logo"
+              width={96}
+              height={96}
+              className="glow-primary h-24 w-24 rounded-full object-contain"
+            />
+            <h1
+              data-hero-item
+              className="mt-8 text-5xl font-extrabold tracking-tight text-foreground sm:text-7xl"
             >
-              Start Learning <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link
-              to="/platform"
-              className="inline-flex items-center justify-center rounded-full border border-border bg-card/60 px-7 py-3 text-sm font-semibold text-foreground backdrop-blur transition-colors hover:bg-accent/60"
-            >
-              Explore Platform
-            </Link>
+              LUNA
+            </h1>
+            <p data-hero-item className="mt-4 text-2xl font-bold tracking-tight text-primary sm:text-3xl">
+              One Platform. Endless Learning.
+            </p>
+            <p data-hero-item className="mt-4 max-w-xl text-base text-muted-foreground sm:text-lg">
+              AI-powered learning platform for engineering students.
+            </p>
+            <div data-hero-item className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <Link
+                to="/roadmaps"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.04]"
+              >
+                Start Learning <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                to="/platform"
+                className="inline-flex items-center justify-center rounded-full border border-border bg-card/60 px-7 py-3 text-sm font-semibold text-foreground backdrop-blur transition-colors hover:bg-accent/60"
+              >
+                Explore Platform
+              </Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </HeroIntro>
+
 
       <section className="container mx-auto px-4 py-16 sm:py-20">
         <h2 className="sr-only">What you can do on LUNA</h2>
