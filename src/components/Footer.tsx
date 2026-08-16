@@ -103,7 +103,7 @@ export function Footer() {
           </p>
 
           <p className="text-sm text-muted-foreground">
-            Built with ❤️ by M. Gayathri
+            Built with ❤️ by Gayathri Marasani
           </p>
         </div>
       </div>

@@ -127,12 +127,85 @@ export type Database = {
         }
         Relationships: []
       }
+      community_posts: {
+        Row: {
+          category: string
+          content: string
+          created_at: string
+          id: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category?: string
+          content: string
+          created_at?: string
+          id?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          content?: string
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      learning_plans: {
+        Row: {
+          created_at: string
+          goal: string
+          id: string
+          reminder_time: string | null
+          schedule: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          goal: string
+          id?: string
+          reminder_time?: string | null
+          schedule?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          goal?: string
+          id?: string
+          reminder_time?: string | null
+          schedule?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "learning_plans_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           branch: string | null
           career_goal: string | null
+          college_year: string | null
           created_at: string
           display_name: string | null
+          full_name: string | null
           id: string
           learning_speed: string | null
           updated_at: string
@@ -141,8 +214,10 @@ export type Database = {
         Insert: {
           branch?: string | null
           career_goal?: string | null
+          college_year?: string | null
           created_at?: string
           display_name?: string | null
+          full_name?: string | null
           id: string
           learning_speed?: string | null
           updated_at?: string
@@ -151,12 +226,44 @@ export type Database = {
         Update: {
           branch?: string | null
           career_goal?: string | null
+          college_year?: string | null
           created_at?: string
           display_name?: string | null
+          full_name?: string | null
           id?: string
           learning_speed?: string | null
           updated_at?: string
           year?: string | null
+        }
+        Relationships: []
+      }
+      roadmaps: {
+        Row: {
+          branch: string
+          content: Json
+          created_at: string
+          description: string | null
+          id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          branch: string
+          content?: Json
+          created_at?: string
+          description?: string | null
+          id?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          branch?: string
+          content?: Json
+          created_at?: string
+          description?: string | null
+          id?: string
+          title?: string
+          updated_at?: string
         }
         Relationships: []
       }
