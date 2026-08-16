@@ -18,6 +18,7 @@ import { Navbar } from "@/components/Navbar";
 import { BranchWelcome } from "@/components/BranchWelcome";
 import { AuthProvider } from "@/lib/auth";
 import { LearningReminders } from "@/components/LearningReminders";
+import { MotionPage } from "@/components/motion";
 
 
 
@@ -182,8 +183,8 @@ function RootComponent() {
 function PageTransition() {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   return (
-    <div key={pathname} className="animate-page">
+    <MotionPage key={pathname}>
       <Outlet />
-    </div>
+    </MotionPage>
   );
 }
