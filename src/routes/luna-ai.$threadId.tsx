@@ -454,6 +454,29 @@ function ChatWindow({
         {status === "submitted" && (
           <p className="animate-pulse text-sm text-muted-foreground">LunaAI is thinking…</p>
         )}
+
+        {errorText && !isLoading && (
+          <div
+            role="alert"
+            className="flex flex-wrap items-center gap-3 rounded-lg border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-foreground"
+          >
+            <span className="flex-1">{errorText}</span>
+            {lastPrompt && (
+              <Button type="button" size="sm" variant="outline" onClick={regenerate}>
+                <RotateCcw className="mr-1 h-3 w-3" />
+                Retry
+              </Button>
+            )}
+            <button
+              type="button"
+              aria-label="Dismiss error"
+              onClick={() => setErrorText(null)}
+              className="text-muted-foreground hover:text-foreground"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+        )}
       </div>
 
       {podcastOpen && (
