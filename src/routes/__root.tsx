@@ -18,6 +18,7 @@ import { Navbar } from "@/components/Navbar";
 import { BranchWelcome } from "@/components/BranchWelcome";
 import { AuthProvider } from "@/lib/auth";
 import { LearningReminders } from "@/components/LearningReminders";
+import { MotionPage } from "@/components/motion";
 
 
 
