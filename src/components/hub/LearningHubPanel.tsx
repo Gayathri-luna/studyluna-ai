@@ -1,4 +1,3 @@
-
 import { useServerFn } from "@tanstack/react-start";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
@@ -25,9 +24,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-const DESCRIPTION =
-  "Generate a personalised engineering learning roadmap from your current level and target job, with phase-by-phase steps and recommended mini projects.";
 
 const LEVELS = [
   "Complete beginner (1st year)",

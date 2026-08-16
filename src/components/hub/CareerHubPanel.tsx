@@ -21,9 +21,6 @@ import {
 } from "@/components/ui/card";
 import { Sparkles } from "lucide-react";
 
-const DESCRIPTION =
-  "Engineering career roadmaps for core jobs, technical and non-technical skills, and the latest hiring updates — with Luna AI guidance.";
-
 export function CareerHubPanel() {
   return (
     <div className="container mx-auto px-4 py-16">
