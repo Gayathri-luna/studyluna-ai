@@ -54,7 +54,7 @@ export function Navbar() {
             <Link
               key={link.to}
               to={link.to}
-              search={"search" in link ? (link.search as never) : undefined}
+              search={("search" in link ? link.search : {}) as never}
               activeOptions={{ exact: link.to === "/" }}
               activeProps={{ className: "text-foreground bg-accent/60" }}
               className="rounded-full px-2.5 py-2 text-[13px] font-medium text-muted-foreground transition-colors hover:bg-accent/60 hover:text-foreground"
@@ -111,7 +111,7 @@ export function Navbar() {
                 <Link
                   key={link.label}
                   to={link.to}
-                  search={"search" in link ? (link.search as never) : undefined}
+                  search={("search" in link ? link.search : {}) as never}
                   onClick={() => setOpen(false)}
                   className="rounded-md px-2 py-2.5 text-sm font-medium text-muted-foreground hover:bg-accent/60 hover:text-foreground"
                 >
