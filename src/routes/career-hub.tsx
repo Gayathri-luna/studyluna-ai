@@ -1,209 +1,75 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import {
-  careerUpdates,
-  nonTechnicalSkills,
-  roadmaps,
-  technicalSkills,
-} from "@/data/ece";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { careerUpdates, nonTechnicalSkills, roadmaps, technicalSkills } from "@/data/ece";
+import { engineeringBranches } from "@/data/engineering-branches";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Sparkles } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { BriefcaseBusiness, Sparkles, ArrowRight } from "lucide-react";
 
-const DESCRIPTION =
-  "ECE career roadmaps for core jobs, technical and non-technical skills, and the latest hiring updates — with Luna AI guidance.";
+const DESCRIPTION = "Career roadmaps, skills and opportunities for students across every engineering branch.";
 
 export const Route = createFileRoute("/career-hub")({
-  head: () => ({
-    meta: [
-      { title: "Career Hub — ECE Roadmaps & Skills | Luna.io" },
-      { name: "description", content: DESCRIPTION },
-      { property: "og:title", content: "Career Hub — ECE Roadmaps & Skills" },
-      { property: "og:description", content: DESCRIPTION },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () => ({ meta: [{ title: "Career Hub — Every Engineering Branch | Luna.ai" }, { name: "description", content: DESCRIPTION }] }),
   component: CareerHubPage,
 });
 
 function CareerHubPage() {
   return (
-    <div className="container mx-auto px-4 py-16">
-      <header className="mx-auto max-w-3xl text-center">
-        <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-          ECE Career Hub
-        </h1>
-        <p className="mt-4 text-lg text-muted-foreground">
-          Stage-by-stage roadmaps for the core Electronics &amp; Communication
-          jobs, the skills each one demands, and what the industry is hiring for
-          right now.
-        </p>
-        <Link
-          to="/luna-ai"
-          className="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
-        >
-          <Sparkles className="h-4 w-4" />
-          Ask Luna AI to personalise a roadmap
-        </Link>
-      </header>
+    <div className="min-h-screen px-4 py-16">
+      <div className="container mx-auto">
+        <header className="animate-fade-up mx-auto max-w-4xl text-center">
+          <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary"><BriefcaseBusiness className="h-3.5 w-3.5" /> Career Hub</div>
+          <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-gradient-circuit sm:text-6xl">Your Career. Your Branch. Your Path.</h1>
+          <p className="mt-5 text-lg text-muted-foreground">Explore roadmaps and career options across engineering — CSE, ECE, EEE, Mechanical, Civil, AI, Data Science, Robotics, VLSI, Embedded and more.</p>
+          <Link to="/luna-ai" className="mt-7 inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/20"><Sparkles className="h-4 w-4" /> Ask Luna AI for my roadmap</Link>
+        </header>
 
-      <section className="mt-16" aria-labelledby="roadmaps">
-        <h2
-          id="roadmaps"
-          className="text-2xl font-bold tracking-tight text-foreground"
-        >
-          Core job roadmaps
-        </h2>
-        <p className="mt-2 text-muted-foreground">
-          Eight core ECE career tracks, each broken into foundation, core
-          skills, specialisation, and job-ready stages.
-        </p>
+        <section className="mt-16" aria-labelledby="branches">
+          <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
+            <div><h2 id="branches" className="text-3xl font-bold">Explore every engineering branch</h2><p className="mt-2 text-muted-foreground">Pick a branch to see relevant career directions and skills.</p></div>
+            <span className="text-sm font-medium text-primary">{engineeringBranches.length} branches available</span>
+          </div>
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {engineeringBranches.map((branch, index) => (
+              <Card key={branch.short} className={`glass-card animate-fade-up group transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 animation-delay-${Math.min(index * 100, 1000)}`}>
+                <CardHeader>
+                  <div className="flex items-center justify-between"><Badge variant="secondary">{branch.short}</Badge><ArrowRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" /></div>
+                  <CardTitle className="pt-2 text-lg">{branch.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-primary">Career paths</p>
+                  <ul className="mt-2 space-y-1 text-sm text-muted-foreground">{branch.careers.map((career) => <li key={career}>• {career}</li>)}</ul>
+                  <div className="mt-4 flex flex-wrap gap-1.5">{branch.skills.map((skill) => <Badge key={skill} variant="outline" className="text-[10px]">{skill}</Badge>)}</div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
 
-        <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          {roadmaps.map((roadmap) => (
-            <Card key={roadmap.slug} className="flex flex-col">
-              <CardHeader>
-                <CardTitle>{roadmap.title}</CardTitle>
-                <CardDescription>{roadmap.summary}</CardDescription>
-                <p className="pt-1 text-sm font-medium text-primary">
-                  {roadmap.salary}
-                </p>
-              </CardHeader>
-              <CardContent className="flex flex-1 flex-col">
-                <Accordion type="single" collapsible className="w-full">
-                  {roadmap.stages.map((stage) => (
-                    <AccordionItem key={stage.stage} value={stage.stage}>
-                      <AccordionTrigger className="text-left text-sm font-semibold">
-                        {stage.stage}
-                      </AccordionTrigger>
-                      <AccordionContent>
-                        <ul className="list-disc space-y-1.5 pl-5 text-sm text-muted-foreground">
-                          {stage.items.map((item) => (
-                            <li key={item}>{item}</li>
-                          ))}
-                        </ul>
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {roadmap.tools.map((tool) => (
-                    <Badge key={tool} variant="secondary">
-                      {tool}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
+        <section className="mt-20" aria-labelledby="roadmaps">
+          <h2 id="roadmaps" className="text-2xl font-bold">Detailed career roadmaps</h2>
+          <p className="mt-2 text-muted-foreground">Deep-dive tracks are available now, with the branch library expanding over time.</p>
+          <div className="mt-8 grid gap-6 lg:grid-cols-2">
+            {roadmaps.map((roadmap) => (
+              <Card key={roadmap.slug} className="glass-card transition-all hover:-translate-y-1">
+                <CardHeader><CardTitle>{roadmap.title}</CardTitle><CardDescription>{roadmap.summary}</CardDescription><p className="pt-1 text-sm font-medium text-primary">{roadmap.salary}</p></CardHeader>
+                <CardContent className="flex flex-col">
+                  <Accordion type="single" collapsible className="w-full">{roadmap.stages.map((stage) => <AccordionItem key={stage.stage} value={stage.stage}><AccordionTrigger className="text-left text-sm font-semibold">{stage.stage}</AccordionTrigger><AccordionContent><ul className="list-disc space-y-1.5 pl-5 text-sm text-muted-foreground">{stage.items.map((item) => <li key={item}>{item}</li>)}</ul></AccordionContent></AccordionItem>)}</Accordion>
+                  <div className="mt-4 flex flex-wrap gap-2">{roadmap.tools.map((tool) => <Badge key={tool} variant="secondary">{tool}</Badge>)}</div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
 
-      <section className="mt-20" aria-labelledby="technical-skills">
-        <h2
-          id="technical-skills"
-          className="text-2xl font-bold tracking-tight text-foreground"
-        >
-          Technical skills
-        </h2>
-        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {technicalSkills.map((group) => (
-            <Card key={group.group}>
-              <CardHeader>
-                <CardTitle className="text-lg">{group.group}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  {group.skills.map((skill) => (
-                    <li key={skill} className="flex gap-2">
-                      <span aria-hidden className="text-primary">
-                        •
-                      </span>
-                      {skill}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
+        <section className="mt-20" aria-labelledby="technical-skills"><h2 id="technical-skills" className="text-2xl font-bold">Technical skills</h2><div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{technicalSkills.map((group) => <Card key={group.group} className="glass-card"><CardHeader><CardTitle className="text-lg">{group.group}</CardTitle></CardHeader><CardContent><ul className="space-y-2 text-sm text-muted-foreground">{group.skills.map((skill) => <li key={skill}>• {skill}</li>)}</ul></CardContent></Card>)}</div></section>
 
-      <section className="mt-20" aria-labelledby="soft-skills">
-        <h2
-          id="soft-skills"
-          className="text-2xl font-bold tracking-tight text-foreground"
-        >
-          Non-technical skills
-        </h2>
-        <div className="mt-6 grid gap-6 sm:grid-cols-2">
-          {nonTechnicalSkills.map((skill) => (
-            <Card key={skill.title}>
-              <CardHeader>
-                <CardTitle className="text-lg">{skill.title}</CardTitle>
-                <CardDescription>{skill.detail}</CardDescription>
-              </CardHeader>
-            </Card>
-          ))}
-        </div>
-      </section>
+        <section className="mt-20" aria-labelledby="soft-skills"><h2 id="soft-skills" className="text-2xl font-bold">Non-technical skills</h2><div className="mt-6 grid gap-6 sm:grid-cols-2">{nonTechnicalSkills.map((skill) => <Card key={skill.title} className="glass-card"><CardHeader><CardTitle className="text-lg">{skill.title}</CardTitle><CardDescription>{skill.detail}</CardDescription></CardHeader></Card>)}</div></section>
 
-      <section className="mt-20" aria-labelledby="career-updates">
-        <h2
-          id="career-updates"
-          className="text-2xl font-bold tracking-tight text-foreground"
-        >
-          Career updates
-        </h2>
-        <p className="mt-2 text-muted-foreground">
-          Hiring trends shaping ECE roles and what to learn in response.
-        </p>
-        <div className="mt-6 space-y-4">
-          {careerUpdates.map((update) => (
-            <Card key={update.title}>
-              <CardHeader>
-                <div className="flex flex-wrap items-center gap-2">
-                  <Badge>{update.category}</Badge>
-                  <span className="text-xs text-muted-foreground">
-                    {update.period}
-                  </span>
-                </div>
-                <CardTitle className="text-lg">{update.title}</CardTitle>
-                <CardDescription>{update.detail}</CardDescription>
-              </CardHeader>
-            </Card>
-          ))}
-        </div>
-      </section>
+        <section className="mt-20" aria-labelledby="career-updates"><h2 id="career-updates" className="text-2xl font-bold">Career updates</h2><p className="mt-2 text-muted-foreground">Keep an eye on changing hiring trends and skills.</p><div className="mt-6 space-y-4">{careerUpdates.map((update) => <Card key={update.title} className="glass-card"><CardHeader><div className="flex flex-wrap items-center gap-2"><Badge>{update.category}</Badge><span className="text-xs text-muted-foreground">{update.period}</span></div><CardTitle className="text-lg">{update.title}</CardTitle><CardDescription>{update.detail}</CardDescription></CardHeader></Card>)}</div></section>
 
-      <section className="mt-20 rounded-lg border border-border bg-muted/40 p-8 text-center">
-        <h2 className="text-2xl font-bold text-foreground">
-          Not sure which track fits you?
-        </h2>
-        <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
-          Tell Luna AI your semester, interests, and available time. It will
-          shortlist a track and turn it into a weekly study plan.
-        </p>
-        <Link
-          to="/luna-ai"
-          className="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
-        >
-          <Sparkles className="h-4 w-4" />
-          Open Luna AI
-        </Link>
-      </section>
+        <section className="glass-card mt-20 rounded-3xl p-8 text-center"><h2 className="text-2xl font-bold">Not sure which branch or career fits you?</h2><p className="mx-auto mt-3 max-w-xl text-muted-foreground">Tell Luna AI your interests, semester and goals. It can help you compare paths and create a practical learning plan.</p><Link to="/luna-ai" className="mt-6 inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-all hover:-translate-y-1"><Sparkles className="h-4 w-4" /> Open Luna AI</Link></section>
+      </div>
     </div>
   );
 }
