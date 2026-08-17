@@ -1,0 +1,33 @@
+name: Luna.ai Daily Career Updates
+
+on:
+  schedule:
+    - cron: "30 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-career-news:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Fetch fresh industry feeds
+        run: node scripts/update-daily-career-news.mjs
+
+      - name: Commit daily update
+        run: |
+          git config user.name "Luna.ai Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/daily-career-updates.ts
+          git diff --cached --quiet && exit 0
+          git commit -m "chore: update daily career news"
+          git push
