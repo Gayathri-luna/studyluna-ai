@@ -254,3 +254,102 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* ---- Luna global animation language ---- */
+@keyframes luna-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes luna-drift {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(3%, -4%, 0) scale(1.12); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes luna-pan {
+  from { background-position: 0% 50%; }
+  to { background-position: 200% 50%; }
+}
+
+@keyframes luna-scan {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(100%); }
+}
+
+@keyframes luna-pulse-ring {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-primary) 35%, transparent); }
+  70% { box-shadow: 0 0 0 14px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+@utility animate-float {
+  animation: luna-float 6s ease-in-out infinite;
+}
+
+@utility animate-drift {
+  animation: luna-drift 18s ease-in-out infinite;
+}
+
+@utility animate-pulse-ring {
+  animation: luna-pulse-ring 2.6s ease-out infinite;
+}
+
+/* Animated gradient headline text */
+@utility text-gradient-animated {
+  background-image: linear-gradient(
+    100deg,
+    var(--chart-1),
+    var(--chart-2),
+    var(--chart-1)
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  color: transparent;
+  animation: luna-pan 6s linear infinite;
+}
+
+/* Moving circuit scan line overlay */
+@utility circuit-scan {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      color-mix(in oklab, var(--color-primary) 12%, transparent),
+      transparent
+    );
+    animation: luna-scan 7s linear infinite;
+    pointer-events: none;
+  }
+}
+
+/* Reusable interactive card surface */
+@utility luna-card {
+  border-radius: 1rem;
+  border: 1px solid color-mix(in oklab, var(--color-border) 70%, transparent);
+  background: color-mix(in oklab, var(--color-card) 50%, transparent);
+  backdrop-filter: blur(16px);
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+  &:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in oklab, var(--color-primary) 55%, transparent);
+    box-shadow: var(--glow-primary);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-drift,
+  .animate-pulse-ring,
+  .text-gradient-animated {
+    animation: none !important;
+  }
+}

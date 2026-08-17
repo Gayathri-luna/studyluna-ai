@@ -18,7 +18,7 @@ import { Navbar } from "@/components/Navbar";
 import { BranchWelcome } from "@/components/BranchWelcome";
 import { AuthProvider } from "@/lib/auth";
 import { LearningReminders } from "@/components/LearningReminders";
-import { MotionPage } from "@/components/motion";
+import { MotionPage, FloatingBackground } from "@/components/motion";
 import { AnimatePresence } from "framer-motion";
 
 
@@ -162,8 +162,10 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
+        <FloatingBackground />
         <div className="flex min-h-screen flex-col">
           <Navbar />
+
 
           <main className="flex-1">
             {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
