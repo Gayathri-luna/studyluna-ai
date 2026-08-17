@@ -151,14 +151,10 @@ export function AnimatedCard({
   return (
     <motion.div
       className={className}
-      variants={
-        reveal
-          ? {
-              hidden: { opacity: 0, y: reduced ? 0 : 18 },
-              visible: { opacity: 1, y: 0, transition: { duration: reduced ? 0 : 0.45, ease: EASE } },
-            }
-          : undefined
-      }
+      variants={{
+        hidden: { opacity: 0, y: reduced ? 0 : 18 },
+        visible: { opacity: 1, y: 0, transition: { duration: reduced ? 0 : 0.45, ease: EASE } },
+      }}
       initial={reveal && !reduced ? "hidden" : false}
       whileInView={reveal ? "visible" : undefined}
       viewport={reveal ? { once: true, amount: 0.15 } : undefined}

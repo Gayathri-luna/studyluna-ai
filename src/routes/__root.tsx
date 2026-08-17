@@ -18,7 +18,7 @@ import { Navbar } from "@/components/Navbar";
 import { BranchWelcome } from "@/components/BranchWelcome";
 import { AuthProvider } from "@/lib/auth";
 import { LearningReminders } from "@/components/LearningReminders";
-import { MotionPage } from "@/components/motion";
+import { MotionPage, FloatingBackground } from "@/components/motion";
 import { AnimatePresence } from "framer-motion";
 
 
