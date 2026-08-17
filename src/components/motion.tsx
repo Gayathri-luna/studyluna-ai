@@ -156,8 +156,8 @@ export function AnimatedCard({
         visible: { opacity: 1, y: 0, transition: { duration: reduced ? 0 : 0.45, ease: EASE } },
       }}
       initial={reveal && !reduced ? "hidden" : false}
-      whileInView={reveal ? "visible" : undefined}
-      viewport={reveal ? { once: true, amount: 0.15 } : undefined}
+      whileInView={reveal ? "visible" : "visible"}
+      viewport={{ once: true, amount: 0.15 }}
       whileHover={reduced ? {} : { y: -5, boxShadow: "var(--glow-primary)" }}
       whileTap={reduced ? {} : { scale: 0.995 }}
       transition={{ duration: 0.22, ease: EASE }}
