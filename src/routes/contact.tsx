@@ -68,6 +68,14 @@ function ContactPage() {
             <Linkedin className="h-4 w-4" />
             Varshini Yarramsetty | LinkedIn
           </a>
+          <a
+            href="mailto:varshiniyarramsetty03@gmail.com"
+            className="mt-1 flex items-center gap-2 text-sm font-medium text-primary hover:underline"
+          >
+            <Mail className="h-4 w-4" />
+            varshiniyarramsetty03@gmail.com
+          </a>
+
         </div>
 
         <div className="mt-6 grid gap-3 sm:grid-cols-3">
