@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import lunaLogo from "@/assets/luna-logo.png";
 import { WhatsNew } from "@/components/WhatsNew";
-import { HoverLift, LunaGlow, Reveal, Stagger } from "@/components/motion";
+import { AnimatedButton, HoverLift, LunaGlow, Particles, Reveal, Stagger } from "@/components/motion";
 import { HeroIntro } from "@/components/HeroIntro";
 
 
@@ -85,6 +85,7 @@ function HomePage() {
       <HeroIntro>
         <section className="circuit-grid relative overflow-hidden border-b border-border/60">
           <LunaGlow />
+          <Particles count={22} />
           <div className="container mx-auto flex flex-col items-center px-4 py-20 text-center sm:py-28">
             <img
               data-hero-item
@@ -92,11 +93,11 @@ function HomePage() {
               alt="LUNA logo"
               width={96}
               height={96}
-              className="glow-primary h-24 w-24 rounded-full object-contain"
+              className="glow-primary h-24 w-24 rounded-full object-contain animate-float"
             />
             <h1
               data-hero-item
-              className="mt-8 text-5xl font-extrabold tracking-tight text-foreground sm:text-7xl"
+              className="mt-8 text-5xl font-extrabold tracking-tight text-gradient-animated sm:text-7xl"
             >
               LUNA
             </h1>
@@ -104,25 +105,30 @@ function HomePage() {
               One Platform. Endless Learning.
             </p>
             <p data-hero-item className="mt-4 max-w-xl text-base text-muted-foreground sm:text-lg">
-              AI-powered learning platform for engineering students.
+              AI-powered learning platform for engineering students across every branch.
             </p>
             <div data-hero-item className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link
-                to="/roadmaps"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.04]"
-              >
-                Start Learning <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                to="/platform"
-                className="inline-flex items-center justify-center rounded-full border border-border bg-card/60 px-7 py-3 text-sm font-semibold text-foreground backdrop-blur transition-colors hover:bg-accent/60"
-              >
-                Explore Platform
-              </Link>
+              <AnimatedButton>
+                <Link
+                  to="/roadmaps"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground"
+                >
+                  Start Learning <ArrowRight className="h-4 w-4" />
+                </Link>
+              </AnimatedButton>
+              <AnimatedButton>
+                <Link
+                  to="/platform"
+                  className="inline-flex items-center justify-center rounded-full border border-border bg-card/60 px-7 py-3 text-sm font-semibold text-foreground backdrop-blur transition-colors hover:bg-accent/60"
+                >
+                  Explore Platform
+                </Link>
+              </AnimatedButton>
             </div>
           </div>
         </section>
       </HeroIntro>
+
 
 
       <section className="container mx-auto px-4 py-16 sm:py-20">
