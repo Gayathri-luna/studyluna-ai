@@ -22,13 +22,13 @@ export const Route = createFileRoute("/about")({
       {
         name: "description",
         content:
-          "Learn about Luna.io's mission, vision, core values, and the creator behind the AI-powered ECE learning platform.",
+          "Learn about Luna.io's mission, vision, core values, and the team behind the AI-powered learning platform for engineering students.",
       },
       { property: "og:title", content: "About Luna.io" },
       {
         property: "og:description",
         content:
-          "Our mission is to make Electronics & Communication Engineering accessible, practical, and career-focused.",
+          "Our mission is to make engineering education accessible, practical, and career-focused across every branch.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -55,7 +55,7 @@ const values = [
   },
   {
     title: "Open Learning",
-    description: "Make quality ECE education accessible to everyone, everywhere.",
+    description: "Make quality engineering education accessible to everyone, everywhere.",
     icon: Unlock,
   },
   {
@@ -108,14 +108,14 @@ function AboutPage() {
         <div className="container relative mx-auto px-4 text-center">
           <div className="mx-auto mb-5 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary">
             <Cpu className="h-3.5 w-3.5" />
-            Electronics · Communication · AI
+            Every Branch · Every Engineer · AI
           </div>
           <h1 className="text-4xl font-extrabold tracking-tight text-gradient-circuit sm:text-5xl">
             About Luna.io
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-            Empowering the next generation of Electronics & Communication
-            Engineers with AI-driven learning and career support.
+            Empowering the next generation of engineers across every branch with
+            AI-driven learning and career support.
           </p>
         </div>
       </section>
@@ -129,9 +129,9 @@ function AboutPage() {
               Our Mission
             </div>
             <p className="text-lg leading-relaxed text-muted-foreground">
-              Luna.io is an AI-powered platform built to make Electronics &
-              Communication Engineering accessible, practical, and career-focused.
-              The goal is to help learners confidently navigate ECE by providing
+              Luna.io is an AI-powered platform built to make engineering education
+              accessible, practical, and career-focused for every branch.
+              The goal is to help learners confidently navigate their degree by providing
               structured learning paths, career roadmaps, project guidance, AI
               mentorship, industry updates, and a collaborative community.
             </p>
@@ -144,7 +144,7 @@ function AboutPage() {
             </div>
             <p className="text-lg leading-relaxed text-muted-foreground">
               To become the world&apos;s most trusted AI-powered platform for
-              Electronics & Communication Engineering, empowering learners,
+              engineering education, empowering learners,
               professionals, and innovators with the knowledge and tools they need
               to succeed.
             </p>
@@ -211,8 +211,8 @@ function AboutPage() {
                     Personal Mission
                   </h4>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    To make ECE education accessible, practical, and career-focused
-                    for learners around the world.
+                    To make engineering education accessible, practical, and
+                    career-focused for learners around the world.
                   </p>
                 </div>
 
@@ -311,6 +311,15 @@ function AboutPage() {
                     engineering students.
                   </p>
                   <ul className="space-y-1 text-sm text-muted-foreground">
+                    <li>
+                      Email:{" "}
+                      <a
+                        href="mailto:varshiniyarramsetty03@gmail.com"
+                        className="font-medium text-primary hover:underline"
+                      >
+                        varshiniyarramsetty03@gmail.com
+                      </a>
+                    </li>
                     <li>
                       LinkedIn:{" "}
                       <a
