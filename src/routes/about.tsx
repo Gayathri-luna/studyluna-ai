@@ -161,7 +161,6 @@ function AboutPage() {
             {values.map((value) => (
               <AnimatedCard
                 key={value.title}
-                reveal={false}
                 className="group rounded-2xl border border-border bg-card p-6 transition-colors hover:border-primary/20 hover:bg-accent"
               >
                 <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
