@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import lunaLogo from "@/assets/luna-logo.png";
 import { WhatsNew } from "@/components/WhatsNew";
-import { HoverLift, LunaGlow, Reveal, Stagger } from "@/components/motion";
+import { AnimatedButton, HoverLift, LunaGlow, Particles, Reveal, Stagger } from "@/components/motion";
 import { HeroIntro } from "@/components/HeroIntro";
 
 
