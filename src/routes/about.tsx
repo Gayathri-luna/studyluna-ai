@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { AnimatedCard, Stagger } from "@/components/motion";
+
 import {
   Award,
   BookOpen,
@@ -155,10 +157,11 @@ function AboutPage() {
           <h2 className="text-center text-3xl font-semibold tracking-tight text-foreground">
             Core Values
           </h2>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <Stagger className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {values.map((value) => (
-              <div
+              <AnimatedCard
                 key={value.title}
+                reveal={false}
                 className="group rounded-2xl border border-border bg-card p-6 transition-colors hover:border-primary/20 hover:bg-accent"
               >
                 <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
@@ -170,9 +173,9 @@ function AboutPage() {
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                   {value.description}
                 </p>
-              </div>
+              </AnimatedCard>
             ))}
-          </div>
+          </Stagger>
         </section>
 
         <section className="mt-24">
