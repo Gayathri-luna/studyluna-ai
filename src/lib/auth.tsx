@@ -28,18 +28,46 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     setBranchState(localStorage.getItem(BRANCH_KEY));
 
-    const { data } = supabase.auth.onAuthStateChange((_event, next) => {
-      setSession(next);
+    let settled = false;
+    const settle = (next: Session | null, from: "event" | "initial") => {
+      // Single source of truth: the first resolved value wins for `loading`,
+      // later auth events still update the session.
+      if (from === "event" || !settled) setSession(next);
+      settled = true;
       setLoading(false);
-    });
+    };
 
-    void supabase.auth.getSession().then(({ data: result }) => {
-      setSession(result.session);
-      setLoading(false);
-    });
+    const { data } = supabase.auth.onAuthStateChange((_event, next) => settle(next, "event"));
 
-    return () => data.subscription.unsubscribe();
+    // Safety net: never let the UI hang on a stalled session check.
+    const timeout = setTimeout(() => {
+      if (!settled) {
+        console.warn("[auth] Session check timed out after 5s; continuing signed-out.");
+        settled = true;
+        setLoading(false);
+      }
+    }, 5000);
+
+    void supabase.auth
+      .getSession()
+      .then(({ data: result, error }) => {
+        if (error) console.error("[auth] getSession error:", error);
+        settle(result?.session ?? null, "initial");
+      })
+      .catch((error: unknown) => {
+        console.error("[auth] getSession failed:", error);
+      })
+      .finally(() => {
+        settled = true;
+        setLoading(false);
+      });
+
+    return () => {
+      clearTimeout(timeout);
+      data.subscription.unsubscribe();
+    };
   }, []);
+
 
   const userId = session?.user.id ?? null;
 
