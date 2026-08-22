@@ -197,6 +197,75 @@ function ChatWindow({
 
   const [errorText, setErrorText] = useState<string | null>(null);
   const sendingRef = useRef(false);
+  const [media, setMedia] = useState<MediaItem[]>([]);
+
+  const patchMedia = (id: string, patch: Partial<MediaItem>) =>
+    setMedia((prev) => prev.map((item) => (item.id === id ? { ...item, ...patch } : item)));
+
+  const authHeaders = async (): Promise<Record<string, string>> => {
+    const { data } = await supabase.auth.getSession();
+    const token = data.session?.access_token;
+    return {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    };
+  };
+
+  /** Calls the generation route and always resolves the card into done or error. */
+  const generateMedia = async (kind: "image" | "audio", prompt: string) => {
+    const trimmed = prompt.trim();
+    if (!trimmed) {
+      toast.error(
+        kind === "image"
+          ? "Describe the image you want, then press Generate image."
+          : "Type or generate a script first, then press Generate audio.",
+      );
+      return;
+    }
+
+    const id = `${kind}-${Date.now()}-${Math.random()}`;
+    setMedia((prev) => [...prev, { id, kind, prompt: trimmed, status: "loading" }]);
+
+    try {
+      const response = await fetch(kind === "image" ? "/api/generate-image" : "/api/generate-audio", {
+        method: "POST",
+        headers: await authHeaders(),
+        body: JSON.stringify(kind === "image" ? { prompt: trimmed } : { script: trimmed }),
+      });
+
+      if (!response.ok) {
+        const message =
+          (await response.text().catch(() => "")).trim() ||
+          `${kind === "image" ? "Image" : "Audio"} generation failed. Please retry.`;
+        patchMedia(id, { status: "error", error: message.slice(0, 220) });
+        toast.error(message.slice(0, 220));
+        return;
+      }
+
+      if (kind === "image") {
+        const payload = (await response.json()) as { image?: string };
+        if (!payload.image) throw new Error("No image returned.");
+        patchMedia(id, { status: "done", url: payload.image });
+      } else {
+        const blob = await response.blob();
+        patchMedia(id, { status: "done", url: URL.createObjectURL(blob) });
+      }
+    } catch (error) {
+      const message = friendlyError(error);
+      patchMedia(id, { status: "error", error: message });
+      toast.error(message);
+    }
+  };
+
+  const lastAssistantText = useMemo(() => {
+    for (let i = messages.length - 1; i >= 0; i--) {
+      const message = messages[i]!;
+      if (message.role !== "assistant") continue;
+      const text = message.parts.map((p) => (p.type === "text" ? p.text : "")).join("").trim();
+      if (text) return text;
+    }
+    return "";
+  }, [messages]);
 
   const { messages, sendMessage, status, stop, setMessages } = useChat({
     id: threadId,
