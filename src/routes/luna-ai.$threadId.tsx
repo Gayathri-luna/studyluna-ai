@@ -63,6 +63,15 @@ const PODCAST_PROMPTS: Record<PodcastOutput, string> = {
 
 type Attachment = { id: string; file: File; url: string };
 
+type MediaItem = {
+  id: string;
+  kind: "image" | "audio";
+  prompt: string;
+  status: "loading" | "done" | "error";
+  url?: string;
+  error?: string;
+};
+
 /**
  * The backend already maps every failure to a friendly sentence, so prefer its
  * text and only fall back for transport-level failures it never reached.
@@ -82,7 +91,26 @@ function friendlyError(error: unknown): string {
 function MessageMarkdown({ text }: { text: string }) {
   return (
     <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground prose-code:text-primary">
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          a: ({ href, children }) => {
+            const url = String(href ?? "");
+            const internal = url.startsWith("/");
+            return (
+              <a
+                href={url}
+                {...(internal ? {} : { target: "_blank", rel: "noopener noreferrer" })}
+                className="font-medium text-primary underline underline-offset-2 hover:opacity-80"
+              >
+                {children}
+              </a>
+            );
+          },
+        }}
+      >
+        {text}
+      </ReactMarkdown>
     </div>
   );
 }
@@ -169,6 +197,65 @@ function ChatWindow({
 
   const [errorText, setErrorText] = useState<string | null>(null);
   const sendingRef = useRef(false);
+  const [media, setMedia] = useState<MediaItem[]>([]);
+
+  const patchMedia = (id: string, patch: Partial<MediaItem>) =>
+    setMedia((prev) => prev.map((item) => (item.id === id ? { ...item, ...patch } : item)));
+
+  const authHeaders = async (): Promise<Record<string, string>> => {
+    const { data } = await supabase.auth.getSession();
+    const token = data.session?.access_token;
+    return {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    };
+  };
+
+  /** Calls the generation route and always resolves the card into done or error. */
+  const generateMedia = async (kind: "image" | "audio", prompt: string) => {
+    const trimmed = prompt.trim();
+    if (!trimmed) {
+      toast.error(
+        kind === "image"
+          ? "Describe the image you want, then press Generate image."
+          : "Type or generate a script first, then press Generate audio.",
+      );
+      return;
+    }
+
+    const id = `${kind}-${Date.now()}-${Math.random()}`;
+    setMedia((prev) => [...prev, { id, kind, prompt: trimmed, status: "loading" }]);
+
+    try {
+      const response = await fetch(kind === "image" ? "/api/generate-image" : "/api/generate-audio", {
+        method: "POST",
+        headers: await authHeaders(),
+        body: JSON.stringify(kind === "image" ? { prompt: trimmed } : { script: trimmed }),
+      });
+
+      if (!response.ok) {
+        const message =
+          (await response.text().catch(() => "")).trim() ||
+          `${kind === "image" ? "Image" : "Audio"} generation failed. Please retry.`;
+        patchMedia(id, { status: "error", error: message.slice(0, 220) });
+        toast.error(message.slice(0, 220));
+        return;
+      }
+
+      if (kind === "image") {
+        const payload = (await response.json()) as { image?: string };
+        if (!payload.image) throw new Error("No image returned.");
+        patchMedia(id, { status: "done", url: payload.image });
+      } else {
+        const blob = await response.blob();
+        patchMedia(id, { status: "done", url: URL.createObjectURL(blob) });
+      }
+    } catch (error) {
+      const message = friendlyError(error);
+      patchMedia(id, { status: "error", error: message });
+      toast.error(message);
+    }
+  };
 
   const { messages, sendMessage, status, stop, setMessages } = useChat({
     id: threadId,
@@ -185,6 +272,16 @@ function ChatWindow({
       setErrorText(null);
     },
   });
+
+  const lastAssistantText = useMemo(() => {
+    for (let i = messages.length - 1; i >= 0; i--) {
+      const message = messages[i]!;
+      if (message.role !== "assistant") continue;
+      const text = message.parts.map((p) => (p.type === "text" ? p.text : "")).join("").trim();
+      if (text) return text;
+    }
+    return "";
+  }, [messages]);
 
   const isLoading = status === "submitted" || status === "streaming";
 
@@ -347,8 +444,24 @@ function ChatWindow({
         ))}
         <button
           type="button"
-          onClick={clearChat}
+          onClick={() => void generateMedia("image", input)}
           className="ml-auto inline-flex items-center gap-1 rounded-full border border-border px-3 py-1.5 text-xs text-muted-foreground hover:bg-accent hover:text-foreground"
+        >
+          <ImageIcon className="h-3 w-3" />
+          Generate image
+        </button>
+        <button
+          type="button"
+          onClick={() => void generateMedia("audio", input.trim() || lastAssistantText)}
+          className="inline-flex items-center gap-1 rounded-full border border-border px-3 py-1.5 text-xs text-muted-foreground hover:bg-accent hover:text-foreground"
+        >
+          <Radio className="h-3 w-3" />
+          Generate audio
+        </button>
+        <button
+          type="button"
+          onClick={clearChat}
+          className="inline-flex items-center gap-1 rounded-full border border-border px-3 py-1.5 text-xs text-muted-foreground hover:bg-accent hover:text-foreground"
         >
           <Eraser className="h-3 w-3" />
           Clear chat
@@ -454,6 +567,58 @@ function ChatWindow({
         {status === "submitted" && (
           <p className="animate-pulse text-sm text-muted-foreground">LunaAI is thinking…</p>
         )}
+
+        {media.map((item) => (
+          <div
+            key={item.id}
+            className="rounded-xl border border-border bg-background p-3 text-sm"
+          >
+            <p className="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
+              {item.kind === "image" ? (
+                <ImageIcon className="h-3.5 w-3.5 text-primary" />
+              ) : (
+                <Radio className="h-3.5 w-3.5 text-primary" />
+              )}
+              <span className="line-clamp-1">{item.prompt}</span>
+            </p>
+
+            {item.status === "loading" && (
+              <p className="animate-pulse text-xs text-muted-foreground">
+                {item.kind === "image" ? "Generating image…" : "Generating audio…"}
+              </p>
+            )}
+
+            {item.status === "done" && item.kind === "image" && item.url && (
+              <img
+                src={item.url}
+                alt={item.prompt}
+                className="max-h-80 w-full rounded-lg border border-border object-contain"
+              />
+            )}
+
+            {item.status === "done" && item.kind === "audio" && item.url && (
+              <audio controls src={item.url} className="w-full" />
+            )}
+
+            {item.status === "error" && (
+              <div className="flex flex-wrap items-center gap-2 text-xs text-destructive">
+                <span className="flex-1">{item.error}</span>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => {
+                    setMedia((prev) => prev.filter((m) => m.id !== item.id));
+                    void generateMedia(item.kind, item.prompt);
+                  }}
+                >
+                  <RotateCcw className="mr-1 h-3 w-3" />
+                  Retry
+                </Button>
+              </div>
+            )}
+          </div>
+        ))}
 
         {errorText && !isLoading && (
           <div

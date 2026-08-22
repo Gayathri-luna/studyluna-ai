@@ -2,6 +2,26 @@ import { createClient } from "@supabase/supabase-js";
 
 export const DAILY_AI_MESSAGE_LIMIT = 60;
 
+/** Media generation (image / audio) is far pricier than text, so cap it per minute. */
+export const MEDIA_PER_MINUTE_LIMIT = 4;
+const mediaHits = new Map<string, number[]>();
+
+export function checkMediaRateLimit(userId: string, kind: "image" | "audio"): Response | null {
+  const now = Date.now();
+  const bucket = `${kind}:${userId}`;
+  const recent = (mediaHits.get(bucket) ?? []).filter((t) => now - t < 60_000);
+  if (recent.length >= MEDIA_PER_MINUTE_LIMIT) {
+    mediaHits.set(bucket, recent);
+    return new Response(
+      `You can generate up to ${MEDIA_PER_MINUTE_LIMIT} ${kind}s per minute. Please wait a moment and try again.`,
+      { status: 429 },
+    );
+  }
+  recent.push(now);
+  mediaHits.set(bucket, recent);
+  return null;
+}
+
 type Verified = { userId: string } | { error: Response };
 
 /** Verifies the Supabase bearer token on an incoming API request. */
