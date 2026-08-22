@@ -27,6 +27,7 @@ import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as ApiGenerateAudioRouteImport } from './routes/api/generate-audio'
 import { Route as ApiGenerateImageRouteImport } from './routes/api/generate-image'
 import { Route as GovernmentJobsIndexRouteImport } from './routes/government-jobs.index'
 import { Route as GovernmentJobsSlugRouteImport } from './routes/government-jobs.$slug'
@@ -129,6 +130,11 @@ const ApiChatRoute = ApiChatRouteImport.update({
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiGenerateAudioRoute = ApiGenerateAudioRouteImport.update({
+  id: '/api/generate-audio',
+  path: '/api/generate-audio',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiGenerateImageRoute = ApiGenerateImageRouteImport.update({
   id: '/api/generate-image',
   path: '/api/generate-image',
@@ -204,6 +210,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/generate-audio': typeof ApiGenerateAudioRoute
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/government-jobs/$slug': typeof GovernmentJobsSlugRoute
   '/luna-ai/$threadId': typeof LunaAiThreadIdRoute
@@ -234,6 +241,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/generate-audio': typeof ApiGenerateAudioRoute
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/government-jobs/$slug': typeof GovernmentJobsSlugRoute
   '/luna-ai/$threadId': typeof LunaAiThreadIdRoute
@@ -266,6 +274,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/generate-audio': typeof ApiGenerateAudioRoute
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/government-jobs/$slug': typeof GovernmentJobsSlugRoute
   '/luna-ai/$threadId': typeof LunaAiThreadIdRoute
@@ -299,6 +308,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms-of-service'
     | '/api/chat'
+    | '/api/generate-audio'
     | '/api/generate-image'
     | '/government-jobs/$slug'
     | '/luna-ai/$threadId'
@@ -329,6 +339,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms-of-service'
     | '/api/chat'
+    | '/api/generate-audio'
     | '/api/generate-image'
     | '/government-jobs/$slug'
     | '/luna-ai/$threadId'
@@ -360,6 +371,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms-of-service'
     | '/api/chat'
+    | '/api/generate-audio'
     | '/api/generate-image'
     | '/government-jobs/$slug'
     | '/luna-ai/$threadId'
@@ -392,6 +404,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsOfServiceRoute: typeof TermsOfServiceRoute
   ApiChatRoute: typeof ApiChatRoute
+  ApiGenerateAudioRoute: typeof ApiGenerateAudioRoute
   ApiGenerateImageRoute: typeof ApiGenerateImageRoute
   GovernmentJobsSlugRoute: typeof GovernmentJobsSlugRoute
   ResourcesSlugRoute: typeof ResourcesSlugRoute
@@ -531,6 +544,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/generate-audio': {
+      id: '/api/generate-audio'
+      path: '/api/generate-audio'
+      fullPath: '/api/generate-audio'
+      preLoaderRoute: typeof ApiGenerateAudioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/generate-image': {
       id: '/api/generate-image'
       path: '/api/generate-image'
@@ -643,6 +663,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsOfServiceRoute: TermsOfServiceRoute,
   ApiChatRoute: ApiChatRoute,
+  ApiGenerateAudioRoute: ApiGenerateAudioRoute,
   ApiGenerateImageRoute: ApiGenerateImageRoute,
   GovernmentJobsSlugRoute: GovernmentJobsSlugRoute,
   ResourcesSlugRoute: ResourcesSlugRoute,
