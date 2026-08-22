@@ -552,6 +552,58 @@ function ChatWindow({
           <p className="animate-pulse text-sm text-muted-foreground">LunaAI is thinking…</p>
         )}
 
+        {media.map((item) => (
+          <div
+            key={item.id}
+            className="rounded-xl border border-border bg-background p-3 text-sm"
+          >
+            <p className="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
+              {item.kind === "image" ? (
+                <ImageIcon className="h-3.5 w-3.5 text-primary" />
+              ) : (
+                <Radio className="h-3.5 w-3.5 text-primary" />
+              )}
+              <span className="line-clamp-1">{item.prompt}</span>
+            </p>
+
+            {item.status === "loading" && (
+              <p className="animate-pulse text-xs text-muted-foreground">
+                {item.kind === "image" ? "Generating image…" : "Generating audio…"}
+              </p>
+            )}
+
+            {item.status === "done" && item.kind === "image" && item.url && (
+              <img
+                src={item.url}
+                alt={item.prompt}
+                className="max-h-80 w-full rounded-lg border border-border object-contain"
+              />
+            )}
+
+            {item.status === "done" && item.kind === "audio" && item.url && (
+              <audio controls src={item.url} className="w-full" />
+            )}
+
+            {item.status === "error" && (
+              <div className="flex flex-wrap items-center gap-2 text-xs text-destructive">
+                <span className="flex-1">{item.error}</span>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => {
+                    setMedia((prev) => prev.filter((m) => m.id !== item.id));
+                    void generateMedia(item.kind, item.prompt);
+                  }}
+                >
+                  <RotateCcw className="mr-1 h-3 w-3" />
+                  Retry
+                </Button>
+              </div>
+            )}
+          </div>
+        ))}
+
         {errorText && !isLoading && (
           <div
             role="alert"
