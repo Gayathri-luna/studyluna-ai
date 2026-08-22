@@ -444,8 +444,24 @@ function ChatWindow({
         ))}
         <button
           type="button"
-          onClick={clearChat}
+          onClick={() => void generateMedia("image", input)}
           className="ml-auto inline-flex items-center gap-1 rounded-full border border-border px-3 py-1.5 text-xs text-muted-foreground hover:bg-accent hover:text-foreground"
+        >
+          <ImageIcon className="h-3 w-3" />
+          Generate image
+        </button>
+        <button
+          type="button"
+          onClick={() => void generateMedia("audio", input.trim() || lastAssistantText)}
+          className="inline-flex items-center gap-1 rounded-full border border-border px-3 py-1.5 text-xs text-muted-foreground hover:bg-accent hover:text-foreground"
+        >
+          <Radio className="h-3 w-3" />
+          Generate audio
+        </button>
+        <button
+          type="button"
+          onClick={clearChat}
+          className="inline-flex items-center gap-1 rounded-full border border-border px-3 py-1.5 text-xs text-muted-foreground hover:bg-accent hover:text-foreground"
         >
           <Eraser className="h-3 w-3" />
           Clear chat
