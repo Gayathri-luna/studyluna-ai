@@ -257,16 +257,6 @@ function ChatWindow({
     }
   };
 
-  const lastAssistantText = useMemo(() => {
-    for (let i = messages.length - 1; i >= 0; i--) {
-      const message = messages[i]!;
-      if (message.role !== "assistant") continue;
-      const text = message.parts.map((p) => (p.type === "text" ? p.text : "")).join("").trim();
-      if (text) return text;
-    }
-    return "";
-  }, [messages]);
-
   const { messages, sendMessage, status, stop, setMessages } = useChat({
     id: threadId,
     messages: initialMessages,
@@ -282,6 +272,16 @@ function ChatWindow({
       setErrorText(null);
     },
   });
+
+  const lastAssistantText = useMemo(() => {
+    for (let i = messages.length - 1; i >= 0; i--) {
+      const message = messages[i]!;
+      if (message.role !== "assistant") continue;
+      const text = message.parts.map((p) => (p.type === "text" ? p.text : "")).join("").trim();
+      if (text) return text;
+    }
+    return "";
+  }, [messages]);
 
   const isLoading = status === "submitted" || status === "streaming";
 
