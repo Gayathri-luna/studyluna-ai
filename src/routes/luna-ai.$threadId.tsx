@@ -63,6 +63,15 @@ const PODCAST_PROMPTS: Record<PodcastOutput, string> = {
 
 type Attachment = { id: string; file: File; url: string };
 
+type MediaItem = {
+  id: string;
+  kind: "image" | "audio";
+  prompt: string;
+  status: "loading" | "done" | "error";
+  url?: string;
+  error?: string;
+};
+
 /**
  * The backend already maps every failure to a friendly sentence, so prefer its
  * text and only fall back for transport-level failures it never reached.
