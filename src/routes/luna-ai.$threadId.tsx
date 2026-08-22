@@ -82,7 +82,26 @@ function friendlyError(error: unknown): string {
 function MessageMarkdown({ text }: { text: string }) {
   return (
     <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground prose-code:text-primary">
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          a: ({ href, children }) => {
+            const url = String(href ?? "");
+            const internal = url.startsWith("/");
+            return (
+              <a
+                href={url}
+                {...(internal ? {} : { target: "_blank", rel: "noopener noreferrer" })}
+                className="font-medium text-primary underline underline-offset-2 hover:opacity-80"
+              >
+                {children}
+              </a>
+            );
+          },
+        }}
+      >
+        {text}
+      </ReactMarkdown>
     </div>
   );
 }
