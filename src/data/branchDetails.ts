@@ -1,4 +1,5 @@
 import { extraBranchDetails } from "./fieldPrograms";
+import { healthBranchDetails } from "./healthPrograms";
 
 /**
  * Branch-specific structured learning data.
@@ -607,6 +608,7 @@ const engineeringBranchDetails: Record<string, BranchDetail> = {
 export const branchDetails: Record<string, BranchDetail> = {
   ...engineeringBranchDetails,
   ...extraBranchDetails,
+  ...healthBranchDetails,
 };
 
 export const branchDetailBySlug = (slug: string): BranchDetail | undefined => branchDetails[slug];

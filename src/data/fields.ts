@@ -18,6 +18,7 @@ export const studyFields: StudyField[] = [
   { slug: "computer-applications", label: "Computer Applications", blurb: "BCA and MCA — applied software careers." },
   { slug: "law", label: "Law", blurb: "LLB and 5-year integrated BA LLB." },
   { slug: "forensic-science", label: "Forensic Science", blurb: "Lab science for criminal investigation." },
+  { slug: "healthcare", label: "Healthcare", blurb: "Nursing and Pharmacy — clinical and pharma careers." },
   { slug: "emerging-tech", label: "Emerging Tech", blurb: "AI/ML, Data Science, DevOps, Cybersecurity, Cloud." },
 ];
 

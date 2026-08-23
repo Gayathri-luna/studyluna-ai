@@ -1,4 +1,5 @@
 import { extraBranches } from "./fieldPrograms";
+import { healthBranches } from "./healthPrograms";
 
 export interface Branch {
   slug: string;
@@ -547,7 +548,7 @@ const engineeringBranches: Branch[] = [
   },
 ];
 
-export const branches: Branch[] = [...engineeringBranches, ...extraBranches];
+export const branches: Branch[] = [...engineeringBranches, ...extraBranches, ...healthBranches];
 
 export const branchFields = (b: Branch): string[] => b.fields ?? ["engineering"];
 
