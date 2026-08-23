@@ -10,7 +10,6 @@ import {
   ArrowRight,
 } from "lucide-react";
 import lunaLogo from "@/assets/luna-logo.png";
-import { WhatsNew } from "@/components/WhatsNew";
 import { AnimatedButton, HoverLift, LunaGlow, Particles, Reveal, Stagger } from "@/components/motion";
 import { HeroIntro } from "@/components/HeroIntro";
 
@@ -155,8 +154,6 @@ function HomePage() {
           ))}
         </Stagger>
       </section>
-
-      <WhatsNew limit={6} />
     </div>
   );
 }
