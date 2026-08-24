@@ -116,7 +116,7 @@ This project was built with [Lovable](https://lovable.dev).
 
 **Live app**: https://studyluna-ai.lovable.app
 
-## Build with Lovable
+
 
 Continue developing this project in the [Lovable editor](https://lovable.dev/projects/b2249bb6-cc8c-4a44-8977-6cfa205e2b7d).
 
